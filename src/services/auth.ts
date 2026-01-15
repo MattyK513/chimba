@@ -1,6 +1,11 @@
-import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile, type Unsubscribe } from "firebase/auth";
 import { auth } from "../config/firebase";
 import type { User, UserInfo } from "../types/firebase";
+
+//These functions are Firebase wrappers that assume valid input! Validation should be done prior to calling them.
+export function subscribeToAuthState(callback: (user: UserInfo | null) => void): Unsubscribe {
+  return onAuthStateChanged(auth, callback);
+};
 
 export async function logInWithEmailAndPassword(userEmail: string, password: string): Promise<UserInfo> {
     try {
@@ -36,20 +41,42 @@ export async function createAccountWithEmailAndPassword(userEmail: string, passw
     }
 };
 
-export async function deleteProfile(user: User): Promise<void> {
+// Should we use auth.currentUser instead of passing user as param?
+export async function deleteProfile(user: User): Promise<void | "REAUTH_REQUIRED"> {
     try {
         await deleteUser(user);
-    } catch {
+    } catch (err) {
+        if (checkReauthIsRequired(err)) {
+          return "REAUTH_REQUIRED"
+        };
         throw new Error("There was a problem deleting your account. Please try again.")
     }
 };
 
-export async function updateUsernameOrPhotoURL(user: User, updates: { displayName?: string | null, photoURL?: string | null}): Promise<void> {
+export async function updateUsernameOrPhotoURL(user: User, updates: { displayName?: string | null, photoURL?: string | null }): Promise<void> {
     try {
-        await updateProfile()
-    } catch {
-
+        await updateProfile(user, updates);
+    } catch (err) {
+      const code = typeof err === "object" && err !== null && "code" in err
+            ? String((err as any).code)
+            : undefined;
+        throw new Error(translateAuthError(code));
     }
+};
+
+export async function updateUserEmail() {
+  try {
+
+  } catch {
+
+  }
+};
+
+function checkReauthIsRequired(err: unknown): boolean {
+  const code = typeof err === "object" && err !== null && "code" in err
+            ? String((err as any).code)
+            : undefined;
+  return code === "auth/requires-recent-login";
 };
 
 function translateAuthError(code?: string): string {

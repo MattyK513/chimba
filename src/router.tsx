@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
-import { Home, Goals, Travel, Profile } from "./pages";
+import ErrorComponent from "./components/Error/Error";
+import { Home, Goals, Travel, Profile, Login } from "./pages";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
+        errorElement: <ErrorComponent />,
         children: [
             {
                 index: true,
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "profile",
                 element: <Profile />
+            },
+            {
+                path:"login",
+                element: <Login />
             }
         ]
     }
