@@ -3,3 +3,7 @@ export { default as Goals } from "./Goals/Goals";
 export { default as Travel } from "./Travel/Travel";
 export { default as Profile } from "./Profile/Profile";
 export { default as Login } from "./Login/Login";
+export { action as loginAction } from "./Login/Login";
+export { default as Register } from "./Register/Register";
+export { action as registerAction } from "./Register/Register";
+export { default as Landing } from "./Landing/Landing";

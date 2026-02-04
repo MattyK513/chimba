@@ -1,11 +1,17 @@
-import type { User } from "firebase/auth";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
+import type { ActionFunctionArgs } from "react-router-dom";
 
-interface UserMetadata {
-    createdAt?: string,
-    lastLoginAt?: string,
-    lastSignInTime?: string,
-    creationTime?: string
+type AuthStateSetter = Dispatch<SetStateAction<UserInfo | null>>;
+
+interface AuthProviderProps {
+    children: ReactNode
+}
+
+interface AuthStateType {
+    loading: boolean | null,
+    user: UserInfo | null
 }
 
 interface UserInfo {
@@ -18,4 +24,11 @@ interface UserInfo {
     metadata: UserMetadata
 }
 
-export type { User, FirebaseError, UserInfo };
+interface UserMetadata {
+    createdAt?: string,
+    lastLoginAt?: string,
+    lastSignInTime?: string,
+    creationTime?: string
+}
+
+export type { ActionFunctionArgs, AuthProviderProps, AuthStateSetter, AuthStateType, FirebaseError, Unsubscribe, User, UserInfo };

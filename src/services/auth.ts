@@ -1,17 +1,42 @@
-import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile, type Unsubscribe } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebase";
-import type { User, UserInfo } from "../types/firebase";
+import type { Unsubscribe, User, UserInfo } from "../types/firebase";
+
+const authFunctions = {
+  logIn: logInWithEmailAndPassword,
+  logOut,
+  register: createAccountWithEmailAndPassword,
+  deleteProfile,
+  updateUsernameOrPhotoURL,
+  updateEmail
+};
+
+export default authFunctions;
 
 //These functions are Firebase wrappers that assume valid input! Validation should be done prior to calling them.
-export function subscribeToAuthState(callback: (user: UserInfo | null) => void): Unsubscribe {
-  return onAuthStateChanged(auth, callback);
+export function subscribeToAuthState(callback: (user: UserInfo| null) => void): Unsubscribe {
+  return onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userInfo: UserInfo = {
+        displayName: user.displayName,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        phoneNumber: user.phoneNumber,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        metadata: user.metadata
+      };
+      callback(userInfo);
+    } else {
+      callback(null);
+    }
+  });
 };
 
 export async function logInWithEmailAndPassword(userEmail: string, password: string): Promise<UserInfo> {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
-        const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = userCredential.user;
-        return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
+        return mapUserInfo(userCredential.user);
     } catch (err) {
         const code = typeof err === "object" && err !== null && "code" in err
             ? String((err as any).code)
@@ -31,8 +56,7 @@ export async function logOut(): Promise<void> {
 export async function createAccountWithEmailAndPassword(userEmail: string, password: string): Promise<UserInfo> {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
-        const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = userCredential.user;
-        return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
+        return mapUserInfo(userCredential.user);
     } catch (err) {
         const code = typeof err === "object" && err !== null && "code" in err
             ? String((err as any).code)
@@ -42,7 +66,13 @@ export async function createAccountWithEmailAndPassword(userEmail: string, passw
 };
 
 // Should we use auth.currentUser instead of passing user as param?
-export async function deleteProfile(user: User): Promise<void | "REAUTH_REQUIRED"> {
+export async function deleteProfile(): Promise<void | "REAUTH_REQUIRED"> {
+    const user = auth.currentUser;
+
+    if (!user) {
+      throw new Error("No user is currently signed in.")
+    }
+
     try {
         await deleteUser(user);
     } catch (err) {
@@ -66,10 +96,31 @@ export async function updateUsernameOrPhotoURL(user: User, updates: { displayNam
 
 export async function updateUserEmail() {
   try {
-
+    await updateEmail;
   } catch {
 
   }
+};
+
+export async function waitForAuth(): Promise<UserInfo | null> {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        unsubscribe();
+        resolve(user ? mapUserInfo(user) : null);
+      },
+      (error) => {
+        unsubscribe();
+        reject(error);
+      }
+    );
+  });
+};
+
+function mapUserInfo(user:User): UserInfo {
+  const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;
+  return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
 };
 
 function checkReauthIsRequired(err: unknown): boolean {

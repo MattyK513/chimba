@@ -1,12 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "./components/Layout";
+import ProtectedLayout from "./components/Layout/ProtectedLayout";
+import PublicLayout from "./components/Layout/PublicLayout";
 import ErrorComponent from "./components/Error/Error";
-import { Home, Goals, Travel, Profile, Login } from "./pages";
+import { Home, Goals, Travel, Profile, Login, loginAction, Register, registerAction, Landing } from "./pages";
+
+import { protectedLoader, publicLoader } from "./components/Layout/loaders";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Layout />,
+        element: <ProtectedLayout />,
+        loader: protectedLoader,
         errorElement: <ErrorComponent />,
         children: [
             {
@@ -25,9 +29,26 @@ const router = createBrowserRouter([
                 path: "profile",
                 element: <Profile />
             },
+        ]
+    },
+    {
+        element: <PublicLayout />,
+        loader: publicLoader,
+        errorElement: <ErrorComponent />,
+        children: [
             {
-                path:"login",
-                element: <Login />
+                path: "/welcome",
+                element: <Landing />
+            },
+            {
+                path: "/login",
+                element: <Login />,
+                action: loginAction
+            },
+            {
+                path: "/register",
+                element: <Register />,
+                action: registerAction
             }
         ]
     }
