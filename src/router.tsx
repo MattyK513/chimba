@@ -4,6 +4,8 @@ import PublicLayout from "./components/Layout/PublicLayout";
 import ErrorComponent from "./components/Error/Error";
 import { Home, Goals, Travel, Profile, Login, loginAction, Register, registerAction, Landing } from "./pages";
 
+import { action as goalAction } from "./pages/Goals/Goals";
+
 import { protectedLoader, publicLoader } from "./components/Layout/loaders";
 
 const router = createBrowserRouter([
@@ -19,7 +21,8 @@ const router = createBrowserRouter([
             },
             {
                 path: "goals",
-                element: <Goals />
+                element: <Goals />,
+                action: goalAction
             },
             {
                 path: "travel",

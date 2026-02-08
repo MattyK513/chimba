@@ -1,0 +1,8 @@
+Remove redundancy with protected route context logic and protect route loaders
+Comments, obviously
+A couple auth functions
+Profile picture functionality (needs Firebase Storage to store pic and return photo URL)
+   - optional: enable simple photo URL provision first
+Fix error UX with updated messages
+   - https://firebase.google.com/docs/reference/js/firestore_.md#firestoreerrorcode
+   - https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
