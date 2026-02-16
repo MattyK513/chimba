@@ -1,34 +1,44 @@
-import type { Dispatch, ReactNode, SetStateAction } from "react";
-import type { ActionFunctionArgs } from "react-router-dom";
+import type { Dispatch, SetStateAction } from "react";
 import type { Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
 import type { CollectionReference, DocumentReference, QuerySnapshot } from "firebase/firestore";
 
-type AtLeastOne<T> = {
+export type AtLeastOne<T> = {
   [K in keyof T]: Pick<T, K>
 }[keyof T];
 
-type AuthStateSetter = Dispatch<SetStateAction<UserInfo | null>>;
+export type AuthStateSetter = Dispatch<SetStateAction<UserInfo | null>>;
 
-interface AuthProviderProps {
-    children: ReactNode
-}
-
-interface AuthStateType {
+export interface AuthStateType {
     loading: boolean | null,
     user: UserInfo | null
 }
 
-interface Goal {
+export interface Goal {
     id: string,
     title: string
 }
 
-type GoalList= Goal[];
+export type GoalList= Goal[];
 
-type UpdateUserProfile = AtLeastOne<UserProfileFields>;
+export type ModuleName = "goals";
 
-interface UserInfo {
+export type SubState = Record<ModuleName, SubStateEntry>;
+
+export interface SubStateEntry {
+    count: number,
+    unsubscribe: Unsubscribe | null
+}
+
+export type UpdateUserProfile = AtLeastOne<UserProfileFields>;
+
+export interface UserDataContextType {
+    goals: GoalList | null,
+    addDependency: (module: ModuleName) => void
+    removeDependency: (module: ModuleName) => void
+}
+
+export interface UserInfo {
     displayName: string | null,
     email: string | null,
     emailVerified: boolean,
@@ -38,19 +48,18 @@ interface UserInfo {
     metadata: UserMetadata
 }
 
-interface UserMetadata {
+export interface UserMetadata {
     createdAt?: string,
     lastLoginAt?: string,
     lastSignInTime?: string,
     creationTime?: string
 }
 
-interface UserProfileFields {
-  displayName: string;
+export interface UserProfileFields {
+  displayName: string | null;
   email: string;
-  phoneNumber: string;
-  photoURL: string;
+  phoneNumber: string | null;
+  photoURL: string | null;
 };
 
-
-export type { ActionFunctionArgs, AuthProviderProps, AuthStateSetter, AuthStateType, CollectionReference, DocumentReference, FirebaseError, Goal, GoalList, QuerySnapshot, Unsubscribe, UpdateUserProfile, User, UserInfo };
+export type { CollectionReference, DocumentReference, FirebaseError, QuerySnapshot, Unsubscribe, User };

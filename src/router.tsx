@@ -1,12 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedLayout from "./components/Layout/ProtectedLayout";
-import PublicLayout from "./components/Layout/PublicLayout";
-import ErrorComponent from "./components/Error/Error";
-import { Home, Goals, Travel, Profile, Login, loginAction, Register, registerAction, Landing } from "./pages";
-
-import { action as goalAction } from "./pages/Goals/Goals";
-
-import { protectedLoader, publicLoader } from "./components/Layout/loaders";
+import { ErrorComponent, ProtectedLayout, protectedLoader, PublicLayout, publicLoader } from "./components";
+import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
 
 const router = createBrowserRouter([
     {
@@ -29,8 +23,20 @@ const router = createBrowserRouter([
                 element: <Travel />
             },
             {
+                path: "meal-planner",
+                element: <Meals />,
+                children: [
+                    {
+                        index: true,
+                        element: <RecipeSearch />,
+                        action: recipeSearchAction
+                    }
+                ]
+            },
+            {
                 path: "profile",
-                element: <Profile />
+                element: <Profile />,
+                action: profileAction
             },
         ]
     },

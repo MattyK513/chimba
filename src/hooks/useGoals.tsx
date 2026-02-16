@@ -1,21 +1,14 @@
-import { useEffect, useState } from "react";
-import useAuth from "./useAuth";
-import { subscribeToGoals } from "../services/firestore";
-import type { GoalList } from "../types/firebase";
+import { useEffect } from "react";
+import useUserData from "./useUserData";
+import { addGoal } from "../services/firestore";
 
 export default function useGoals() {
-    const [goals, setGoals] = useState<GoalList | null>(null);
-    const [loading, setLoading] = useState(true);
-    const { user } = useAuth();
+    const { addDependency, removeDependency , goals } = useUserData();
 
     useEffect(() => {
-        if (!user) return;
-        const unsubscribe = subscribeToGoals(user, (goalsFromDb) => {
-            setGoals(goalsFromDb);
-            setLoading(false);
-        });
-        return unsubscribe;
-    }, [user]);
+        addDependency("goals");
+        return () => removeDependency("goals");
+    }, []);
 
-    return { goals, loading };
+    return { goals, addGoal };
 };

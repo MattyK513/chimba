@@ -1,9 +1,14 @@
 export { default as Home } from "./Home/Home";
 export { default as Goals } from "./Goals/Goals";
+export { default as goalAction } from "./Goals/goalAction";
 export { default as Travel } from "./Travel/Travel";
 export { default as Profile } from "./Profile/Profile";
+export { default as profileAction } from "./Profile/profileAction";
 export { default as Login } from "./Login/Login";
-export { action as loginAction } from "./Login/Login";
+export { default as loginAction } from "./Login/loginAction";
 export { default as Register } from "./Register/Register";
-export { action as registerAction } from "./Register/Register";
+export { default as registerAction } from "./Register/registerAction";
 export { default as Landing } from "./Landing/Landing";
+export { default as Meals } from "./Meals/Meals";
+export { default as RecipeSearch } from "./Meals/RecipeSearch/RecipeSearch";
+export { default as recipeSearchAction } from "./Meals/RecipeSearch/recipeSearchAction";

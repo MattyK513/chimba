@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { House, Target, Plane, UserRound, GripVertical } from "lucide-react";
+import { House, Target, Plane, UserRound, GripVertical, UtensilsCrossed } from "lucide-react";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
@@ -36,6 +36,15 @@ export default function Navbar() {
                     }
                 >
                     <Plane />
+                </NavLink>
+                <NavLink
+                    to="meal-planner"
+                    aria-label="Meal planner"
+                    className={({ isActive }) => 
+                        `${styles.navLink} ${isActive ? styles.active : ''}`
+                    }
+                >
+                    <UtensilsCrossed />
                 </NavLink>
                 <NavLink
                     to="profile"

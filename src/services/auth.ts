@@ -8,7 +8,7 @@ const authFunctions = {
   register: createAccountWithEmailAndPassword,
   deleteProfile,
   updateUsernameOrPhotoURL,
-  updateEmail
+  updateEmail: updateUserEmail
 };
 
 export default authFunctions;
