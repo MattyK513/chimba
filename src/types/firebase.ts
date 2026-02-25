@@ -1,16 +1,19 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { Unsubscribe, User } from "firebase/auth";
+import type { AuthError, AuthErrorCodes, Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
 import type { CollectionReference, DocumentReference, QuerySnapshot } from "firebase/firestore";
 
-export type AtLeastOne<T> = {
-  [K in keyof T]: Pick<T, K>
-}[keyof T];
+export type { AuthError as AuthErrorType } from "firebase/auth";
+
+export type AtLeastOne<T, Keys extends keyof T = keyof T> =
+  Keys extends keyof T
+    ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
+    : never;
 
 export type AuthStateSetter = Dispatch<SetStateAction<UserInfo | null>>;
 
 export interface AuthStateType {
-    loading: boolean | null,
+    loading: boolean,
     user: UserInfo | null
 }
 
@@ -19,8 +22,7 @@ export interface Goal {
     title: string
 }
 
-export type GoalList= Goal[];
-
+// Extend this as I build more modules
 export type ModuleName = "goals";
 
 export type SubState = Record<ModuleName, SubStateEntry>;
@@ -33,12 +35,12 @@ export interface SubStateEntry {
 export type UpdateUserProfile = AtLeastOne<UserProfileFields>;
 
 export interface UserDataContextType {
-    goals: GoalList | null,
+    goals: Goal[] | null,
     addDependency: (module: ModuleName) => void
     removeDependency: (module: ModuleName) => void
 }
 
-export interface UserInfo {
+/*export interface UserInfo {
     displayName: string | null,
     email: string | null,
     emailVerified: boolean,
@@ -46,7 +48,18 @@ export interface UserInfo {
     photoURL: string | null,
     uid: string,
     metadata: UserMetadata
-}
+}*/
+
+export type UserInfo = Pick<
+    User,
+    "displayName" |
+    "email" |
+    "emailVerified" |
+    "phoneNumber" |
+    "photoURL" |
+    "uid" |
+    "metadata"
+>;
 
 export interface UserMetadata {
     createdAt?: string,

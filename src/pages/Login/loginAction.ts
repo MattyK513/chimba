@@ -1,5 +1,5 @@
 import authFunctions from "../../services/auth";
-import type { ActionFunctionArgs } from "../../types/react";
+import type { ActionFunctionArgs } from "../../types";
 
 export default async function action({request}: ActionFunctionArgs) {
     const { logIn } = authFunctions;

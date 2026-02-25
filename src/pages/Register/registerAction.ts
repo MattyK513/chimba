@@ -1,8 +1,9 @@
 import authFunctions from "../../services/auth";
 import type { ActionFunctionArgs } from "../../types/react";
+import { createFirestoreUser } from "../../services/firestore";
 
 export default async function action({request}: ActionFunctionArgs) {
-    const { register } = authFunctions;
+    const { register, updateUsernameOrPhotoURL } = authFunctions;
     const data = await request.formData();
     const email = data.get("email");
     const password = data.get("password");
@@ -21,6 +22,11 @@ export default async function action({request}: ActionFunctionArgs) {
         return { error: "Passwords do not match"};
     }
 
-    await register(email, password);
-
+    const user = await register(email, password);
+    if (displayName) {
+        console.log(displayName)
+        await updateUsernameOrPhotoURL(user, {displayName: displayName});
+    }
+    console.log(user)
+    await createFirestoreUser(user);
 };

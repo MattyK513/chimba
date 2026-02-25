@@ -27,7 +27,7 @@ const router = createBrowserRouter([
                 element: <Meals />,
                 children: [
                     {
-                        index: true,
+                        path: "recipe-search",
                         element: <RecipeSearch />,
                         action: recipeSearchAction
                     }
@@ -41,21 +41,22 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path: "/",
         element: <PublicLayout />,
         loader: publicLoader,
         errorElement: <ErrorComponent />,
         children: [
             {
-                path: "/welcome",
+                path: "welcome",
                 element: <Landing />
             },
             {
-                path: "/login",
+                path: "login",
                 element: <Login />,
                 action: loginAction
             },
             {
-                path: "/register",
+                path: "register",
                 element: <Register />,
                 action: registerAction
             }

@@ -1,12 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { subscribeToAuthState } from "../services/auth";
-import type { AuthStateType, UserInfo } from "../types/firebase";
-import type { ReactNode } from "../types/react";
+import type { AuthStateType, ReactNode, UserInfo } from "../types";
 
-export const AuthStateContext= createContext<AuthStateType>({
-    loading: null,
-    user: null
-});
+export const AuthStateContext = createContext<AuthStateType | null>(null);
 
 export default function AuthProvider({ children }: {children: ReactNode}) {
     const [user, setUser] = useState<UserInfo | null>(null);
@@ -20,8 +16,13 @@ export default function AuthProvider({ children }: {children: ReactNode}) {
         return unsubscribe;
     }, []);
 
+    const value = useMemo(
+        () => ({ loading, user }),
+        [loading, user]
+    );
+
     return (
-        <AuthStateContext.Provider value={{ loading, user}}>
+        <AuthStateContext.Provider value={value}>
             {children}
         </AuthStateContext.Provider>
     )

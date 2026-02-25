@@ -19,7 +19,7 @@ export default function Login() {
                 </label>
                 <label>
                     Enter your password
-                    <input name="password" required ></input>
+                    <input name="password" type="password" required ></input>
                 </label>
                 <button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? "Logging in..." : "Log in"}

@@ -1,23 +1,3 @@
-/*
-q: query string
-ingr: ingredient number (1 or more is 1%2B, 1 to 2 is 1-2, at most 1 is simply 1)
-    const NUMERIC_RANGE_REGEX =
-        /^(?:\d+(?:\.\d+)?|\d+(?:\.\d+)?\+|\d+(?:\.\d+)?-\d+(?:\.\d+)?)$/;
-diet
-health
-cuisineType
-mealType
-dishType
-calories: kCal per serving, numeric range input like "ingr"
-time: minutes of prep time
-glycemicIndex: "FLOAT-RANGE", unclear if open ranges are accepted
-inflammatoryIndex: "FLOAT-RANGE", unclear if open ranges are accepted,
-excluded: take an array of strings, convert to "excluded=food1&food2&food3"
-random: boolean, randomizes results
-nutrients[X]: each specific nutrient, must be in that format, takes numeric ranges like ingr
-field: specifies fields to include in the response, uses these parameters, availabe values in docs, it's extensive
-*/
-
 export interface AllergyOption {
     parameter: "health",
     value: HealthLabel,
@@ -56,7 +36,7 @@ export interface CuisineOption {
 
 export interface DietOption {
     parameter: "diet" | "health",
-    value: string,
+    value: DietLabel | HealthLabel,
     label: string,
     definition: string
 }
@@ -98,7 +78,7 @@ export type DietLabel =
 
 export interface DishTypeOption {
     parameter: "dishType",
-    value: string,
+    value: DishType,
     label: string
 }
 
@@ -241,7 +221,6 @@ export type HealthLabel =
   | 'vegetarian'
   | 'wheat-free';
 
-// Edamam doc appears to have errors in type specification of measure and food. Verify them with testing later.
 export interface IngredientResult {
     foodId: string,
     quantity: number,
@@ -260,7 +239,7 @@ export type MealType =
 
 export interface MealTypeOption {
     parameter: "mealType",
-    value: "breakfast" | "brunch" | "lunch/dinner" | "snack" | "teatime",
+    value: MealType
     label: "Breakfast" | "Brunch" | "Lunch or dinner" | "Snack" | "Teatime"
 }
 
@@ -279,7 +258,7 @@ export type NutrientCode =
   | 'FIBTG'
   | 'FOLAC'
   | 'FOLDFE'
-  | 'FOLFD'
+  | 'FOLFE'
   | 'K'
   | 'MG'
   | 'NA'
@@ -304,9 +283,10 @@ export type NutrientCode =
 type NutrientInfo = Omit<NutrientResult, "uri">;
 
 export interface NutrientOption {
-    parameter: string,
+    parameter: NutrientCode,
     label: string,
     unit: "µg" | "mg" | "g"
+    group: "macros" | "vitamins" | "minerals" | "other"
 }
 
 export interface NutrientResult {
@@ -335,7 +315,7 @@ export type QueryParam =
     {key: `nutrients[${NutrientCode}]`, value: QuantRange } |
     {key: "field", value: RecipeField}
 
-/** Available recipe fields that can be requested in the response */
+
 export type RecipeField =
   | 'uri'
   | 'label'

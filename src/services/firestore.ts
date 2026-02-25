@@ -1,8 +1,8 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import type { CollectionReference, DocumentReference, GoalList, QuerySnapshot, Unsubscribe, UpdateUserProfile, UserInfo, UserProfileFields } from "../types/firebase";
+import type { CollectionReference, DocumentReference, Goal, QuerySnapshot, Unsubscribe, UpdateUserProfile, User, UserInfo, UserProfileFields } from "../types";
 
-export async function createFirestoreUser(user: UserInfo): Promise<void> {
+export async function createFirestoreUser(user: User): Promise<void> {
     const { displayName, email, phoneNumber, photoURL, uid } = user;
     const now = serverTimestamp();
     const docRef: DocumentReference = doc(db, `users/${uid}`);
@@ -26,8 +26,8 @@ export async function updateLastLogin(user: UserInfo): Promise<void> {
     }
 };
 
-export async function deleteFirestoreUser(user: UserInfo): Promise<void> {
-    const { uid } = user;
+export async function deleteFirestoreUser(): Promise<void> {
+    const uid = auth.currentUser?.uid;
     const docRef: DocumentReference = doc(db, `users/${uid}`);
     try {
         await deleteDoc(docRef);
@@ -53,7 +53,7 @@ export function subscribeToModule(user: UserInfo, module: string, callback: (sna
     return onSnapshot(colRef, callback);
 };
 
-export function subscribeToGoals(user: UserInfo, callback: (data: GoalList | null) => void): Unsubscribe {
+export function subscribeToGoals(user: UserInfo, callback: (data: Goal[] | null) => void): Unsubscribe {
     const { uid } = user;
     const colRef = collection(db, `users/${uid}/goals`);
     return onSnapshot(colRef, (snapshot) => {

@@ -1,8 +1,7 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { subscribeToGoals } from "../services/firestore";
-import type { GoalList, ModuleName, SubState, UserDataContextType } from "../types/firebase";
-import type { ReactNode } from "../types/react";
+import type { Goal, ModuleName, ReactNode, SubState, UserDataContextType } from "../types";
 
 export const UserDataContext = createContext<UserDataContextType | null>(null);
 
@@ -15,7 +14,7 @@ const initialSubState: SubState = {
 
 export default function UserDataContextProvider({ children }: { children: ReactNode }) {
     const { user } = useAuth();
-    const [goals, setGoals] = useState<GoalList | null>(null);
+    const [goals, setGoals] = useState<Goal[] | null>(null);
 
     const subStateRef = useRef<SubState>(structuredClone(initialSubState));
 

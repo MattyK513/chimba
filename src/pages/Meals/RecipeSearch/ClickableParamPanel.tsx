@@ -1,5 +1,5 @@
 import { InfoIcon } from "lucide-react";
-import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption } from "../../../types/edamam";
+import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption } from "../../../types";
 
 type ParamOption = AllergyOption | CuisineOption | DietOption | DishTypeOption | MealTypeOption;
 
@@ -9,11 +9,11 @@ interface ClickableParamPanelProps {
 
 export default function ClickableParamPanel({ params }: ClickableParamPanelProps) {
     const panelDisplay = "definition" in params[0] ?
-        params.map((p, i) => {
-            const pId = p.value.slice(0, 5);
+        params.map(p => {
+            const pId = p.value.slice(0, 6);
             return (
                 <div key={pId} id={`div-${pId}`}>
-                    <label htmlFor={`${p.parameter}`}>
+                    <label htmlFor={`${pId}`}>
                         {p.label}
                         <input type="checkbox" name={`${p.parameter}`} value={`${p.value}`} id={pId}></input>
                     </label>
@@ -21,11 +21,11 @@ export default function ClickableParamPanel({ params }: ClickableParamPanelProps
                 </div>
             )
         }) :
-        params.map((p, i) => {
-            const pId = p.value.slice(0, 5);
+        params.map(p => {
+            const pId = p.value.slice(0, 7);
             return (
                 <div key={pId} id={`div-${pId}`}>
-                    <label htmlFor={`${p.parameter}` }>
+                    <label htmlFor={`${pId}` }>
                         {p.label}
                         <input type="checkbox" name={`${p.parameter}`} value={`${p.value}`} id={pId}></input>
                     </label>
@@ -33,11 +33,7 @@ export default function ClickableParamPanel({ params }: ClickableParamPanelProps
             )
         });
 
-    return (
-        <>
-            {panelDisplay}
-        </>
-    );
+    return panelDisplay;
 };
 
 

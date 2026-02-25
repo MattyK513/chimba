@@ -6,3 +6,8 @@ Profile picture functionality (needs Firebase Storage to store pic and return ph
 Fix error UX with updated messages
    - https://firebase.google.com/docs/reference/js/firestore_.md#firestoreerrorcode
    - https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
+
+
+Request a verification code from the error messages (services/auth)
+
+If a user must sign in before deleting profile, redirect to login or provide UI for sign-in.

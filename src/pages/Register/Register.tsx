@@ -20,11 +20,11 @@ export default function Register() {
                 </label>
                 <label>
                     Enter your password
-                    <input name="password" required />
+                    <input name="password" type="password" required />
                 </label>
                 <label>
                     Confirm your password
-                    <input name="password-confirmation" required />
+                    <input name="password-confirmation" type="password" required />
                 </label>
                 <label>
                     Choose a display name

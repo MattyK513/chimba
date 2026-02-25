@@ -5,7 +5,7 @@ import authFunctions from "../services/auth";
 export default function useAuth() {
     const context = useContext(AuthStateContext);
 
-    if (context.loading === null) {
+    if (!context) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
 

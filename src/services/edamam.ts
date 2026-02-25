@@ -1,17 +1,15 @@
 import { appId, appKey } from "../config/edamam";
-import type { QueryParam } from "../types/edamam";
+import type { EdamamResponse, QueryParam, NutrientOption } from "../types";
 
-export async function searchEdamam(params: QueryParam[]) {
+export async function searchEdamam(params: QueryParam[]): Promise<EdamamResponse> {
     const url = buildSearchURL(params);
 
-    try { 
-        const response = await fetch(url);
-        const data = await response.json();
-
-        console.log(data)
-    } catch (err) {
-        throw err;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Edamam API error: ${response.status}`);
     }
+
+    return response.json();
 };
 
 function buildSearchURL(params: QueryParam[]): URL {
@@ -26,4 +24,12 @@ function buildSearchURL(params: QueryParam[]): URL {
     });
 
     return url;
+};
+
+export function sortNutrients(nutrients: NutrientOption[]) {
+    const groups: Record<string, NutrientOption[]> = {};
+    for (const n of nutrients) {
+        (groups[n.group] ??= []).push(n);
+    };
+    return groups;
 };

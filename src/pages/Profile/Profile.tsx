@@ -3,6 +3,7 @@ import { subscribeToProfileData } from "../../services/firestore";
 import useAuth from "../../hooks/useAuth";
 import type { UserProfileFields } from "../../types/firebase";
 
+import { deleteFirestoreUser } from "../../services/firestore";
 
 
 export default function Profile() {
@@ -17,6 +18,12 @@ export default function Profile() {
         return unsubscribe
     }, []);
 
+    async function handleDelete() {
+        await deleteFirestoreUser();
+        await deleteProfile();
+    };
+
+
     const profileInfoDisplay = data ? <div>
         <p>Email address: <span>{data.email}</span></p>
         <p>Display name: <span>{data.displayName ? data.displayName : "None provided"}</span></p>
@@ -29,7 +36,7 @@ export default function Profile() {
             <h1>Profile page</h1>
             {profileInfoDisplay}
             <button onClick={logOut}>Sign Out</button>
-            <button onClick={deleteProfile}>Delete user</button>
+            <button onClick={handleDelete}>Delete user</button>
         </>
     )
 };
