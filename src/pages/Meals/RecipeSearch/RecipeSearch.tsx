@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useFetcher, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import KeywordSearchPanel from "./KeywordSearchPanel";
 import ClickableParamPanel from "./ClickableParamPanel";
 import QuantParamPanel from "./QuantParamPanel";
@@ -18,7 +18,7 @@ export default function RecipeSearch() {
     const { fetcher } = useOutletContext<MealsOutletContext>();
 
     const { data }: { data: EdamamResponse | undefined } = fetcher;
-    const { Form, formAction, formData, formEncType, formMethod, json, load, reset, state, submit, text } = fetcher;
+    const { Form } = fetcher;
 
     return (  
         <>

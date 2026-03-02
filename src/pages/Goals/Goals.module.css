@@ -1,0 +1,44 @@
+.goals p {
+    color: var(--muted);
+}
+
+.goalList {
+    display: grid;
+    gap: 0.7rem;
+    margin: 1.2rem 0;
+}
+
+.goalItem {
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(124, 143, 255, 0.25);
+    background: rgba(7, 14, 33, 0.65);
+}
+
+.emptyState {
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+
+.form input {
+    flex: 1;
+    min-width: 220px;
+    background: rgba(4, 8, 24, 0.9);
+    border: 1px solid rgba(124, 143, 255, 0.25);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 0.58rem 0.8rem;
+}
+
+.form button {
+    border: 0;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(120deg, var(--accent), #5d73ff);
+    padding: 0.6rem 0.95rem;
+}

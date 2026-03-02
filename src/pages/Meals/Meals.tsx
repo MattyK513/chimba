@@ -1,8 +1,5 @@
 import { Link, Outlet, useFetcher, useLocation } from "react-router-dom";
-import { searchEdamam } from "../../services/edamam";
-import { allergyOptions } from "../../constants/edamam";
-import RecipeSearch from "./RecipeSearch/RecipeSearch";
-import type { EdamamResponse, QueryParam } from "../../types";
+import type { EdamamResponse } from "../../types";
 
 export default function Meals() {
     const fetcher = useFetcher<EdamamResponse>();
