@@ -1,13 +1,68 @@
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    padding-top: 6rem;
-    text-align: center;
+  width: min(1060px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 5rem 0 2rem;
+}
+
+.page {
+  display: grid;
+  gap: 1rem;
+}
+
+.section {
+  background: linear-gradient(180deg, rgba(31, 44, 37, 0.8), rgba(25, 36, 30, 0.92));
+  border: 1px solid rgba(127, 165, 138, 0.25);
+  border-radius: 0.9rem;
+  padding: 1.15rem;
+}
+
+.authShell {
+  min-height: calc(100vh - 7rem);
+  display: grid;
+  place-items: center;
+}
+
+.authCard {
+  width: min(500px, 100%);
+}
+
+.formStack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.formLabel {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.errorText {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.loadingState {
+  min-height: 45vh;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+}
+
+.subtle {
+  color: var(--text-muted);
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 768px) {
-    #root {
-        padding-top: 5rem;
-    }
+  #root {
+    width: calc(100% - 1rem);
+    padding-top: 4.25rem;
+  }
 }

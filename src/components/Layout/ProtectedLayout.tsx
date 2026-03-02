@@ -8,7 +8,7 @@ export default function ProtectedLayout() {
 
     if (loading) {
         return (
-            <h1>Loading...</h1>
+            <h1 className="loadingState">Loading...</h1>
         );
     } else if (!user) {
         return (

@@ -1,7 +1,12 @@
+import styles from "./Home.module.css";
+
 export default function Home() {
     return (
-        <>
-            <h1>Home page</h1>
-        </>
+        <main className="page">
+            <section className={`section ${styles.hero}`}>
+                <h1>Home</h1>
+                <p className="subtle">Welcome back. Pick a workspace in the nav and continue where you left off.</p>
+            </section>
+        </main>
     )
 };
