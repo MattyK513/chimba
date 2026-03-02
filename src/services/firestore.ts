@@ -1,8 +1,8 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../config/firebase";
-import type { CollectionReference, DocumentReference, Goal, QuerySnapshot, Unsubscribe, UpdateUserProfile, User, UserInfo, UserProfileFields } from "../types";
+import { db } from "../config/firebase";
+import type { CollectionReference, DocumentReference, Goal, QuerySnapshot, Unsubscribe, UpdateUserProfile, UserInfo, UserProfileFields } from "../types";
 
-export async function createFirestoreUser(user: User): Promise<void> {
+export async function createFirestoreUser(user: UserInfo): Promise<void> {
     const { displayName, email, phoneNumber, photoURL, uid } = user;
     const now = serverTimestamp();
     const docRef: DocumentReference = doc(db, `users/${uid}`);
@@ -15,8 +15,7 @@ export async function createFirestoreUser(user: User): Promise<void> {
     }
 };
 
-export async function updateLastLogin(user: UserInfo): Promise<void> {
-    const { uid } = user;
+export async function updateLastLogin(uid: string): Promise<void> {
     const now = serverTimestamp();
     const docRef: DocumentReference = doc(db, `users/${uid}`);
     try {
@@ -26,8 +25,7 @@ export async function updateLastLogin(user: UserInfo): Promise<void> {
     }
 };
 
-export async function deleteFirestoreUser(): Promise<void> {
-    const uid = auth.currentUser?.uid;
+export async function deleteFirestoreUser(uid: string): Promise<void> {
     const docRef: DocumentReference = doc(db, `users/${uid}`);
     try {
         await deleteDoc(docRef);
@@ -36,8 +34,7 @@ export async function deleteFirestoreUser(): Promise<void> {
     }
 };
 
-export async function updateUserInfo(user: UserInfo, updates: UpdateUserProfile): Promise<void> {
-    const { uid } = user;
+export async function updateUserInfo(uid: string, updates: UpdateUserProfile): Promise<void> {
     const now = serverTimestamp();
     const docRef: DocumentReference = doc(db, `users/${uid}`);
     try {
@@ -47,14 +44,12 @@ export async function updateUserInfo(user: UserInfo, updates: UpdateUserProfile)
     }
 };
 
-export function subscribeToModule(user: UserInfo, module: string, callback: (snapshot: QuerySnapshot) => void): Unsubscribe {
-    const { uid } = user;
+export function subscribeToModule(uid: string, module: string, callback: (snapshot: QuerySnapshot) => void): Unsubscribe {
     const colRef: CollectionReference = collection(db, `users/${uid}/${module}`);
     return onSnapshot(colRef, callback);
 };
 
-export function subscribeToGoals(user: UserInfo, callback: (data: Goal[] | null) => void): Unsubscribe {
-    const { uid } = user;
+export function subscribeToGoals(uid: string, callback: (data: Goal[] | null) => void): Unsubscribe {
     const colRef = collection(db, `users/${uid}/goals`);
     return onSnapshot(colRef, (snapshot) => {
         const docList = snapshot.docs;
@@ -67,8 +62,7 @@ export function subscribeToGoals(user: UserInfo, callback: (data: Goal[] | null)
     });
 };
 
-export async function addGoal(goal: string) {
-    const uid = auth.currentUser?.uid;
+export async function addGoal(uid: string, goal: string) {
     const colRef: CollectionReference = collection(db, `users/${uid}/goals`);
     try {
         await addDoc(colRef, {
@@ -79,8 +73,7 @@ export async function addGoal(goal: string) {
     }
 };
 
-export function subscribeToProfileData(user: UserInfo, callback: (data: UserProfileFields | null) => void): Unsubscribe {
-    const { uid } = user;
+export function subscribeToProfileData(uid: string, callback: (data: UserProfileFields | null) => void): Unsubscribe {
     const docRef = doc(db, `users/${uid}`);
     return onSnapshot(docRef, snapshot => {
         if (!snapshot.exists()) {
@@ -92,8 +85,8 @@ export function subscribeToProfileData(user: UserInfo, callback: (data: UserProf
     });
 };
 
-export async function deleteGoal(user: UserInfo, goalId: string) {
-    const docRef = doc(db, `users/${user.uid}/goals/${goalId}`);
+export async function deleteGoal(uid: string, goalId: string) {
+    const docRef = doc(db, `users/${uid}/goals/${goalId}`);
     try {
         await deleteDoc(docRef);
     } catch (err) {

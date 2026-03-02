@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { AuthError, AuthErrorCodes, Unsubscribe, User } from "firebase/auth";
+import type { Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
 import type { CollectionReference, DocumentReference, QuerySnapshot } from "firebase/firestore";
 
@@ -17,6 +17,13 @@ export interface AuthStateType {
     user: UserInfo | null
 }
 
+export interface EditableUserProfileFields {
+  displayName?: string | null;
+  email?: string;
+  phoneNumber?: string | null;
+  photoURL?: string | null;
+}
+
 export interface Goal {
     id: string,
     title: string
@@ -32,7 +39,7 @@ export interface SubStateEntry {
     unsubscribe: Unsubscribe | null
 }
 
-export type UpdateUserProfile = AtLeastOne<UserProfileFields>;
+export type UpdateUserProfile = AtLeastOne<EditableUserProfileFields>;
 
 export interface UserDataContextType {
     goals: Goal[] | null,

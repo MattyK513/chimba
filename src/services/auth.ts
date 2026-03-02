@@ -1,8 +1,11 @@
 import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { auth } from "../config/firebase";
-import { AuthError, ValidationError } from "../errors";
-import type { AuthErrorType, Unsubscribe, User, UserInfo } from "../types";
+import { AuthError } from "../errors";
+import type { Unsubscribe, User, UserInfo } from "../types";
+
+let authInitPromise: Promise<void> | null = null;
+console.log(`Code in services/auth.ts has run, authInitPromise is ${authInitPromise}`)
 
 //These functions are Firebase wrappers that assume valid input! Validation should be done prior to calling them.
 export function subscribeToAuthState(callback: (user: UserInfo| null) => void): Unsubscribe {
@@ -14,6 +17,26 @@ export function subscribeToAuthState(callback: (user: UserInfo| null) => void): 
       callback(null);
     }
   });
+};
+
+export function ensureAuthInitialization() {
+  if (!authInitPromise) {
+    authInitPromise = new Promise(resolve => {
+      const unsubscribe = onAuthStateChanged(auth, () => {
+        unsubscribe();
+        resolve();
+      });
+    });
+  }
+
+  return authInitPromise;
+};
+
+export async function getCurrentUserInfo(): Promise<UserInfo | null> {
+  await ensureAuthInitialization();
+
+  const user = auth.currentUser;
+  return user ? mapUserInfo(user) : null;
 };
 
 export async function logInWithEmailAndPassword(userEmail: string, password: string): Promise<UserInfo> {
@@ -40,10 +63,13 @@ export async function logOut(): Promise<void> {
     }
 };
 
-export async function createAccountWithEmailAndPassword(userEmail: string, password: string): Promise<User> {
+export async function createAccountWithEmailAndPassword(userEmail: string, password: string, optionals?: {displayName?: string | null, photoURL?: string | null}): Promise<UserInfo> {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
-      return (userCredential.user);
+      if (optionals?.displayName || optionals?.photoURL) {
+        await updateProfile(userCredential.user, optionals);
+      }
+      return (mapUserInfo(userCredential.user));
     } catch (err) {
       if (err instanceof FirebaseError) {
         throw new AuthError(err.code, translateAuthError(err.code), err);
@@ -75,16 +101,18 @@ export async function deleteProfile(): Promise<void> {
     }
 };
 
-export async function updateUsernameOrPhotoURL(user: User, updates: { displayName?: string | null, photoURL?: string | null }): Promise<void> {
+export async function updateUsernameOrPhotoURL(updates: { displayName?: string | null, photoURL?: string | null }): Promise<UserInfo> {
+  const user = auth.currentUser;
 
   if (!user) {
-    const code = "no-user";
-    const message = "No user is currently signed in.";
+    const code = "unauthorized";
+    const message = "User not authenticated";
     throw new AuthError(code, message);
   }
   
   try {
         await updateProfile(user, updates);
+        return mapUserInfo(user);
     } catch (err) {
       if (err instanceof FirebaseError) {
         throw new AuthError(err.code, translateAuthError(err.code), err);
@@ -93,6 +121,8 @@ export async function updateUsernameOrPhotoURL(user: User, updates: { displayNam
     }
 };
 
+export function requireAuth() {};
+
 /*export async function updateUserEmail() {
   try {
     await updateEmail;
@@ -100,26 +130,6 @@ export async function updateUsernameOrPhotoURL(user: User, updates: { displayNam
 
   }
 };*/
-
-export async function waitForAuth(): Promise<UserInfo | null> {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (user) => {
-        unsubscribe();
-        resolve(user ? mapUserInfo(user) : null);
-      },
-      (error) => {
-        unsubscribe();
-        if (error instanceof FirebaseError) {
-          reject(new AuthError(error.code, translateAuthError(error.code), error));
-          return;
-        }
-        reject(error);
-      }
-    );
-  });
-};
 
 function mapUserInfo(user:User): UserInfo {
   const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;

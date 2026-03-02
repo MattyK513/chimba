@@ -1,8 +1,8 @@
 import { redirect } from "react-router-dom";
-import { waitForAuth } from "../../services/auth";
+import { getCurrentUserInfo } from "../../services/auth";
 
 export async function protectedLoader() {
-    const user = await waitForAuth();
+    const user = await getCurrentUserInfo();
     if (!user) {
         // TODO: redirectTo search param for nav after login
         // TODO: UI message about needing to log in
@@ -12,9 +12,9 @@ export async function protectedLoader() {
 };
 
 export async function publicLoader() {
-    const user = await waitForAuth();
+    const user = await getCurrentUserInfo();
     if (user) {
         return redirect("/");
     }
-    return null;
+    return user;
 };
