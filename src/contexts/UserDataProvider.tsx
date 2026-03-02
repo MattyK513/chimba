@@ -35,7 +35,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
         } else if (entry.count === 0) {
             const { setState, subscribe } = subscriptionDefinitions[module];
             entry.count++;
-            entry.unsubscribe = subscribe(user, setState);
+            entry.unsubscribe = subscribe(user.uid, setState);
         } else {
             throw new Error (`Invalid subscription number: ${module} has subscription count ${entry.count}`);
         }

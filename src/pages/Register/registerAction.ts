@@ -3,7 +3,7 @@ import type { ActionFunctionArgs } from "../../types/react";
 import { createFirestoreUser } from "../../services/firestore";
 
 export default async function action({request}: ActionFunctionArgs) {
-    const { register, updateUsernameOrPhotoURL } = authFunctions;
+    const { register } = authFunctions;
     const data = await request.formData();
     const email = data.get("email");
     const password = data.get("password");
@@ -15,18 +15,14 @@ export default async function action({request}: ActionFunctionArgs) {
     }
 
     if (password.length < 6) {
-        return { error: "Password must contain at least 6 characters"}
+        return { error: "Password must contain at least 6 characters"};
     }
 
     if (password !== passwordConfirmation) {
         return { error: "Passwords do not match"};
     }
 
-    const user = await register(email, password);
-    if (displayName) {
-        console.log(displayName)
-        await updateUsernameOrPhotoURL(user, {displayName: displayName});
-    }
-    console.log(user)
+    const user = await register(email, password, {displayName});
+
     await createFirestoreUser(user);
 };
