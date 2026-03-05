@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { NutrientOption } from "../../../types";
+import styles from "../Meals.module.css";
 
 export default function NutrientQuantInput({ parameter, label, unit }: NutrientOption) {
     const [min, setMin] = useState("");
@@ -13,10 +14,10 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
         : undefined;
 
     return (
-        <>
-            <span>{label}</span>
+        <div className={`${styles.quantPanel} ${styles.badge}`}>
+            <span className={styles.quantLabel}>{label}</span>
             <label>
-                From
+                <span>From:</span>
                 <input
                     id={`${parameter}-min`}
                     type="number"
@@ -25,10 +26,10 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
                     max={max !== "" ? max : undefined}
                     onChange={e => setMin(e.target.value)}
                 />
-                {unit}
+                <span className={styles.unit}>{unit}</span>
             </label>
             <label>
-                To
+                <span className={styles.toLabel}>To:</span>
                 <input
                     id={`${parameter}-max`}
                     type="number"
@@ -36,10 +37,10 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
                     min={min !== "" ? min : 0}
                     onChange={e => setMax(e.target.value)}
                     />
-                {unit}
+                <span className={styles.unit}>{unit}</span>
             </label>
 
             {name && value && <input type="hidden" name={name} value={value} />}
-        </>
+        </div>
     );
 };

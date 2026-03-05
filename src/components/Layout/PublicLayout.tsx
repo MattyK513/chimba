@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import style from "./Layout.module.css";
 
 export default function PublicLayout() {
     const { user, loading } = useAuth();

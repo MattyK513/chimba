@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../Meals.module.css";
 
 export default function SimpleQuantInput({ type }: {type: "time" | "calories" | "ingr"}) {
     const [min, setMin] = useState("");
@@ -11,10 +12,17 @@ export default function SimpleQuantInput({ type }: {type: "time" | "calories" | 
         : max !== "" ? max
         : undefined;
 
+    const panelLabels = {
+        time: "Cooking time",
+        calories: "Calories",
+        ingr: "Number of ingredients"
+    };
+
     return (
-        <>
+        <div className={styles.quantPanel}>
+            <span className={styles.quantLabel}>{panelLabels[type]}</span>
             <label>
-                From
+                <span>From:</span>
                 <input
                     id={`${type}-min`}
                     type="number"
@@ -23,9 +31,10 @@ export default function SimpleQuantInput({ type }: {type: "time" | "calories" | 
                     max={max !== "" ? max : undefined}
                     onChange={e => setMin(e.target.value)}
                  />
+                 {type === "time" && <span className={styles.unit}>min</span>}
             </label>
             <label>
-                To
+                <span className={styles.toLabel}>To:</span>
                 <input
                     id={`${type}-max`}
                     type="number"
@@ -33,9 +42,10 @@ export default function SimpleQuantInput({ type }: {type: "time" | "calories" | 
                     min={min !== "" ? min : 0}
                     onChange={e => setMax(e.target.value)}
                  />
+                 {type === "time" && <span className={styles.unit}>min</span>}
             </label>
 
             {name && value && <input type="hidden" name={name} value={value} />}
-        </>
+        </div>
     );
 };

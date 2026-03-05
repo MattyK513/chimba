@@ -4,7 +4,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.33s ease;
 }
 
 /* When docked to the side */

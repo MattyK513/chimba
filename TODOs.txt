@@ -11,3 +11,5 @@ Fix error UX with updated messages
 Request a verification code from the error messages (services/auth)
 
 If a user must sign in before deleting profile, redirect to login or provide UI for sign-in.
+
+Investigate whether it's worth it to combine nutrient quant and simple quant components into a single component

@@ -1,9 +1,95 @@
-.searchForm {
+.mealPage {
 
 }
 
-input[type="number"] {
+.searchForm {
+    margin: 0.5rem 0.25rem;
+    outline: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 7px;
+}
+
+.backToPlannerLink {
+    display: block;
+    text-align: left;
+    margin: 0 0.5rem;
+}
+
+.formDivider {
+    margin: 0.3rem 0;
+    opacity: 0.6;
+}
+
+.subFormDivider {
+    margin: 0.2rem 0;
+    opacity: 0.25;
+}
+
+.clickableParamPanel {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0 0.3rem;
+}
+
+.clickableParam {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.infoIcon {
+    width: 1rem;
+    height: 1rem;
+    display: none;
+}
+
+.quantPanel {
+    display: inline-block;
+}
+
+.quantLabel {
+    display: block;
+}
+
+.quantPanel label {
+    font-size: 0.8rem;
+}
+
+.quantPanel input {
+    padding: 0.2rem 0.4rem;
     width: 2.2em;
+    margin: 0.1rem;
+    margin-left: 0.2rem;
+}
+
+.toLabel {
+    margin-left: 0.3rem;
+}
+
+.badge {
+    display: flex;
+    padding: 0.1rem 0.4rem;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.keywordContainer {
+    padding: 0.4rem 0 0.3rem;
+}
+
+.keywordContainer input {
+    margin-left: 0.4rem;
+    padding: 0.15rem 0.3rem;
+}
+
+button {
+    margin-bottom: 0.25rem;
 }
 
 /* Hide spin buttons */

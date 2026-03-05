@@ -3,6 +3,7 @@ import NutrientQuantInput from "./NutrientQuantInput";
 import SimpleQuantInput from "./SimpleQuantInput";
 import { sortNutrients } from "../../../services/edamam";
 import type { NutrientOption } from "../../../types";
+import styles from "../Meals.module.css";
 
 const groupLabels: Record<string, string> = {
     macros: "Macronutrients",
@@ -14,11 +15,7 @@ const groupLabels: Record<string, string> = {
 export default function QuantParamPanel({ type, params = null }: {type: "nutrients" | "calories" | "time" | "ingr", params?: NutrientOption[] | null}) {
 
     if (type !== "nutrients") {
-        return (
-            <div>
-                <SimpleQuantInput type={type} />
-            </div>
-        );
+        return <SimpleQuantInput type={type} />;
     }
 
     if (!params) {
@@ -32,10 +29,13 @@ export default function QuantParamPanel({ type, params = null }: {type: "nutrien
             {Object.entries(grouped).map(([group, nutrients]) => (
                 <details key={group}>
                     <summary>{groupLabels[group] ?? group}</summary>
-                    {nutrients.map(p => (
-                        <NutrientQuantInput key={p.parameter} {...p} />
-                    ))}
+                    <div className={styles.clickableParamPanel}>
+                        {nutrients.map(p => (
+                            <NutrientQuantInput key={p.parameter} {...p} />
+                        ))}
+                    </div>
                 </details>
+                
             ))}
         </>
     );

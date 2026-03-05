@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Navbar from "../Navbar/Navbar";
+import styles from "./Layout.module.css";
 
 export default function ProtectedLayout() {
     const { user, loading } = useAuth();
@@ -19,7 +20,9 @@ export default function ProtectedLayout() {
     return (
             <>
                 <Navbar />
-                <Outlet />
+                <div className={styles.protectedContent}>
+                    <Outlet />
+                </div>
             </>
         );
 };

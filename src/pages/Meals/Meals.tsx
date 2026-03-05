@@ -3,6 +3,7 @@ import { searchEdamam } from "../../services/edamam";
 import { allergyOptions } from "../../constants/edamam";
 import RecipeSearch from "./RecipeSearch/RecipeSearch";
 import type { EdamamResponse, QueryParam } from "../../types";
+import styles from "./Meals.module.css";
 
 export default function Meals() {
     const fetcher = useFetcher<EdamamResponse>();
@@ -11,12 +12,12 @@ export default function Meals() {
     const currentPath = location.pathname;
 
     return (
-        <>
-            <h1>Meal planner page</h1>
+        <div className={styles.mealPage}>
+            {currentPath === "/meal-planner" && <h1>Meal planner page</h1>}
             {currentPath === "/meal-planner/recipe-search"
-                ? "Link will go here"
+                ? <Link to="." className={styles.backToPlannerLink}>← back to meal planner</Link>
                 : <Link to="recipe-search">find recipes</Link>}
             <Outlet context={{ fetcher }} />
-        </>
+        </div>
     );
 };

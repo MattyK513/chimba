@@ -1,0 +1,3 @@
+.protectedContent {
+    min-height: calc(100vh - var(--app-top-padding))
+}
