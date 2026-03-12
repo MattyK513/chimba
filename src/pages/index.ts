@@ -12,3 +12,4 @@ export { default as Landing } from "./Landing/Landing";
 export { default as Meals } from "./Meals/Meals";
 export { default as RecipeSearch } from "./Meals/RecipeSearch/RecipeSearch";
 export { default as recipeSearchAction } from "./Meals/RecipeSearch/recipeSearchAction";
+export { default as RecipePage } from "./Meals/RecipeSearch/RecipePage";

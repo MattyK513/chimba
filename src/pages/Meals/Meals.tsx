@@ -14,10 +14,21 @@ export default function Meals() {
     return (
         <div className={styles.mealPage}>
             {currentPath === "/meal-planner" && <h1>Meal planner page</h1>}
-            {currentPath === "/meal-planner/recipe-search"
+            {currentPath === "/meal-planner"
+                ? <Link to="recipe-search">find recipes</Link>
+                : currentPath === "/meal-planner/recipe-search"
                 ? <Link to="." className={styles.backToPlannerLink}>← back to meal planner</Link>
-                : <Link to="recipe-search">find recipes</Link>}
+                : <Link to="/meal-planner/recipe-search" className={styles.backToPlannerLink}>← back to recipe search</Link>
+            }
             <Outlet context={{ fetcher }} />
         </div>
     );
 };
+
+/*
+{currentPath === "meal-planner"
+                ? <Link to="recipe-search">find recipes</Link>
+                : currentPath === "/meal-planner/recipe-search"
+                ? <Link to="." className={styles.backToPlannerLink}>← back to meal planner</Link>
+                : <Link to="home" className={styles.backToPlannerLink}>← back to recipe search</Link>}
+*/

@@ -3,7 +3,7 @@
 }
 
 .searchForm {
-    margin: 0.5rem 0.25rem;
+    margin: 0.5rem 0.25rem 0;
     outline: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 7px;
 }
@@ -86,6 +86,134 @@
 .keywordContainer input {
     margin-left: 0.4rem;
     padding: 0.15rem 0.3rem;
+}
+
+.searchToggle {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 0 0 7px 7px;
+}
+
+.expand {
+    border-radius: 7px;
+}
+
+.hide {
+    display: inline-block;
+    border-radius: 0 0 7px 7px;
+}
+
+.resultCard {
+    border: 1px solid white;
+    border-radius: 7px;
+    margin-top: 0.8rem;
+    position: relative;
+}
+
+.resultCardLink {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.resultCardLink:visited,
+.resultCardLink:hover,
+.resultCardLink:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardHeader {
+    display: flex;
+    gap: 8%;
+    padding: 1rem;
+}
+
+.cardPhoto {
+    width: 40%;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+.cardMainInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardTags {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardHealthLabels, .cardCautions {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex: 1;
+    gap:  0 0.8rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    padding: 0.1rem 1rem;
+}
+
+.cardHealthLabels {
+    color: green;
+    justify-content: flex-start;
+}
+
+.cardCautions {
+    color: red;
+    justify-content: flex-end;
+}
+
+.cardNutritionFacts {
+    margin: 0;
+    padding: 0.1rem 1.2rem 0.8rem 0;
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+}
+
+.cardCaloriesAndServings {
+    margin: 0;
+    font-weight: bold;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.cardCalories > span {
+    font-size: 1.1rem;
+}
+
+.cardNutrientList {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    list-style: none;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.cardNutrient {
+    margin: 0;
+    display: flex;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.sentinel {
+    margin: 0;
+    height: 1px;
 }
 
 button {

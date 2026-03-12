@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import KeywordSearchPanel from "./KeywordSearchPanel";
 import ClickableParamPanel from "./ClickableParamPanel";
 import QuantParamPanel from "./QuantParamPanel";
 import SearchResults from "./SearchResults";
 import { allergyOptions, cuisineOptions, dietOptions, dishTypeOptions, mealTypeOptions, nutrientOptions } from "../../../constants/edamam";
-import type { EdamamResponse } from "../../../types/edamam";
+import type { EdamamResponse, EdamamHit } from "../../../types/edamam";
 import type { FetcherWithComponents } from "react-router-dom";
 import styles from "../Meals.module.css";
 
@@ -15,15 +15,33 @@ type MealsOutletContext = {
 
 export default function RecipeSearch() {
     const [currentTab, setCurrentTab] = useState("");
-    const [isHidden, setIsHidden] = useState(false);
+    const [allHits, setAllHits] = useState<EdamamHit[]>([]);
+    const [searchIsHidden, setsearchIsHidden] = useState(false);
     const { fetcher } = useOutletContext<MealsOutletContext>();
 
     const { data }: { data: EdamamResponse | undefined } = fetcher;
     const { Form, formAction, formData, formEncType, formMethod, json, load, reset, state, submit, text } = fetcher;
+    
+    useEffect(() => {
+        if (data && data.count > 0) {
+            setsearchIsHidden(true);
+            
+            setAllHits(prev => {
+                const existing = new Set(
+                    prev.map(hit => hit.recipe.uri)
+                );
+                const newHits = data.hits.filter(hit => 
+                    !existing.has(hit.recipe.uri)
+                );
+
+                return [...prev, ...newHits]
+            });
+        }
+    }, [data]);
 
     return (  
         <>
-            {!isHidden && <Form method="post" className={styles.searchForm} onSubmit={() => setIsHidden(true)}>
+            <Form method="post" className={styles.searchForm} hidden={searchIsHidden} onSubmit={() => setAllHits([])}>
                 <KeywordSearchPanel />
 
                 <hr className={styles.formDivider} />
@@ -83,13 +101,16 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
                 
-                <button type="submit">Search</button>
-            </Form>}
-            <div onClick={() => setIsHidden(prev => !prev)}>
-                {isHidden ? "Expand search" : "Hide search"}
-            </div>
+                <button type="submit" disabled={fetcher.state !== "idle"}>
+                    {fetcher.state === "idle" ? "Search" : "Submitting"}
+                </button>
+                <button type="reset" disabled={fetcher.state !== "idle"}>Clear search</button>
+            </Form>
+            {data && data.hits.length > 0 && <div onClick={() => setsearchIsHidden(prev => !prev)} className={`${styles.searchToggle} ${searchIsHidden ? styles.expand : styles.hide}`}>
+                {searchIsHidden ? "Show search panel" : "Hide search panel"}
+            </div>}
 
-            {data && <SearchResults response={data} />}
+            {data && <SearchResults response={data} hits={allHits} fetcher={fetcher} />}
         </>
 
     );

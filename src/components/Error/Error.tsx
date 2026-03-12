@@ -4,6 +4,6 @@ export default function ErrorComponent() {
     const error: unknown = useRouteError();
 
     return (
-        <h1>{`${error}`}</h1>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
     )
 };

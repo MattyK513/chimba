@@ -99,7 +99,7 @@ export interface EdamamError {
     params: string[]
 }
 
-interface EdamamHit {
+export interface EdamamHit {
     recipe: {
         uri: string,
         label: string,
@@ -124,6 +124,7 @@ interface EdamamHit {
         inflammatoryIndex: number,
         totalCO2Emissions: number
         co2EmissionsClass: string,
+        totalTime: number,
         totalWeight: number,
         cuisineType: string[],
         mealType: string[],
@@ -280,7 +281,7 @@ export type NutrientCode =
   | 'WATER'       
   | 'ZN';
 
-type NutrientInfo = Omit<NutrientResult, "uri">;
+export type NutrientInfo = Omit<NutrientResult, "uri">;
 
 export interface NutrientOption {
     parameter: NutrientCode,

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorComponent, ProtectedLayout, protectedLoader, PublicLayout, publicLoader } from "./components";
-import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
+import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipePage, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +29,11 @@ const router = createBrowserRouter([
                     {
                         path: "recipe-search",
                         element: <RecipeSearch />,
-                        action: recipeSearchAction
+                        action: recipeSearchAction,
+                    },
+                    {
+                        path: "recipe-search/:recipeId",
+                        element: <RecipePage />
                     }
                 ]
             },
