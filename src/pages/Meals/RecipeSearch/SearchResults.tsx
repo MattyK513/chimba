@@ -1,46 +1,51 @@
 import { useEffect, useRef } from "react";
-import { Link, type FetcherWithComponents } from "react-router-dom";
-import type { EdamamHit, EdamamResponse, NutrientCode } from "../../../types";
+import { Link } from "react-router-dom";
+import type { EdamamHit, FetcherSubmitFunction, NutrientCode } from "../../../types";
 import styles from "../Meals.module.css";
 
-export default function SearchResults({ response, hits, fetcher }: {response: EdamamResponse, hits: EdamamHit[], fetcher: FetcherWithComponents<EdamamResponse>}) {
-    const sentinelRef = useRef<HTMLDivElement | null>(null);
+interface Props {
+    hits: EdamamHit[],
+    submit: FetcherSubmitFunction,
+    numResults: number,
+    fetcherState: "idle" | "loading" | "submitting",
+    nextURL: string | null
+}
 
-    console.log(response)
-    console.log(hits)
-    const { submit } = fetcher;
+export default function SearchResults({ hits, submit, numResults, fetcherState, nextURL }: Props) {
+
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
 
     const macros: NutrientCode[] = ["PROCNT", "FAT", "CHOCDF", "FIBTG", "SUGAR"];
     const micros: NutrientCode[] = ["CHOLE", "NA", "CA", "MG", "K", "FE"];
 
     useEffect(() => {
-        console.log("useEffect ran")
-        if (!sentinelRef.current) return;
+        if (!sentinelRef.current || hits.length === 0 || !nextURL || fetcherState !== "idle") return;
 
-        console.log("sentinelRef.current was defined")
         const observer = new IntersectionObserver(entries => {
             const entry = entries[0];
-            console.log("sentinel was triggered")
             if (
-                entry.isIntersecting &&
-                response._links?.next?.href &&
-                fetcher.state === "idle"
+                entry.isIntersecting
             ) {
-                console.log("everything ran")
-                submit({nextURL: response._links?.next?.href}, {method: "post", action: "/meal-planner/recipe-search"});
+                submit({nextURL: nextURL}, {method: "post", action: "/meal-planner/recipe-search"});
             }
-        });
+        },
+        {
+            root: null,
+            rootMargin: "0px 0px 250px 0px",
+            threshold: 0
+        }
+    
+        );
         observer.observe(sentinelRef.current);
 
         return () => observer.disconnect();
-    }, [response._links?.next?.href, hits.length]);
+    }, [nextURL, hits.length]);
 
-    if (!fetcher.data?.hits.length) return <span>No results</span>
+    if (numResults === 0) return <span>No results</span>;
 
     const resultCards = hits.map(result => {
-        const id = result.recipe.uri.split("#recipe_")[1];
         const { recipe } = result;
-        const { images, label, dietLabels, cautions, totalDaily, totalNutrients, calories, source } = recipe;
+        const { images, label, dietLabels, cautions, totalDaily, totalNutrients, calories, source, id } = recipe;
         const servings = recipe.yield || 1;
 
         const dietLabelDisplay = dietLabels.map(label => {
@@ -79,7 +84,7 @@ export default function SearchResults({ response, hits, fetcher }: {response: Ed
                         <strong>{`${Math.round(n.quantity / servings)}%`}</strong>
                     </span>
                 </li>
-            )
+            );
         });
 
 

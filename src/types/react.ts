@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-export type { Dispatch, SetStateAction } from "react";
-export type { ActionFunctionArgs, FetcherWithComponents } from "react-router-dom";
+export type { Dispatch, FormEvent, SetStateAction } from "react";
+export type { ActionFunctionArgs, FetcherWithComponents, FetcherSubmitFunction, Params } from "react-router-dom";
 
 export interface ParentComponentProps {
     children: ReactNode

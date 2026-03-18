@@ -96,6 +96,7 @@
 
 .expand {
     border-radius: 7px;
+    margin-top: 0.5rem
 }
 
 .hide {
@@ -211,13 +212,70 @@
     justify-content: space-between;
 }
 
+.recipePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.pageTitle {
+    margin: 0;
+    font-size: 45px;
+}
+
+.pagePhoto {
+    border-radius: 7px;
+    margin: 0 0 1.2rem;
+}
+
+.recipePage h3 {
+    margin: 1rem 0 0;
+}
+
+.ingredientList {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.3rem;
+    text-indent:-1.3rem;
+    text-align: left;
+    width: 80%;
+}
+
+.pageCuisineAndDishTagContainer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.healthTag, .dietTag, .cuisineTag, .cautionTag, .dishTag {
+    border: 1px solid black;
+    border-radius: 17px;
+    padding: 0.4rem 0.6rem;
+    display: inline-block;
+}
+
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+}
+
+.nutritionContainer {
+    margin: 1.1rem 0 0.7rem;
+}
+.pageCookTime {
+    margin: 0.75rem 0 -0.4rem;
+}
+
 .sentinel {
     margin: 0;
     height: 1px;
 }
 
 button {
-    margin-bottom: 0.25rem;
+    margin: 0 1.5rem 0.25rem;
 }
 
 /* Hide spin buttons */

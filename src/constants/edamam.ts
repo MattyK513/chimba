@@ -1,4 +1,4 @@
-import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption, NutrientOption } from "../types";
+import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption, NutrientCode, NutrientOption } from "../types";
 
 export const allergyOptions: AllergyOption[] = [
   {parameter: 'health', value: 'celery-free', label: 'Celery-free', definition: "Does not contain celery or derivatives"},
@@ -108,7 +108,8 @@ export const mealTypeOptions: MealTypeOption[] = [
 
 export const nutrientOptions: NutrientOption[] = [
   {parameter: 'CA', label: 'Calcium', unit: 'mg', group: 'minerals'},
-  {parameter: 'CHOCDF.net', label: 'Carbohydrates', unit: 'g', group: "macros"},
+  {parameter: 'CHOCDF', label: 'Carbs, net', unit: 'g', group: "macros"},
+  {parameter: 'CHOCDF.net', label: 'Carbs, total', unit: 'g', group: "macros"},
   {parameter: 'CHOLE', label: 'Cholesterol', unit: 'mg', group: "other"},
   {parameter: 'FAMS', label: 'Fat, monounsaturated', unit: 'g', group: "macros"},
   {parameter: 'FAPU', label: 'Fat, polyunsaturated', unit: 'g', group: "macros"},
@@ -117,7 +118,7 @@ export const nutrientOptions: NutrientOption[] = [
   {parameter: 'FATRN', label: 'Fat, trans', unit: 'g', group: "macros"},
   {parameter: 'FIBTG', label: 'Fiber', unit: 'g', group: "other"},
   {parameter: 'FOLDFE', label: 'Folate, DFE', unit: 'µg', group: "vitamins"},
-  {parameter: 'FOLFE', label: 'Folate, food', unit: 'µg', group: "vitamins"},
+  //{parameter: 'FOLFE', label: 'Folate, food', unit: 'µg', group: "vitamins"},
   {parameter: 'FOLAC', label: 'Folic acid', unit: 'µg', group: "vitamins"},
   {parameter: 'FE', label: 'Iron', unit: 'mg', group: 'minerals'},
   {parameter: 'MG', label: 'Magnesium', unit: 'mg', group: 'minerals'},
@@ -140,4 +141,40 @@ export const nutrientOptions: NutrientOption[] = [
   {parameter: 'VITK1', label: 'Vitamin K', unit: 'µg', group: "vitamins"},
   {parameter: 'WATER', label: 'Water', unit: 'g', group: "other"},
   {parameter: 'ZN', label: 'Zinc', unit: 'mg', group: 'minerals'}
+];
+
+export const nutrientCodes: NutrientCode[] = [
+  'CA',
+  'CHOCDF.net',
+  'CHOLE',
+  'FAMS',
+  'FAPU',
+  'FASAT',
+  'FAT',
+  'FATRN',
+  'FIBTG',
+  'FOLDFE',
+  //'FOLFE',
+  'FOLAC',
+  'FE',
+  'MG',
+  'NIA',
+  'P',
+  'K',
+  'PROCNT',
+  'RIBF',
+  'NA',
+  'Sugar.alcohol',
+  'SUGAR.added',
+  'SUGAR',
+  'THIA',
+  'VITA_RAE',
+  'VITB12',
+  'VITB6A',
+  'VITC',
+  'VITD',
+  'TOCPHA',
+  'VITK1',
+  'WATER',
+  'ZN'
 ];

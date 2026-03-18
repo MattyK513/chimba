@@ -1,0 +1,46 @@
+.nutritionLabel {
+  width: 17rem;
+  border: 2px solid black;
+  padding: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.nutritionLabel h2 {
+  font-size: 26px;
+  margin: 0;
+  font-weight: 800;
+}
+
+.divider {
+  border-top: 1px solid black;
+  margin: 4px 0;
+}
+
+.divider.thick {
+  border-top: 6px solid black;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.row.calories {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.indented {
+    margin-left: 1.3rem;
+}
+
+.doubleIndented {
+    margin-left: 2.3rem;
+}
+
+.amountPerServing {
+    display: block;
+    text-align: left;
+    font-size: 0.7rem;
+}

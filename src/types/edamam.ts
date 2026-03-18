@@ -132,13 +132,10 @@ export interface EdamamHit {
         instructionLines: string[],
         tags: string[],
         externalId: string,
-        totalNutrients: {
-            [key: string]: NutrientInfo
-        },
-        totalDaily: {
-            [key: string]: NutrientInfo
-        },
-        digest: EdamamDigestEntry[]
+        totalNutrients: NutrientObj,
+        totalDaily: NutrientObj,
+        digest: EdamamDigestEntry[],
+        id: string
     },
     _links: EdamamLinkObject
 }
@@ -228,7 +225,8 @@ export interface IngredientResult {
     measure: string,
     weight: number,
     food: string,
-    foodCategory: string
+    foodCategory: string,
+    text: string
 }
 
 export type MealType =
@@ -280,6 +278,8 @@ export type NutrientCode =
   | 'VITK1'
   | 'WATER'       
   | 'ZN';
+
+export type NutrientObj = Record<NutrientCode, NutrientInfo>;
 
 export type NutrientInfo = Omit<NutrientResult, "uri">;
 

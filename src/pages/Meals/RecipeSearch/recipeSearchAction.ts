@@ -1,14 +1,14 @@
-import { searchEdamam } from "../../../services/edamam";
-import type { ActionFunctionArgs, QueryParam } from "../../../types";
+import { fetchNextResults, searchEdamam } from "../../../services/edamam";
+import type { ActionFunctionArgs, EdamamResponse, QueryParam } from "../../../types";
 
 export default async function recipeSearchAction({ request }: ActionFunctionArgs) {
     const params: QueryParam[] = [];
     const data = await request.formData();
 
     const nextURL = data.get("nextURL");
+
     if (typeof nextURL === "string") {
-        const res = await fetch(nextURL);
-        return res.json();
+        return await fetchNextResults(nextURL);
     }
 
     let q = data.get("q");
@@ -25,8 +25,7 @@ export default async function recipeSearchAction({ request }: ActionFunctionArgs
     };
 
     if (params.length === 0) {
-        return;
-    }
-
+        return null;
+    };
     return await searchEdamam(params);
 };

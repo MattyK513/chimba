@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorComponent, ProtectedLayout, protectedLoader, PublicLayout, publicLoader } from "./components";
-import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipePage, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
+import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipePage, recipePageLoader, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +33,8 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "recipe-search/:recipeId",
-                        element: <RecipePage />
+                        element: <RecipePage />,
+                        loader: recipePageLoader
                     }
                 ]
             },
