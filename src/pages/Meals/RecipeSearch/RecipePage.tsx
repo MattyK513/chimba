@@ -1,3 +1,4 @@
+import { useEffect} from "react";
 import { useLocation, useLoaderData } from "react-router-dom";
 import { addIngredientToGroceryList } from "../../../services/edamam";
 import NutritionFacts from "./NutritionFacts";
@@ -10,10 +11,14 @@ export default function RecipePage() {
     //const { recipe } = location.state as EdamamHit;
     const { recipe } = (loaderData ?? location.state) as EdamamHit;
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto"});
+     }, []);
+
     const { label, calories, cautions, cuisineType, dietLabels, dishType, healthLabels, images, ingredients, mealType, shareAs, source,
-        totalDaily, totalNutrients, totalTime, totalWeight, uri, url, yield: servings
+        totalDaily, totalNutrients, totalTime, totalWeight, uri, url, yield: servings, ingredientLines
      } = recipe;
-     console.log(totalDaily, totalNutrients)
+     
      const {height: imgHeight, width: imgWidth, url: imgURL} = images.REGULAR;
 
      const ingredientDisplay = ingredients.map(ing => {
@@ -24,7 +29,7 @@ export default function RecipePage() {
             </li>
         );
      });
-
+     
      const cuisineTypeDisplay = cuisineType.map(cuisine => {
         return (
             <div key={cuisine} className={styles.cuisineTag}>{cuisine}</div>

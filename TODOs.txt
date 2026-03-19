@@ -14,5 +14,4 @@ If a user must sign in before deleting profile, redirect to login or provide UI 
 
 Investigate whether it's worth it to combine nutrient quant and simple quant components into a single component
 
-Edge case: infinite scroll can potentially trigger "too many requests" error from Edamam if user goes fast. Find a creative way to handle this
-in the UX
+Edge case: infinite scroll can potentially trigger "too many requests" error from Edamam if user goes fast. Integrate an case for this in the UX

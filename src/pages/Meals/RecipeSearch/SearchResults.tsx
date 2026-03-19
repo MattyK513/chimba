@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import type { EdamamHit, FetcherSubmitFunction, NutrientCode } from "../../../types";
 import styles from "../Meals.module.css";
 
+const LAST_VIEWED_RECIPE_KEY = "recipe-search:last-viewed";
+
 interface Props {
     hits: EdamamHit[],
     submit: FetcherSubmitFunction,
@@ -14,6 +16,7 @@ interface Props {
 export default function SearchResults({ hits, submit, numResults, fetcherState, nextURL }: Props) {
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
+    const cardRefs = useRef(new Map<string, HTMLElement>());
 
     const macros: NutrientCode[] = ["PROCNT", "FAT", "CHOCDF", "FIBTG", "SUGAR"];
     const micros: NutrientCode[] = ["CHOLE", "NA", "CA", "MG", "K", "FE"];
@@ -40,6 +43,19 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
 
         return () => observer.disconnect();
     }, [nextURL, hits.length]);
+
+    useEffect(() => {
+        const lastViewedRecipeId = sessionStorage.getItem(LAST_VIEWED_RECIPE_KEY);
+
+        if (!lastViewedRecipeId) return;
+        
+        const recipeCard = cardRefs.current.get(lastViewedRecipeId);
+
+        if (!recipeCard) return;
+
+        recipeCard.scrollIntoView({ behavior: "auto", block: "center"});
+        sessionStorage.removeItem(LAST_VIEWED_RECIPE_KEY);
+    }, [hits]);
 
     if (numResults === 0) return <span>No results</span>;
 
@@ -89,8 +105,18 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
 
 
         return (
-            <article className={styles.resultCard} key={id}>
-                <Link to={id} state={result} className={styles.resultCardLink}>
+            <article
+                className={styles.resultCard}
+                key={id}
+                ref={node => {
+                    if (node) {
+                        cardRefs.current.set(id,node);
+                        return;
+                    }
+                    cardRefs.current.delete(id);
+                }
+            }>
+                <Link to={id} state={result} className={styles.resultCardLink} onClick={() => sessionStorage.setItem(LAST_VIEWED_RECIPE_KEY, id)}>
                     <div className={styles.cardHeader}>
                         <img src={images.SMALL.url} className={styles.cardPhoto} alt={label} />
                             <div className={styles.cardMainInfo}>
