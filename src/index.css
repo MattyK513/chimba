@@ -1,33 +1,47 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   --app-top-padding: 6rem;
+
+  --color-bg: #121a19;
+  --color-surface: #1a2422;
+  --color-surface-elevated: #22302d;
+  --color-text: #edf6f1;
+  --color-text-muted: #b4c4bc;
+  --color-border-soft: rgba(210, 235, 224, 0.2);
+
+  --color-primary: #56c89a;
+  --color-primary-soft: rgba(86, 200, 154, 0.18);
+
+  --color-success: #63d99f;
+  --color-danger: #ff8d99;
+
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.22);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #7be0b4;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  color: var(--color-text);
+  background: radial-gradient(circle at top, #1c2a28 0%, var(--color-bg) 42%);
 }
 
 h1 {
@@ -37,32 +51,51 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border-soft);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-surface);
+  color: var(--color-text);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color-scheme: light;
+
+    --color-bg: #eff6f3;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #f7fbf9;
+    --color-text: #213333;
+    --color-text-muted: #4f6661;
+    --color-border-soft: rgba(46, 88, 73, 0.2);
+
+    --color-primary: #1f9d71;
+    --color-primary-soft: rgba(31, 157, 113, 0.12);
+
+    --color-success: #1f9d71;
+    --color-danger: #c34658;
+
+    --shadow-soft: 0 8px 24px rgba(18, 40, 34, 0.08);
   }
+
+  body {
+    background: linear-gradient(180deg, #f6fbf9 0%, var(--color-bg) 55%);
+  }
+
   a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    color: #157352;
   }
 }

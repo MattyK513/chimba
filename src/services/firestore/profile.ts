@@ -1,6 +1,6 @@
-import { addDoc, collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import type { CollectionReference, DocumentReference, Goal, QuerySnapshot, Unsubscribe, UpdateUserProfile, UserInfo, UserProfileFields } from "../../types";
+import type { CollectionReference, DocumentReference, QuerySnapshot, Unsubscribe, UpdateUserProfile, UserInfo, UserProfileFields } from "../../types";
 
 export async function createFirestoreUser(user: UserInfo): Promise<void> {
     const { displayName, email, phoneNumber, photoURL, uid } = user;

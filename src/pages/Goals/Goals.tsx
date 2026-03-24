@@ -1,25 +1,14 @@
-import { Form } from "react-router-dom";
-import useGoals from "../../hooks/useGoals";
+import styles from "./Goals.module.css";
 
 export default function Goals() {
-    const { goals } = useGoals();
-
-    const goalDisplay = goals?.map(goal => {
-        return (
-            <div key={goal.id}>
-                <span>{goal.title}</span>
-            </div>
-        );
-    });
-
     return (
-        <>
-            <h1>Goals page</h1>
-            {goalDisplay}
-            <Form method="post">
-                <input name="title" placeholder="Enter a goal" type="text"></input>
-                <button type="submit">Create goal</button>
-            </Form>
-        </>
+        <section className={styles.comingSoonCard}>
+            <h1>Goals</h1>
+            <p>
+                This module will help you set health goals, break them into milestones,
+                and track your progress over time with actionable insights.
+            </p>
+            <p className={styles.comingSoonText}>Coming soon.</p>
+        </section>
     );
-};
+}

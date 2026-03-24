@@ -165,6 +165,18 @@ export interface EdamamResponse {
     hits: EdamamHit[]
 }
 
+export interface RecipeSearchErrorPayload {
+    code: string,
+    message: string,
+    isRateLimit: boolean,
+    retryAfterSeconds?: number,
+    attemptedNextURL?: string
+}
+
+export type RecipeSearchActionResponse =
+    { ok: true, results: EdamamResponse } |
+    { ok: false, error: RecipeSearchErrorPayload };
+
 export interface EdamamRecipeEntry {
     quantity: number,
     measure: string | null,

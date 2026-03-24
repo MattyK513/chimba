@@ -1,0 +1,45 @@
+.errorPage {
+    min-height: 60vh;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+}
+
+.errorCard {
+    width: min(560px, 100%);
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.errorCard h1 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.errorCard p {
+    margin: 0.65rem 0 0;
+}
+
+.errorCode {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+}
+
+.actions a,
+.actions button {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+    color: inherit;
+    background: transparent;
+    text-decoration: none;
+}

@@ -1,59 +1,77 @@
-import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
-import KeywordSearchPanel from "./KeywordSearchPanel";
-import ClickableParamPanel from "./ClickableParamPanel";
-import QuantParamPanel from "./QuantParamPanel";
-import SearchResults from "./SearchResults";
+import { useEffect, useMemo, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import type { FetcherWithComponents } from "react-router-dom";
 import { allergyOptions, cuisineOptions, dietOptions, dishTypeOptions, mealTypeOptions, nutrientOptions } from "../../../constants/edamam";
 import { resetRecipeSearchState } from "../../../services/edamam";
-import type { EdamamResponse, EdamamHit, FormEvent, Dispatch, SetStateAction } from "../../../types";
-import type { FetcherWithComponents } from "react-router-dom";
+import type { Dispatch, EdamamHit, RecipeSearchActionResponse, RecipeSearchErrorPayload, SetStateAction } from "../../../types";
 import styles from "../Meals.module.css";
+import ClickableParamPanel from "./ClickableParamPanel";
+import KeywordSearchPanel from "./KeywordSearchPanel";
+import QuantParamPanel from "./QuantParamPanel";
+import SearchResults from "./SearchResults";
 
 type MealsOutletContext = {
-    fetcher: FetcherWithComponents<EdamamResponse>;
+    fetcher: FetcherWithComponents<RecipeSearchActionResponse>;
     allHits: EdamamHit[];
-    setAllHits: Dispatch<SetStateAction<EdamamHit[]>>
+    setAllHits: Dispatch<SetStateAction<EdamamHit[]>>;
 };
 
 export default function RecipeSearch() {
     const [currentTab, setCurrentTab] = useState("");
     const [searchIsHidden, setsearchIsHidden] = useState(false);
     const { fetcher, allHits, setAllHits } = useOutletContext<MealsOutletContext>();
-    const { data }: { data: EdamamResponse | undefined } = fetcher;
-    const { Form, formAction, formData, formEncType, formMethod, json, load, reset, state: fetcherState, submit, text } = fetcher;
-    const nextURL = data?._links?.next?.href || null;
-    
-    useEffect(() => {
-        if (data && data.count > 0) {
+    const { data } = fetcher;
+    const { Form, state: fetcherState, submit } = fetcher;
 
-            setsearchIsHidden(true);
-            
-            setAllHits(prev => {
-                const existing = new Set(
-                    prev.map(hit => hit.recipe.uri)
-                );
-                const newHits = data.hits.filter(hit => 
-                    !existing.has(hit.recipe.uri)
-                );
-                return [...prev, ...newHits];
-            });
+    const searchResults = useMemo(() => {
+        if (!data || !data.ok) {
+            return null;
         }
+
+        return data.results;
     }, [data]);
 
-    return (  
+    const searchError = useMemo<RecipeSearchErrorPayload | null>(() => {
+        if (!data || data.ok) {
+            return null;
+        }
+
+        return data.error;
+    }, [data]);
+
+    const nextURL = searchResults?._links?.next?.href || null;
+
+    useEffect(() => {
+        if (!searchResults || searchResults.count <= 0) {
+            return;
+        }
+
+        setsearchIsHidden(true);
+
+        setAllHits((prev) => {
+            const existing = new Set(
+                prev.map((hit) => hit.recipe.uri)
+            );
+            const newHits = searchResults.hits.filter((hit) =>
+                !existing.has(hit.recipe.uri)
+            );
+            return [...prev, ...newHits];
+        });
+    }, [searchResults, setAllHits]);
+
+    return (
         <>
             <Form
                 method="post"
                 className={styles.searchForm}
                 hidden={searchIsHidden}
-                onSubmit={() => {resetRecipeSearchState(setAllHits);}}
+                onSubmit={() => { resetRecipeSearchState(setAllHits); }}
             >
                 <KeywordSearchPanel />
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "diet" } onToggle={e => {if (e.currentTarget.open) setCurrentTab("diet")}}>
+                <details open={currentTab === "diet"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("diet"); }}>
                     <summary>Diet options</summary>
                     <hr className={styles.subFormDivider} />
                     <ClickableParamPanel params={dietOptions} />
@@ -61,7 +79,7 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "nutrition"} onToggle={e => {if (e.currentTarget.open) setCurrentTab("nutrition")}}>
+                <details open={currentTab === "nutrition"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("nutrition"); }}>
                     <summary>Nutrition</summary>
                     <hr className={styles.subFormDivider} />
                     <QuantParamPanel type="calories" />
@@ -71,12 +89,12 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "cooking"} onToggle={e => {if (e.currentTarget.open) setCurrentTab("cooking")}}>
+                <details open={currentTab === "cooking"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("cooking"); }}>
                     <summary>Cooking constraints</summary>
                     <hr className={styles.subFormDivider} />
-                    <QuantParamPanel type="time"  />
+                    <QuantParamPanel type="time" />
                     <hr className={styles.subFormDivider} />
-                    <QuantParamPanel type="ingr"  />
+                    <QuantParamPanel type="ingr" />
                     <hr className={styles.subFormDivider} />
                     <span>Meal type</span>
                     <ClickableParamPanel params={mealTypeOptions} />
@@ -84,7 +102,7 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "allergy"} onToggle={e => {if (e.currentTarget.open) setCurrentTab("allergy")}}>
+                <details open={currentTab === "allergy"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("allergy"); }}>
                     <summary>Allergy considerations</summary>
                     <hr className={styles.subFormDivider} />
                     <ClickableParamPanel params={allergyOptions} />
@@ -92,7 +110,7 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "cuisine"} onToggle={e => {if (e.currentTarget.open) setCurrentTab("cuisine")}}>
+                <details open={currentTab === "cuisine"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("cuisine"); }}>
                     <summary>Cuisines</summary>
                     <hr className={styles.subFormDivider} />
                     <ClickableParamPanel params={cuisineOptions} />
@@ -100,14 +118,14 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
 
-                <details open={currentTab === "dish"} onToggle={e => {if (e.currentTarget.open) setCurrentTab("dish")}}>
+                <details open={currentTab === "dish"} onToggle={(e) => { if (e.currentTarget.open) setCurrentTab("dish"); }}>
                     <summary>Dish types</summary>
                     <hr className={styles.subFormDivider} />
                     <ClickableParamPanel params={dishTypeOptions} />
                 </details>
 
                 <hr className={styles.formDivider} />
-                
+
                 <button type="submit" disabled={fetcher.state !== "idle"}>
                     {fetcher.state === "idle" ? "Search" : "Submitting"}
                 </button>
@@ -115,11 +133,27 @@ export default function RecipeSearch() {
                     Clear search
                 </button>
             </Form>
-            {data && data.hits.length > 0 && <div onClick={() => setsearchIsHidden(prev => !prev)} className={`${styles.searchToggle} ${searchIsHidden ? styles.expand : styles.hide}`}>
+            {searchResults && searchResults.hits.length > 0 && <div onClick={() => setsearchIsHidden((prev) => !prev)} className={`${styles.searchToggle} ${searchIsHidden ? styles.expand : styles.hide}`}>
                 {searchIsHidden ? "Show search panel" : "Hide search panel"}
             </div>}
 
-            {data && <SearchResults hits={allHits} submit={submit} numResults={data.hits.length} fetcherState={fetcherState} nextURL={nextURL} />}
+            {searchResults && (
+                <SearchResults
+                    hits={allHits}
+                    submit={submit}
+                    numResults={searchResults.hits.length}
+                    fetcherState={fetcherState}
+                    nextURL={nextURL}
+                    rateLimitError={searchError?.isRateLimit ? searchError : null}
+                />
+            )}
+
+            {!searchResults && searchError && !searchError.isRateLimit && (
+                <div className={styles.searchErrorNotice}>
+                    <strong>Couldn&apos;t complete your request.</strong>
+                    <p>{searchError.message}</p>
+                </div>
+            )}
         </>
     );
-};
+}

@@ -4,7 +4,7 @@
 
 .searchForm {
     margin: 0.5rem 0.25rem 0;
-    outline: 1px solid rgba(255, 255, 255, 0.6);
+    outline: 1px solid var(--color-border-soft);
     border-radius: 7px;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .clickableParam {
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--color-border-soft);
     padding: 0.25rem 0.5rem;
     white-space: nowrap;
     display: flex;
@@ -75,7 +75,7 @@
     display: flex;
     padding: 0.1rem 0.4rem;
     flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--color-border-soft);
     border-radius: 5px;
 }
 
@@ -90,7 +90,7 @@
 
 .searchToggle {
     padding: 0.3rem 0.6rem;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--color-border-soft);
     border-radius: 0 0 7px 7px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .resultCard {
-    border: 1px solid white;
+    border: 1px solid var(--color-border-soft);
     border-radius: 7px;
     margin-top: 0.8rem;
     position: relative;
@@ -163,12 +163,12 @@
 }
 
 .cardHealthLabels {
-    color: green;
+    color: var(--color-success);
     justify-content: flex-start;
 }
 
 .cardCautions {
-    color: red;
+    color: var(--color-danger);
     justify-content: flex-end;
 }
 
@@ -283,4 +283,185 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+.toggleRow {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0.8rem 0.4rem;
+}
+
+.toggleButton {
+    border: 1px solid var(--color-border-soft);
+    background: transparent;
+    color: inherit;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+}
+
+.activeToggle {
+    background: var(--color-primary-soft);
+}
+
+.plannerSection {
+    margin: 0.5rem 0.3rem;
+}
+
+.plannerNav {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.plannerNav button {
+    border: 1px solid var(--color-border-soft);
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    width: 2rem;
+    height: 2rem;
+}
+
+.focusedDateLabel {
+    margin: 0;
+    text-align: center;
+}
+
+.dayCard {
+    border: 1px solid var(--color-border-soft);
+    border-radius: 7px;
+    padding: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.dayTitle {
+    margin: 0 0 0.45rem;
+    font-size: 1rem;
+}
+
+.dayMealList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.dayMealItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dayMealType {
+    text-transform: capitalize;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.weekGrid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.grocerySection {
+    margin: 0.5rem 0.4rem;
+    text-align: left;
+}
+
+.grocerySection h2 {
+    margin: 0 0 0.5rem;
+}
+
+.groceryList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 7px;
+}
+
+.groceryItem {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+    padding: 0.45rem 0.6rem;
+}
+
+.groceryItem + .groceryItem {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.groceryFood {
+    text-transform: capitalize;
+}
+
+.rateLimitNotice,
+.searchErrorNotice {
+    border: 1px solid rgba(255, 200, 120, 0.7);
+    border-radius: 8px;
+    margin: 0.75rem 0.45rem;
+    padding: 0.65rem 0.75rem;
+    text-align: left;
+    background: rgba(255, 180, 60, 0.08);
+}
+
+.rateLimitNotice p,
+.searchErrorNotice p {
+    margin: 0;
+}
+
+.rateLimitRetryButton {
+    margin: 0.65rem 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    color: inherit;
+    padding: 0.35rem 0.7rem;
+}
+
+.mealDisplayRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    padding: 0.45rem 0.55rem;
+    background: color-mix(in srgb, var(--color-surface-elevated) 75%, transparent);
+}
+
+.mealActions,
+.mealEditorActions {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.mealActions button,
+.mealEditorActions button {
+    margin: 0;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.82rem;
+}
+
+.mealEditorRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.mealEditorInput {
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    color: inherit;
+    padding: 0.38rem 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
 }

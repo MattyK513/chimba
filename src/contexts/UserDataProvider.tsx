@@ -1,7 +1,7 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { subscribeToGoals, subscribeToMealPlans, subscribeToGroceryList, subscribeToSavedRecipes } from "../services/firestore";
-import type { Goal, Ingredient, MealModuleData, MealPlans, ModuleName, ReactNode, SavedRecipeWithId, SubState, UserDataContextType } from "../types";
+import type { Goal, Ingredient, MealPlans, ModuleName, ReactNode, SavedRecipeWithId, SubState, UserDataContextType } from "../types";
 
 export const UserDataContext = createContext<UserDataContextType | null>(null);
 

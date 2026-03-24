@@ -1,32 +1,54 @@
 import { useState } from "react";
 import { Link, Outlet, useFetcher, useLocation } from "react-router-dom";
-import useMeals from "../../hooks/useMeals";
-import { searchEdamam } from "../../services/edamam";
-import { allergyOptions } from "../../constants/edamam";
-import RecipeSearch from "./RecipeSearch/RecipeSearch";
+import type { EdamamHit, RecipeSearchActionResponse } from "../../types";
 import WeeklyPlanner from "./Planner/WeeklyPlanner";
-import type { EdamamHit, EdamamResponse, QueryParam } from "../../types";
+import GroceryList from "./Planner/GroceryList";
 import styles from "./Meals.module.css";
 
+type PlannerView = "meal-plan" | "grocery-list";
+
 export default function Meals() {
-    const fetcher = useFetcher<EdamamResponse>();
+    const fetcher = useFetcher<RecipeSearchActionResponse>();
     const location = useLocation();
     const currentPath = location.pathname;
-    const { mealPlans, groceryList, savedRecipes } = useMeals();
 
     const [allSearchHits, setAllSearchHits] = useState<EdamamHit[]>([]);
+    const [plannerView, setPlannerView] = useState<PlannerView>("meal-plan");
+
+    const isPlannerRoot = currentPath === "/meal-planner";
+    const isRecipeSearch = currentPath === "/meal-planner/recipe-search";
 
     return (
         <div className={styles.mealPage}>
-            {currentPath === "/meal-planner" && <h1>Meal planner page</h1>}
-            {currentPath === "/meal-planner"
+            {isPlannerRoot && <h1>Meal planner page</h1>}
+            {isPlannerRoot
                 ? <Link to="recipe-search">find recipes</Link>
-                : currentPath === "/meal-planner/recipe-search"
-                ? <Link to="." className={styles.backToPlannerLink}>← back to meal planner</Link>
-                : <Link to="/meal-planner/recipe-search" className={styles.backToPlannerLink}>← back to recipe search</Link>
+                : isRecipeSearch
+                    ? <Link to="." className={styles.backToPlannerLink}>← back to meal planner</Link>
+                    : <Link to="/meal-planner/recipe-search" className={styles.backToPlannerLink}>← back to recipe search</Link>
             }
-            {currentPath === "/meal-planner" && <WeeklyPlanner />}
+            {isPlannerRoot && (
+                <>
+                    <div className={styles.toggleRow}>
+                        <button
+                            type="button"
+                            className={`${styles.toggleButton} ${plannerView === "meal-plan" ? styles.activeToggle : ""}`}
+                            onClick={() => setPlannerView("meal-plan")}
+                        >
+                            Meal plan
+                        </button>
+                        <button
+                            type="button"
+                            className={`${styles.toggleButton} ${plannerView === "grocery-list" ? styles.activeToggle : ""}`}
+                            onClick={() => setPlannerView("grocery-list")}
+                        >
+                            Grocery list
+                        </button>
+                    </div>
+                    {plannerView === "meal-plan" ? <WeeklyPlanner /> : <GroceryList />}
+                </>
+            )}
             <Outlet context={{ fetcher, allHits: allSearchHits, setAllHits: setAllSearchHits }} />
         </div>
     );
-};
+}
