@@ -1,5 +1,5 @@
 import { getCurrentUserInfo, updateUsernameOrPhotoURL } from "../../services/auth";
-import { updateUserInfo } from "../../services/firestore";
+import { updateUserInfo } from "../../services/firestore/profile";
 import { AuthError, ValidationError } from "../../errors";
 import type { ActionFunctionArgs } from "../../types/react";
 

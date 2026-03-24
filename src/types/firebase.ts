@@ -30,7 +30,7 @@ export interface Goal {
 }
 
 // Extend this as I build more modules
-export type ModuleName = "goals";
+export type ModuleName = "goals" | "mealPlans" | "savedRecipes" | "groceryList";
 
 export type SubState = Record<ModuleName, SubStateEntry>;
 
@@ -43,6 +43,9 @@ export type UpdateUserProfile = AtLeastOne<EditableUserProfileFields>;
 
 export interface UserDataContextType {
     goals: Goal[] | null,
+    mealPlans: MealPlans | null,
+    groceryList: Ingredient[] | null,
+    savedRecipes: SavedRecipeWithId[] | null,
     addDependency: (module: ModuleName) => void
     removeDependency: (module: ModuleName) => void
 }
@@ -80,6 +83,51 @@ export interface UserProfileFields {
   email: string;
   phoneNumber: string | null;
   photoURL: string | null;
+};
+
+export type Ingredient = IngredientDetails & {
+    food: string
+};
+
+export interface IngredientDetails {
+    price: {
+        amount: number | null;
+        currency: "USD" | "COP" | null;
+    } | null;
+    quantity: number | null;
+    measure: string | null;
+};
+
+export interface MealPlanDay {
+  breakfast: Meal | null,
+  lunch: Meal | null,
+  dinner: Meal | null,
+  snack: Meal | null  
+};
+
+export type MealPlans = Record<string, MealPlanDay>;
+
+export interface Meal {
+    recipeLabel: string,
+    ingredients?: Ingredient[]
+};
+
+export interface SavedRecipe {
+    edamamName: string | null,
+    ingredients: Ingredient[] | null,
+    isFromEdamam: boolean,
+    outsideLink: URL,
+    recipeLabel: string
+};
+
+export type SavedRecipeWithId = SavedRecipe & {
+    id: string
+}
+
+export interface MealModuleData {
+    groceryList: Ingredient[],
+    mealPlans: MealPlans,
+    savedRecipes: SavedRecipe[]
 };
 
 export type { CollectionReference, DocumentReference, FirebaseError, QuerySnapshot, Unsubscribe, User };

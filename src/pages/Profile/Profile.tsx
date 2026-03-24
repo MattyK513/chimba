@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-router-dom";
-import { subscribeToProfileData } from "../../services/firestore";
+import { subscribeToProfileData } from "../../services/firestore/profile";
 import useAuth from "../../hooks/useAuth";
 import { AuthError } from "../../errors";
 import type { UserProfileFields } from "../../types/firebase";
 
-import { deleteFirestoreUser } from "../../services/firestore";
+import { deleteFirestoreUser } from "../../services/firestore/profile";
 
 
 export default function Profile() {

@@ -16,7 +16,7 @@ export default function RecipePage() {
      }, []);
 
     const { label, calories, cautions, cuisineType, dietLabels, dishType, healthLabels, images, ingredients, mealType, shareAs, source,
-        totalDaily, totalNutrients, totalTime, totalWeight, uri, url, yield: servings, ingredientLines
+        totalDaily, totalNutrients, totalTime, totalWeight, uri, url, yield: servings, ingredientLines, id
      } = recipe;
      
      const {height: imgHeight, width: imgWidth, url: imgURL} = images.REGULAR;
@@ -58,7 +58,7 @@ export default function RecipePage() {
 
         return hourString + minString;
      };
-
+     console.log(id, url)
     return (
         <div className={styles.recipePage}>
             <img src={imgURL} alt={label} className={styles.pagePhoto} />

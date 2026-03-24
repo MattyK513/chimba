@@ -1,6 +1,6 @@
 import authFunctions from "../../services/auth";
 import type { ActionFunctionArgs } from "../../types/react";
-import { createFirestoreUser } from "../../services/firestore";
+import { createFirestoreUser } from "../../services/firestore/profile";
 
 export default async function action({request}: ActionFunctionArgs) {
     const { register } = authFunctions;
