@@ -5,9 +5,26 @@ import { AuthError } from "../errors";
 import type { Unsubscribe, User, UserInfo } from "../types";
 
 let authInitPromise: Promise<void> | null = null;
-console.log(`Code in services/auth.ts has run, authInitPromise is ${authInitPromise}`)
+// Used to ensure Firebase auth state has resolved before accessing auth.currentUser.
+// Firebase initializes auth asynchronously, so accessing currentUser too early can return null.
 
-//These functions are Firebase wrappers that assume valid input! Validation should be done prior to calling them.
+// Note: Functions in this file assume that inputs have been validated prior to their calling.
+
+
+/**
+ * Subscribes to Firebase authentication state changes.
+ *
+ * Transforms the Firebase `User` object into the app-level `UserInfo` shape,
+ * decoupling the rest of the application from Firebase-specific types.
+ *
+ * @param callback - Invoked with the current user (or null if signed out).
+ *
+ * @returns Unsubscribe function that stops the auth listener.
+ *
+ * Notes:
+ * - The callback is invoked immediately upon subscription with the current auth state.
+ * - Subsequent auth changes (login, logout, token refresh) will trigger additional calls.
+ */
 export function subscribeToAuthState(callback: (user: UserInfo| null) => void): Unsubscribe {
   return onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -30,9 +47,11 @@ export function ensureAuthInitialization() {
   }
 
   return authInitPromise;
+  // Guarantees that Firebase has finished determining auth state before proceeding
 };
 
 export async function getCurrentUserInfo(): Promise<UserInfo | null> {
+  // Prevents race condition where auth.currentUser is accessed before initialization
   await ensureAuthInitialization();
 
   const user = auth.currentUser;
@@ -44,6 +63,7 @@ export async function logInWithEmailAndPassword(userEmail: string, password: str
         const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
         return mapUserInfo(userCredential.user);
     } catch (err) {
+      // Normalize Firebase errors into application-level errors
       if (err instanceof FirebaseError) {
         throw new AuthError(err.code, translateAuthError(err.code), err);
       }
@@ -63,10 +83,18 @@ export async function logOut(): Promise<void> {
     }
 };
 
+/**
+ * 
+ * @param userEmail 
+ * @param password 
+ * @param optionals 
+ * @returns 
+ */
 export async function createAccountWithEmailAndPassword(userEmail: string, password: string, optionals?: {displayName?: string | null, photoURL?: string | null}): Promise<UserInfo> {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
       if (optionals?.displayName || optionals?.photoURL) {
+        // A separate call is required to update these fields after account creation
         await updateProfile(userCredential.user, optionals);
       }
       return (mapUserInfo(userCredential.user));
@@ -120,16 +148,6 @@ export async function updateUsernameOrPhotoURL(updates: { displayName?: string |
       throw err;
     }
 };
-
-export function requireAuth() {};
-
-/*export async function updateUserEmail() {
-  try {
-    await updateEmail;
-  } catch {
-
-  }
-};*/
 
 function mapUserInfo(user:User): UserInfo {
   const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;
