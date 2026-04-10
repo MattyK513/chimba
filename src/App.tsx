@@ -7,15 +7,9 @@ import './App.css';
 function App() {
     return (
         <AuthProvider>
-            {/*
-                Provides auth-related actions and authenticated user state to downstream components
-            */}
+            {/* Exposes the authenticated user and auth actions throughout the app. */}
             <UserDataContextProvider>
-                {/*
-                    Manages Firestore subscription-based user data for different app modules.
-                    Designed to lazily subscribe and unsubscribe based on component usage to limit
-                    unnecessary Firestore reads.
-                */}
+                {/* Lazily manages Firestore-backed user data subscriptions for active modules. */}
                 <RouterProvider router={router} />
             </UserDataContextProvider>
         </AuthProvider>

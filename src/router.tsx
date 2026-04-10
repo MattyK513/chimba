@@ -1,8 +1,34 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ErrorComponent, ProtectedLayout, protectedLoader, PublicLayout, publicLoader } from "./components";
-import { Home, Goals, goalAction, Landing, Meals, Travel, Profile, profileAction, Login, loginAction, RecipePage, recipePageLoader, RecipeSearch, recipeSearchAction, Register, registerAction } from "./pages";
+import {
+    ErrorComponent,
+    ProtectedLayout,
+    protectedLoader,
+    PublicLayout,
+    publicLoader
+} from "./components";
+import {
+    Goals,
+    goalAction,
+    Home,
+    Landing,
+    Login,
+    loginAction,
+    Meals,
+    Profile,
+    profileAction,
+    RecipePage,
+    recipePageLoader,
+    RecipeSearch,
+    recipeSearchAction,
+    Register,
+    registerAction,
+    Travel
+} from "./pages";
 
+// The app is split into two top-level route trees that share the same root path.
+// Loader guards decide whether a user sees the authenticated app shell or the public entry flow.
 const router = createBrowserRouter([
+    // Authenticated application routes.
     {
         path: "/",
         element: <ProtectedLayout />,
@@ -45,6 +71,7 @@ const router = createBrowserRouter([
             },
         ]
     },
+    // Public routes shown when no authenticated user is present.
     {
         path: "/",
         element: <PublicLayout />,

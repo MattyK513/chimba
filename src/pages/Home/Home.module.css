@@ -1,0 +1,134 @@
+.home {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.heroTitle {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.heroName {
+    background: linear-gradient(135deg, #7ab8ff 0%, #a47aff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.heroSubtitle {
+    margin: 0;
+    opacity: 0.75;
+    font-size: 1.05rem;
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+}
+
+.card {
+    display: flex;
+    gap: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.card:visited,
+.card:active {
+    color: inherit;
+}
+
+.cardAccent {
+    width: 4px;
+    background: linear-gradient(180deg, #7ab8ff, #a47aff);
+    flex-shrink: 0;
+}
+
+.cardDisabled .cardAccent {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.cardDisabled {
+    opacity: 0.8;
+}
+
+.cardBody {
+    padding: 1.4rem 1.5rem;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    flex: 1;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+
+.cardTitle {
+    margin: 0;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    flex: 1;
+}
+
+.tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(255, 186, 73, 0.12);
+    color: #ffba49;
+    border: 1px solid rgba(255, 186, 73, 0.35);
+    white-space: nowrap;
+}
+
+.cardDescription {
+    margin: 0;
+    font-size: 0.93rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.cardLinkText {
+    font-size: 0.88rem;
+    font-weight: 600;
+    opacity: 0.85;
+    align-self: flex-start;
+}
+
+@media (max-width: 480px) {
+    .heroTitle {
+        font-size: 2rem;
+    }
+    .cardBody {
+        padding: 1.2rem 1.25rem;
+    }
+}

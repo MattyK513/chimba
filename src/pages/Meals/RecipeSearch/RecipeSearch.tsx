@@ -1,28 +1,41 @@
 import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
-import KeywordSearchPanel from "./KeywordSearchPanel";
-import ClickableParamPanel from "./ClickableParamPanel";
-import QuantParamPanel from "./QuantParamPanel";
-import SearchResults from "./SearchResults";
+import { useOutletContext } from "react-router-dom";
+import KeywordSearchPanel from "./SearchSubcomponents/KeywordSearchPanel";
+import ClickableParamPanel from "./SearchSubcomponents/ClickableParamPanel";
+import QuantParamPanel from "./SearchSubcomponents/QuantParamPanel";
+import SearchResults from "./ResultsSubcomponents/SearchResults";
 import { allergyOptions, cuisineOptions, dietOptions, dishTypeOptions, mealTypeOptions, nutrientOptions } from "../../../constants/edamam";
 import { resetRecipeSearchState } from "../../../services/edamam";
-import type { EdamamResponse, EdamamHit, FormEvent, Dispatch, SetStateAction } from "../../../types";
+import type { EdamamResponse, EdamamHit, InfiniteScrollErrorResponse, Dispatch, SetStateAction } from "../../../types";
 import type { FetcherWithComponents } from "react-router-dom";
 import styles from "../Meals.module.css";
 
 type MealsOutletContext = {
     fetcher: FetcherWithComponents<EdamamResponse>;
     allHits: EdamamHit[];
-    setAllHits: Dispatch<SetStateAction<EdamamHit[]>>
+    setAllHits: Dispatch<SetStateAction<EdamamHit[]>>;
+    searchIsDisabled: boolean
 };
 
 export default function RecipeSearch() {
     const [currentTab, setCurrentTab] = useState("");
     const [searchIsHidden, setsearchIsHidden] = useState(false);
-    const { fetcher, allHits, setAllHits } = useOutletContext<MealsOutletContext>();
-    const { data }: { data: EdamamResponse | undefined } = fetcher;
-    const { Form, formAction, formData, formEncType, formMethod, json, load, reset, state: fetcherState, submit, text } = fetcher;
-    const nextURL = data?._links?.next?.href || null;
+    const { fetcher, allHits, setAllHits, searchIsDisabled } = useOutletContext<MealsOutletContext>();
+    const { data }: { data: EdamamResponse | InfiniteScrollErrorResponse | undefined } = fetcher;
+    const { Form, state: fetcherState, submit } = fetcher;
+    const paginationError = data && "error" in data ? true : false;
+
+    let nextURL: string | null = null;
+
+    if (data?._links?.next?.href) {
+        nextURL = data._links.next.href;
+    } else if (
+        data &&
+        "nextURL" in data &&
+        typeof data.nextURL === "string"
+    ) {
+        nextURL = data.nextURL;
+    }
     
     useEffect(() => {
         if (data && data.count > 0) {
@@ -108,18 +121,18 @@ export default function RecipeSearch() {
 
                 <hr className={styles.formDivider} />
                 
-                <button type="submit" disabled={fetcher.state !== "idle"}>
+                <button type="submit" disabled={fetcher.state !== "idle" || searchIsDisabled}>
                     {fetcher.state === "idle" ? "Search" : "Submitting"}
                 </button>
                 <button type="reset" disabled={fetcher.state !== "idle"}>
                     Clear search
                 </button>
             </Form>
-            {data && data.hits.length > 0 && <div onClick={() => setsearchIsHidden(prev => !prev)} className={`${styles.searchToggle} ${searchIsHidden ? styles.expand : styles.hide}`}>
+            {data && data.hits?.length > 0 && <div onClick={() => setsearchIsHidden(prev => !prev)} className={`${styles.searchToggle} ${searchIsHidden ? styles.expand : styles.hide}`}>
                 {searchIsHidden ? "Show search panel" : "Hide search panel"}
             </div>}
 
-            {data && <SearchResults hits={allHits} submit={submit} numResults={data.hits.length} fetcherState={fetcherState} nextURL={nextURL} />}
+            {data && <SearchResults hits={allHits} submit={submit} numResults={data.hits?.length} fetcherState={fetcherState} nextURL={nextURL} paginationError={paginationError} searchIsDisabled={searchIsDisabled}/>}
         </>
     );
 };

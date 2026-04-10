@@ -1,7 +1,7 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { subscribeToGoals, subscribeToMealPlans, subscribeToGroceryList, subscribeToSavedRecipes } from "../services/firestore";
-import type { Goal, Ingredient, MealModuleData, MealPlans, ModuleName, ReactNode, SavedRecipeWithId, SubState, UserDataContextType } from "../types";
+import { subscribeToGoals, subscribeToMealPlans, subscribeToGroceryList, subscribeToProfileData, subscribeToSavedRecipes } from "../services/firestore";
+import type { Goal, Ingredient, MealPlans, ModuleName, ReactNode, SavedRecipeWithId, SubState, UserDataContextType, UserProfileFields } from "../types";
 
 export const UserDataContext = createContext<UserDataContextType | null>(null);
 
@@ -18,6 +18,10 @@ const initialSubState: SubState = {
         count: 0,
         unsubscribe: null
     },
+    profileData: {
+        count: 0,
+        unsubscribe: null
+    },
     savedRecipes: {
         count: 0,
         unsubscribe: null
@@ -30,6 +34,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
     const [groceryListData, setGroceryListData] = useState<Ingredient[] | null>(null);
     const [mealPlanData, setMealPlanData] = useState<MealPlans | null>(null);
     const [savedRecipeData, setSavedRecipeData] = useState<SavedRecipeWithId[] | null>(null);
+    const [profileData, setProfileData] = useState<UserProfileFields | null>(null);
 
     const subStateRef = useRef<SubState>(structuredClone(initialSubState));
 
@@ -49,6 +54,10 @@ export default function UserDataContextProvider({ children }: { children: ReactN
         savedRecipes: {
             setState: setSavedRecipeData,
             subscribe: subscribeToSavedRecipes
+        },
+        profileData: {
+            setState: setProfileData,
+            subscribe: subscribeToProfileData
         }
     };
 
@@ -79,7 +88,9 @@ export default function UserDataContextProvider({ children }: { children: ReactN
             break;
         case "savedRecipes":
             entry.unsubscribe = subscribeToSavedRecipes(user.uid, setSavedRecipeData);
-            break; 
+            break;
+        case "profileData":
+            entry.unsubscribe = subscribeToProfileData(user.uid, setProfileData);
         }
 
     }, [user]);
@@ -117,6 +128,8 @@ export default function UserDataContextProvider({ children }: { children: ReactN
                 case "savedRecipes":
                     setSavedRecipeData(null);
                     break;
+                case "profileData":
+                    setProfileData(null);
             }
 
             return;
@@ -150,8 +163,12 @@ export default function UserDataContextProvider({ children }: { children: ReactN
             goals: goalData,
             mealPlans: mealPlanData,
             groceryList: groceryListData,
-            savedRecipes: savedRecipeData, addDependency, removeDependency}),
-        [goalData, mealPlanData, groceryListData, savedRecipeData, addDependency, removeDependency]
+            savedRecipes: savedRecipeData,
+            profileData,
+            addDependency,
+            removeDependency
+        }),
+        [goalData, mealPlanData, groceryListData, savedRecipeData, profileData, addDependency, removeDependency]
     )
 
     return (

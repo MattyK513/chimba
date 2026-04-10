@@ -3,6 +3,10 @@ import useAuth from "../../hooks/useAuth";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Layout.module.css";
 
+/**
+ * Layout for authenticated routes. The loader handles initial auth checks;
+ * the useAuth hook here handles live sign-outs while already on a protected page.
+ */
 export default function ProtectedLayout() {
     const { user, loading } = useAuth();
     const location = useLocation();
@@ -16,13 +20,13 @@ export default function ProtectedLayout() {
             <Navigate to="/welcome" replace state={{ from: location}} />
         );
     }
-    
+
     return (
-            <>
-                <Navbar />
-                <div className={styles.protectedContent}>
-                    <Outlet />
-                </div>
-            </>
-        );
-};
+        <>
+            <Navbar />
+            <div className={styles.protectedContent}>
+                <Outlet />
+            </div>
+        </>
+    );
+}

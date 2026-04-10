@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { AuthStateContext } from "../contexts/AuthProvider";
 import authFunctions from "../services/auth";
 
@@ -9,5 +9,5 @@ export default function useAuth() {
         throw new Error("useAuth must be used within an AuthProvider");
     }
 
-    return { ...context, ...authFunctions};
+    return useMemo(() => ({ ...context, ...authFunctions }), [context]);
 };

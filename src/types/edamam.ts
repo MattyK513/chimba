@@ -94,9 +94,9 @@ interface EdamamDigestEntry {
 }
 
 export interface EdamamError {
-    errorCode: string,
+    errorCode?: string,
     message: string,
-    params: string[]
+    params?: string[]
 }
 
 export interface EdamamHit {
@@ -346,3 +346,8 @@ export type RecipeField =
   | 'digest'
   | 'tags'
   | 'externalId';
+
+  export interface InfiniteScrollErrorResponse {
+    error: true;
+    nextURL: string | null;
+  }

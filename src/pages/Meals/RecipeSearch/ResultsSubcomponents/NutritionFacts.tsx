@@ -1,4 +1,4 @@
-import type { NutrientObj } from "../../../types";
+import type { NutrientObj } from "../../../../types";
 import styles from "./NutritionFacts.module.css";
 
 export default function NutritionFacts({ nutrients, daily, servings, calories }: {nutrients: NutrientObj, daily: NutrientObj, calories: number, servings: number} ) {

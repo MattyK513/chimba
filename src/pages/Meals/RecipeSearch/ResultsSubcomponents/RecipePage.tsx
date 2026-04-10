@@ -1,9 +1,9 @@
 import { useEffect} from "react";
 import { useLocation, useLoaderData } from "react-router-dom";
-import { addIngredientToGroceryList } from "../../../services/edamam";
+import { addIngredientToGroceryList } from "../../../../services/edamam";
 import NutritionFacts from "./NutritionFacts";
-import type { EdamamHit } from "../../../types";
-import styles from "../Meals.module.css";
+import type { EdamamHit } from "../../../../types";
+import styles from "../../Meals.module.css";
 
 export default function RecipePage() {
     const location = useLocation();

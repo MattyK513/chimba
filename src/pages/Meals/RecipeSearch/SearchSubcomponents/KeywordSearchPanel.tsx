@@ -1,4 +1,4 @@
-import styles from "../Meals.module.css";
+import styles from "../../Meals.module.css";
 
 export default function KeywordSearchPanel() {
     return (

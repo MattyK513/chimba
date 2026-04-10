@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { NutrientOption } from "../../../types";
-import styles from "../Meals.module.css";
+import type { NutrientOption } from "../../../../types";
+import styles from "../../Meals.module.css";
 
 export default function NutrientQuantInput({ parameter, label, unit }: NutrientOption) {
     const [min, setMin] = useState("");

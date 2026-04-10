@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../Meals.module.css";
+import styles from "../../Meals.module.css";
 
 export default function SimpleQuantInput({ type }: {type: "time" | "calories" | "ingr"}) {
     const [min, setMin] = useState("");

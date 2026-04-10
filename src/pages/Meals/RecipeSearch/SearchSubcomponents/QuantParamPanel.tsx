@@ -1,9 +1,9 @@
 // QuantParamPanel.tsx
 import NutrientQuantInput from "./NutrientQuantInput";
 import SimpleQuantInput from "./SimpleQuantInput";
-import { sortNutrients } from "../../../services/edamam";
-import type { NutrientOption } from "../../../types";
-import styles from "../Meals.module.css";
+import { sortNutrients } from "../../../../services/edamam";
+import type { NutrientOption } from "../../../../types";
+import styles from "../../Meals.module.css";
 
 const groupLabels: Record<string, string> = {
     macros: "Macronutrients",

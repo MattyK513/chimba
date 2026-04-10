@@ -1,7 +1,7 @@
-import { recipeIsKnown } from "../../../cache/knownRecipes";
+import { recipeIsKnown } from "../../../../cache/knownRecipes";
 import { redirect } from "react-router-dom";
-import { searchEdamamById } from "../../../services/edamam";
-import type { Params } from "../../../types";
+import { searchEdamamById } from "../../../../services/edamam";
+import type { Params } from "../../../../types";
 
 export default async function recipePageLoader({ params }: {params: Params<string>}) {
     const id = params.recipeId ?? null;

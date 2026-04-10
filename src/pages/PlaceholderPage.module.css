@@ -1,0 +1,63 @@
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.titleRow {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.title {
+    margin: 0;
+    font-size: 2.25rem;
+    letter-spacing: -0.02em;
+}
+
+.tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(255, 186, 73, 0.12);
+    color: #ffba49;
+    border: 1px solid rgba(255, 186, 73, 0.35);
+}
+
+.subtitle {
+    margin: 0.75rem 0 1.25rem;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+.featureList {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.featureCard {
+    padding: 1.25rem;
+    border: 1px dashed rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.featureTitle {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+}
+
+.featureDescription {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.78;
+    line-height: 1.45;
+}

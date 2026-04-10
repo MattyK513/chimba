@@ -1,5 +1,5 @@
 import { fetchNextResults, searchEdamam } from "../../../services/edamam";
-import type { ActionFunctionArgs, EdamamResponse, QueryParam } from "../../../types";
+import type { ActionFunctionArgs, QueryParam } from "../../../types";
 
 export default async function recipeSearchAction({ request }: ActionFunctionArgs) {
     const params: QueryParam[] = [];
@@ -8,7 +8,12 @@ export default async function recipeSearchAction({ request }: ActionFunctionArgs
     const nextURL = data.get("nextURL");
 
     if (typeof nextURL === "string") {
-        return await fetchNextResults(nextURL);
+        try {
+            return await fetchNextResults(nextURL);
+        } catch(err) {
+            if (err instanceof Error && err.message === "Edamam pagination error: 429") return {error: true, nextURL: nextURL};
+            throw err;
+        }
     }
 
     let q = data.get("q");

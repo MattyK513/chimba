@@ -1,61 +1,28 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import type { EdamamHit, FetcherSubmitFunction, NutrientCode } from "../../../types";
-import styles from "../Meals.module.css";
+import useInfiniteScroll from "../../../../hooks/useInfiniteScroll";
+import useScrollRestore from "../../../../hooks/useScrollRestore";
+import RateLimitNotice from "./RateLimitNotice";
+import type { EdamamHit, FetcherSubmitFunction, NutrientCode } from "../../../../types";
+import styles from "../../Meals.module.css";
 
-const LAST_VIEWED_RECIPE_KEY = "recipe-search:last-viewed";
+const macros: NutrientCode[] = ["PROCNT", "FAT", "CHOCDF", "FIBTG", "SUGAR"];
+const micros: NutrientCode[] = ["CHOLE", "NA", "CA", "MG", "K", "FE"];
 
 interface Props {
     hits: EdamamHit[],
     submit: FetcherSubmitFunction,
     numResults: number,
     fetcherState: "idle" | "loading" | "submitting",
-    nextURL: string | null
+    nextURL: string | null,
+    paginationError: boolean,
+    searchIsDisabled: boolean
 }
 
-export default function SearchResults({ hits, submit, numResults, fetcherState, nextURL }: Props) {
-
-    const sentinelRef = useRef<HTMLDivElement | null>(null);
-    const cardRefs = useRef(new Map<string, HTMLElement>());
-
-    const macros: NutrientCode[] = ["PROCNT", "FAT", "CHOCDF", "FIBTG", "SUGAR"];
-    const micros: NutrientCode[] = ["CHOLE", "NA", "CA", "MG", "K", "FE"];
-
-    useEffect(() => {
-        if (!sentinelRef.current || hits.length === 0 || !nextURL || fetcherState !== "idle") return;
-
-        const observer = new IntersectionObserver(entries => {
-            const entry = entries[0];
-            if (
-                entry.isIntersecting
-            ) {
-                submit({nextURL: nextURL}, {method: "post", action: "/meal-planner/recipe-search"});
-            }
-        },
-        {
-            root: null,
-            rootMargin: "0px 0px 250px 0px",
-            threshold: 0
-        }
-    
-        );
-        observer.observe(sentinelRef.current);
-
-        return () => observer.disconnect();
-    }, [nextURL, hits.length]);
-
-    useEffect(() => {
-        const lastViewedRecipeId = sessionStorage.getItem(LAST_VIEWED_RECIPE_KEY);
-
-        if (!lastViewedRecipeId) return;
-        
-        const recipeCard = cardRefs.current.get(lastViewedRecipeId);
-
-        if (!recipeCard) return;
-
-        recipeCard.scrollIntoView({ behavior: "auto", block: "center"});
-        sessionStorage.removeItem(LAST_VIEWED_RECIPE_KEY);
-    }, [hits]);
+export default function SearchResults({ hits, submit, numResults, fetcherState, nextURL, paginationError, searchIsDisabled }: Props) {
+    const sentinelRef = useInfiniteScroll({
+        nextURL , enabled: !paginationError, fetcherState, submit, action: "/meal-planner/recipe-search" 
+    });
+    const { registerItem, markItemAsViewed } = useScrollRestore("recipe-search:last-viewed", hits);
 
     if (numResults === 0) return <span>No results</span>;
 
@@ -102,21 +69,12 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
                 </li>
             );
         });
-
-
         return (
             <article
                 className={styles.resultCard}
                 key={id}
-                ref={node => {
-                    if (node) {
-                        cardRefs.current.set(id,node);
-                        return;
-                    }
-                    cardRefs.current.delete(id);
-                }
-            }>
-                <Link to={id} state={result} className={styles.resultCardLink} onClick={() => sessionStorage.setItem(LAST_VIEWED_RECIPE_KEY, id)}>
+                ref={node => registerItem(id, node)}>
+                <Link to={id} state={result} className={styles.resultCardLink} onClick={() => markItemAsViewed(id)}>
                     <div className={styles.cardHeader}>
                         <img src={images.SMALL.url} className={styles.cardPhoto} alt={label} />
                             <div className={styles.cardMainInfo}>
@@ -152,7 +110,8 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
     return (
         <>
             {resultCards}
-            <div ref={sentinelRef} className={styles.sentinel} />
+            {nextURL && fetcherState === "idle" && !paginationError && <div ref={sentinelRef} className={styles.sentinel} />}
+            {paginationError && <RateLimitNotice searchIsDisabled={searchIsDisabled} fetcherState={fetcherState} submit={submit} nextURL={nextURL} />}
         </>
     );
 };

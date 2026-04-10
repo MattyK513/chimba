@@ -1,6 +1,6 @@
 import { InfoIcon } from "lucide-react";
-import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption } from "../../../types";
-import styles from "../Meals.module.css";
+import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption } from "../../../../types";
+import styles from "../../Meals.module.css";
 
 type ParamOption = AllergyOption | CuisineOption | DietOption | DishTypeOption | MealTypeOption;
 

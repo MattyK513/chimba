@@ -1,5 +1,7 @@
 import type { AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption, NutrientCode, NutrientOption } from "../types";
 
+// Note: Commented-out lines represent values that are currently present in Edamam Recipe Search documentation, but non-functional in the API
+
 export const allergyOptions: AllergyOption[] = [
   {parameter: 'health', value: 'celery-free', label: 'Celery-free', definition: "Does not contain celery or derivatives"},
   {parameter: 'health', value: 'crustacean-free', label: 'Crustacean-free', definition: "Does not contain crustaceans (shrimp, lobster etc.) or derivatives"},

@@ -1,228 +1,238 @@
-import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    deleteUser,
+    EmailAuthProvider,
+    onAuthStateChanged,
+    reauthenticateWithCredential,
+    signInWithEmailAndPassword,
+    signOut,
+    updatePassword,
+    updateProfile,
+} from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { auth } from "../config/firebase";
 import { AuthError } from "../errors";
 import type { Unsubscribe, User, UserInfo } from "../types";
 
-let authInitPromise: Promise<void> | null = null;
-// Used to ensure Firebase auth state has resolved before accessing auth.currentUser.
-// Firebase initializes auth asynchronously, so accessing currentUser too early can return null.
-
-// Note: Functions in this file assume that inputs have been validated prior to their calling.
-
+// Note: functions in this file assume inputs have been validated by the caller.
 
 /**
- * Subscribes to Firebase authentication state changes.
- *
- * Transforms the Firebase `User` object into the app-level `UserInfo` shape,
- * decoupling the rest of the application from Firebase-specific types.
- *
- * @param callback - Invoked with the current user (or null if signed out).
- *
- * @returns Unsubscribe function that stops the auth listener.
- *
- * Notes:
- * - The callback is invoked immediately upon subscription with the current auth state.
- * - Subsequent auth changes (login, logout, token refresh) will trigger additional calls.
+ * Resolved once Firebase has finished determining the initial auth state.
+ * `auth.currentUser` is null during initialization regardless of actual
+ * sign-in status — awaiting this ensures we get the real answer.
  */
-export function subscribeToAuthState(callback: (user: UserInfo| null) => void): Unsubscribe {
-  return onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const userInfo: UserInfo = mapUserInfo(user);
-      callback(userInfo);
-    } else {
-      callback(null);
-    }
-  });
-};
+let authInitPromise: Promise<void> | null = null;
 
-export function ensureAuthInitialization() {
-  if (!authInitPromise) {
-    authInitPromise = new Promise(resolve => {
-      const unsubscribe = onAuthStateChanged(auth, () => {
-        unsubscribe();
-        resolve();
-      });
+function ensureAuthInitialization(): Promise<void> {
+    if (!authInitPromise) {
+        authInitPromise = new Promise((resolve) => {
+            const unsubscribe = onAuthStateChanged(auth, () => {
+                unsubscribe();
+                resolve();
+            });
+        });
+    }
+    return authInitPromise;
+}
+
+/**
+ * Subscribes to auth state changes, mapping Firebase's `User` to the
+ * app-level `UserInfo` shape so the rest of the app stays decoupled
+ * from Firebase types.
+ *
+ * The callback fires immediately with the current state, then again on
+ * every subsequent change (login, logout, token refresh).
+ *
+ * @returns Unsubscribe function.
+ */
+export function subscribeToAuthState(
+    callback: (user: UserInfo | null) => void
+): Unsubscribe {
+    return onAuthStateChanged(auth, (user) => {
+        callback(user ? mapUserInfo(user) : null);
     });
-  }
+}
 
-  return authInitPromise;
-  // Guarantees that Firebase has finished determining auth state before proceeding
-};
-
+/**
+ * Gets the current user, waiting for Firebase to finish initializing
+ * if necessary. Safe to call from route loaders.
+ */
 export async function getCurrentUserInfo(): Promise<UserInfo | null> {
-  // Prevents race condition where auth.currentUser is accessed before initialization
-  await ensureAuthInitialization();
+    await ensureAuthInitialization();
+    const user = auth.currentUser;
+    return user ? mapUserInfo(user) : null;
+}
 
-  const user = auth.currentUser;
-  return user ? mapUserInfo(user) : null;
-};
-
-export async function logInWithEmailAndPassword(userEmail: string, password: string): Promise<UserInfo> {
+export async function logInWithEmailAndPassword(
+    email: string,
+    password: string
+): Promise<UserInfo> {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
-        return mapUserInfo(userCredential.user);
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        return mapUserInfo(user);
     } catch (err) {
-      // Normalize Firebase errors into application-level errors
-      if (err instanceof FirebaseError) {
-        throw new AuthError(err.code, translateAuthError(err.code), err);
-      }
-      throw err;
+        throw normalizeAuthError(err);
     }
-};
+}
 
 export async function logOut(): Promise<void> {
     try {
         await signOut(auth);
     } catch (err) {
-      const message = "There were issues logging out. Please try again.";
-        if (err instanceof FirebaseError) {
-          throw new AuthError(err.code, message, err);
-        }
-        throw err;
+        throw normalizeAuthError(err, "Couldn't log out. Please try again.");
     }
-};
+}
+
+interface ProfileUpdates {
+    displayName?: string | null;
+    photoURL?: string | null;
+}
 
 /**
- * 
- * @param userEmail 
- * @param password 
- * @param optionals 
- * @returns 
+ * Creates a new account and optionally sets display name / photo URL.
+ * Firebase requires a separate `updateProfile` call for these fields.
  */
-export async function createAccountWithEmailAndPassword(userEmail: string, password: string, optionals?: {displayName?: string | null, photoURL?: string | null}): Promise<UserInfo> {
+export async function createAccountWithEmailAndPassword(
+    email: string,
+    password: string,
+    profile?: ProfileUpdates
+): Promise<UserInfo> {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
-      if (optionals?.displayName || optionals?.photoURL) {
-        // A separate call is required to update these fields after account creation
-        await updateProfile(userCredential.user, optionals);
-      }
-      return (mapUserInfo(userCredential.user));
+        const { user } = await createUserWithEmailAndPassword(auth, email, password);
+        if (profile?.displayName || profile?.photoURL) {
+            await updateProfile(user, profile);
+        }
+        return mapUserInfo(user);
     } catch (err) {
-      if (err instanceof FirebaseError) {
-        throw new AuthError(err.code, translateAuthError(err.code), err);
-      }
-      throw err;
+        throw normalizeAuthError(err);
     }
-};
+}
 
+/**
+ * Deletes the currently signed-in user. May require recent re-authentication.
+ */
 export async function deleteProfile(): Promise<void> {
     const user = auth.currentUser;
-
     if (!user) {
-      const code = "no-user";
-      const message = "No user is currently signed in.";
-      throw new AuthError(code, message);
+        throw new AuthError("auth/no-current-user", "No user is currently signed in.");
     }
 
     try {
         await deleteUser(user);
     } catch (err) {
-      if (checkReauthIsRequired(err)) {
-        const message = "Please log in again to perform this action.";
-        throw new AuthError("auth/requires-recent-login", message, err);
-      }
-        if (err instanceof FirebaseError) {
-          throw new AuthError(err.code, translateAuthError(err.code), err)
-        }
-        throw err;
+        throw normalizeAuthError(err);
     }
-};
+}
 
-export async function updateUsernameOrPhotoURL(updates: { displayName?: string | null, photoURL?: string | null }): Promise<UserInfo> {
-  const user = auth.currentUser;
+export async function updateUsernameOrPhotoURL(
+    updates: ProfileUpdates
+): Promise<UserInfo> {
+    const user = auth.currentUser;
+    if (!user) {
+        throw new AuthError("auth/no-current-user", "You must be signed in to do that.");
+    }
 
-  if (!user) {
-    const code = "unauthorized";
-    const message = "User not authenticated";
-    throw new AuthError(code, message);
-  }
-  
-  try {
+    try {
         await updateProfile(user, updates);
         return mapUserInfo(user);
     } catch (err) {
-      if (err instanceof FirebaseError) {
-        throw new AuthError(err.code, translateAuthError(err.code), err);
-      }
-      throw err;
+        throw normalizeAuthError(err);
     }
-};
+}
 
-function mapUserInfo(user:User): UserInfo {
-  const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;
-  return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
-};
+export async function changePassword(currentPassword: string, newPassword: string): Promise<{success: boolean}> {
+    const user = auth.currentUser;
+    
+    if (!user || !user.email) throw new AuthError("auth/no-current-user", "You must be signed in to do that.");
 
-function checkReauthIsRequired(err: unknown): boolean {
-  return err instanceof FirebaseError && err.code === "auth/requires-recent-login";
-};
+    try {
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+        await reauthenticateWithCredential(user, credential);
+        await updatePassword(user, newPassword);
 
-function translateAuthError(code?: string): string {
-  switch (code) {
-    case "auth/invalid-email":
-      return "Please enter a valid email address.";
+        return {success: true};
+    } catch (error: any) {
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            return {success: false};
+        }
+        throw error;
+    }
+}
 
-    case "auth/user-disabled":
-      return "This account has been disabled. Please contact support if you believe this is a mistake.";
+// Helpers
 
-    case "auth/user-not-found":
-      return "No account was found with that email or credentials.";
+function mapUserInfo(user: User): UserInfo {
+    const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;
+    return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
+}
 
-    case "auth/wrong-password":
-      return "Invalid username or password";
+/** Wraps Firebase errors in AuthError; passes through anything else. */
+function normalizeAuthError(err: unknown, overrideMessage?: string): AuthError | unknown {
+    if (err instanceof FirebaseError) {
+        return new AuthError(err.code, overrideMessage ?? translateAuthError(err.code), err);
+    }
+    return err;
+}
 
-    case "auth/email-already-in-use":
-      return "Please try another email address.";
+function translateAuthError(code: string): string {
+    switch (code) {
+        // Sign-in
+        case "auth/invalid-email":
+            return "Please enter a valid email address.";
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+        case "auth/user-not-found":
+            // Intentionally vague to prevent account enumeration
+            return "Incorrect email or password.";
+        case "auth/user-disabled":
+            return "This account has been disabled. Contact support if you believe this is a mistake.";
+        case "auth/too-many-requests":
+            return "Too many attempts. Please wait a moment and try again.";
 
-    case "auth/operation-not-allowed":
-      return "Email/password accounts are not enabled and must be enabled in the Firebase Console. Please contact support.";
+        // Registration
+        case "auth/email-already-in-use":
+            return "An account with this email already exists.";
+        case "auth/weak-password":
+            return "Please choose a stronger password (at least 6 characters).";
+        case "auth/operation-not-allowed":
+            return "This sign-in method is not enabled. Please contact support.";
 
-    case "auth/weak-password":
-      return "Please choose a stronger password.";
+        // Action codes (password reset, email verification)
+        case "auth/expired-action-code":
+            return "This link has expired. Please request a new one.";
+        case "auth/invalid-action-code":
+            return "This link is invalid or has already been used.";
 
-    case "auth/expired-action-code":
-      return "Code expired. [REQUEST ANOTHER]";
+        // Session / token
+        case "auth/requires-recent-login":
+            return "For security, please sign in again to continue.";
+        case "auth/invalid-user-token":
+        case "auth/user-token-expired":
+            return "Your session has expired. Please sign in again.";
 
-    case "auth/invalid-action-code":
-      return "Invalid code. [REQUEST ANOTHER]";
+        // Profile
+        case "auth/invalid-photo-url":
+            return "That photo URL doesn't look valid.";
 
-    case "auth/too-many-requests":
-      return "Too many attempts. Please wait a moment and try again.";
+        // Infra
+        case "auth/network-request-failed":
+            return "Network error. Check your connection and try again.";
+        case "auth/internal-error":
+            return "Something went wrong on our end. Please try again.";
 
-    case "auth/internal-error":
-      return "Something went wrong on our end. Please try again later.";
+        default:
+            return "Something went wrong. Please try again.";
+    }
+}
 
-    case "auth/invalid-photo-url":
-      return "The profile photo URL appears to be invalid.";
-
-    case "auth/invalid-user-token":
-      return "Invalid user token";
-
-    case "auth/user-token-expired":
-      return "Token expired";
-
-    case "auth/null-user":
-      return "Attempted to update a null user";
-
-    case "auth/tenant-id-mismatch":
-      return "Attempted to update an unauthenticated user.";
-
-    case "auth/requires-recent-login":
-      return "Please sign in again to continue.";
-
-    default:
-      return "An error occurred. Please try again.";
-  }
-};
+// Public API
 
 const authFunctions = {
-  logIn: logInWithEmailAndPassword,
-  logOut,
-  register: createAccountWithEmailAndPassword,
-  deleteProfile,
-  updateUsernameOrPhotoURL,
-  //updateEmail: updateUserEmail
+    logIn: logInWithEmailAndPassword,
+    logOut,
+    register: createAccountWithEmailAndPassword,
+    deleteProfile,
+    updateUsernameOrPhotoURL,
 };
 
 export default authFunctions;
