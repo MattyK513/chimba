@@ -1,6 +1,10 @@
 .nutritionLabel {
-  width: 17rem;
+  margin: 0 auto;
+  width: 260px;
   border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.9);
   padding: 8px;
   font-family: Arial, sans-serif;
 }
@@ -12,12 +16,12 @@
 }
 
 .divider {
-  border-top: 1px solid black;
+  border-top: 1px solid rgba(0, 0, 0, 0.9);
   margin: 4px 0;
 }
 
 .divider.thick {
-  border-top: 6px solid black;
+  border-top: 6px solid rgba(0, 0, 0, 0.9);
 }
 
 .row {

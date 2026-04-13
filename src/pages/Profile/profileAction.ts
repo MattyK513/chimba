@@ -24,10 +24,6 @@ export default async function profileAction({request}: ActionFunctionArgs) {
 
         const result = await changePassword(currentPassword, newPassword);
 
-        if (!result.success) {
-            return { ...result, error: "wrong-password" };
-        }
-
         return result;
     }
 

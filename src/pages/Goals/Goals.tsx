@@ -29,7 +29,7 @@ export default function Goals() {
             </div>
 
             <p className={styles.subtitle}>
-                A full goal-setting and tracking experience is in development. Here's a sneak peak
+                A full goal-setting and tracking experience is in development. Here's a sneak peek
                 at what we're working towards.
             </p>
 

@@ -1,0 +1,159 @@
+.resultsContainer {
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.resultsContainer > :not(.resultCard) {
+    grid-column: 1 / -1;
+}
+
+.resultCard {
+    background-color: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    position: relative;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.resultCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.resultCardLink {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.resultCardLink:visited,
+.resultCardLink:hover,
+.resultCardLink:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardHeader {
+    display: flex;
+    gap: 8%;
+    padding: 1rem;
+}
+
+.cardPhoto {
+    width: 40%;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+.cardMainInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardTags {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardHealthLabels, .cardCautions {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex: 1;
+    gap:  0 0.8rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    padding: 0.1rem 1rem;
+}
+
+.cardHealthLabels {
+    color: #66d9a0;
+    justify-content: flex-start;
+}
+
+.cardCautions {
+    color: #ff7070;
+    justify-content: flex-end;
+}
+
+.cardNutritionFacts {
+    margin: 0;
+    padding: 0.1rem 1.2rem 0.8rem 0;
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+}
+
+.cardCaloriesAndServings {
+    margin: 0;
+    font-weight: bold;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.cardCalories > span {
+    font-size: 1.1rem;
+}
+
+.cardNutrientList {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    list-style: none;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.cardNutrient {
+    margin: 0;
+    display: flex;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.noResults {
+    margin: 2rem auto 0;
+    padding: 2rem 1.5rem;
+    max-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    text-align: center;
+}
+
+.noResultsTitle {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+}
+
+.noResultsText {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.sentinel {
+    margin: 0;
+    height: 1px;
+}
+
+@media (max-width: 1000px) {
+    .resultsContainer {
+        gap: 0.8rem 1rem;
+    }
+}

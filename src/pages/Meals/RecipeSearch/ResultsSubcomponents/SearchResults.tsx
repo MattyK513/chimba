@@ -3,7 +3,7 @@ import useInfiniteScroll from "../../../../hooks/useInfiniteScroll";
 import useScrollRestore from "../../../../hooks/useScrollRestore";
 import RateLimitNotice from "./RateLimitNotice";
 import type { EdamamHit, FetcherSubmitFunction, NutrientCode } from "../../../../types";
-import styles from "../../Meals.module.css";
+import styles from "./SearchResults.module.css";
 
 const macros: NutrientCode[] = ["PROCNT", "FAT", "CHOCDF", "FIBTG", "SUGAR"];
 const micros: NutrientCode[] = ["CHOLE", "NA", "CA", "MG", "K", "FE"];
@@ -24,7 +24,16 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
     });
     const { registerItem, markItemAsViewed } = useScrollRestore("recipe-search:last-viewed", hits);
 
-    if (numResults === 0) return <span>No results</span>;
+    if (numResults === 0) {
+        return (
+            <div className={styles.noResults}>
+                <h2 className={styles.noResultsTitle}>No results</h2>
+                <p className={styles.noResultsText}>
+                    No recipes matched your search. Try adjusting your filters or keywords.
+                </p>
+            </div>
+        );
+    }
 
     const resultCards = hits.map(result => {
         const { recipe } = result;
@@ -108,10 +117,10 @@ export default function SearchResults({ hits, submit, numResults, fetcherState, 
     });
     
     return (
-        <>
+        <div className={styles.resultsContainer}>
             {resultCards}
             {nextURL && fetcherState === "idle" && !paginationError && <div ref={sentinelRef} className={styles.sentinel} />}
             {paginationError && <RateLimitNotice searchIsDisabled={searchIsDisabled} fetcherState={fetcherState} submit={submit} nextURL={nextURL} />}
-        </>
+        </div>
     );
 };

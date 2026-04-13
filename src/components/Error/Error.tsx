@@ -44,16 +44,16 @@ export default function ErrorComponent() {
     }
 
     return (
-        <div className={styles["error-container"]}>
-            {statusCode && <span className={styles["error-status"]}>{statusCode}</span>}
-            <h1 className={styles["error-title"]}>{title}</h1>
-            <p className={styles["error-message"]}>{message}</p>
-            <div className={styles["error-actions"]}>
-                <Link to="/" className={styles["error-link"]}>Go Home</Link>
-                {shouldDisplaySearchButton && <Link to="/meal-planner/recipe-search" className={styles["error-link"]}>Back to search</Link>}
+        <div className={styles.errorContainer}>
+            {statusCode && <span className={styles.errorStatus}>{statusCode}</span>}
+            <h1 className={styles.errorTitle}>{title}</h1>
+            <p className={styles.errorMessage}>{message}</p>
+            <div className={styles.errorActions}>
+                <Link to="/" className={styles.errorLink}>Go Home</Link>
+                {shouldDisplaySearchButton && <Link to="/meal-planner/recipe-search" className={styles.errorLink}>Back to search</Link>}
             </div>
             {import.meta.env.DEV && (
-                <details className={styles["error-details"]}>
+                <details className={styles.errorDetails}>
                     <summary>Dev Info</summary>
                     <pre>{JSON.stringify(error, null, 2)}</pre>
                 </details>

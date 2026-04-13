@@ -12,7 +12,7 @@ type Feature = {
 const features: Feature[] = [
     {
         title: "Recipe Search",
-        description: "Search thousands of recipes and filter by diet, nutrition, cooking time, allergies, cuisine, and more. Browse rich results with  ingredient lists and full nutrition breakdowns.",
+        description: "Search thousands of recipes and filter by diet, nutrition, cooking time, allergies, cuisine, and more. Browse rich results with ingredient lists and full nutrition breakdowns.",
         path: "/meal-planner/recipe-search",
         status: "available",
     },

@@ -140,7 +140,12 @@ export async function updateUsernameOrPhotoURL(
     }
 }
 
-export async function changePassword(currentPassword: string, newPassword: string): Promise<{success: boolean}> {
+/**
+ * Updates the signed-in user's password. Requires the current password to
+ * reauthenticate first — Firebase rejects `updatePassword` if the user's
+ * session isn't recent.
+ */
+export async function changePassword(currentPassword: string, newPassword: string): Promise<{success: boolean, error: string | null}> {
     const user = auth.currentUser;
     
     if (!user || !user.email) throw new AuthError("auth/no-current-user", "You must be signed in to do that.");
@@ -150,10 +155,10 @@ export async function changePassword(currentPassword: string, newPassword: strin
         await reauthenticateWithCredential(user, credential);
         await updatePassword(user, newPassword);
 
-        return {success: true};
+        return {success: true, error: null};
     } catch (error: any) {
-        if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-            return {success: false};
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential' || error.code === 'auth/weak-password') {
+            return {success: false, error: error.code.slice(5)};
         }
         throw error;
     }

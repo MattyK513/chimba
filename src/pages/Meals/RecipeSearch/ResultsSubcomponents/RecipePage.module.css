@@ -1,0 +1,203 @@
+.recipePage {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1rem 3rem;
+}
+
+.pageHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+
+.pagePhoto {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.headerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.headerInfo p {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.pageTitle {
+    margin: 0;
+    font-size: 2.25rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.cuisineAndDishTagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0.25rem 0;
+}
+
+.pageCookTime {
+    margin: 0.5rem 0 0;
+    opacity: 0.8;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bodyLeftColumn,
+.bodyRightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.ingredientListContainer,
+.tagsContainer {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.ingredientListHeading,
+.tagsHeading {
+    margin: 0 0 0.85rem;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+}
+
+.ingredientList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: left;
+}
+
+.ingredientList li {
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.ingredientList li:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.tagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.healthTag,
+.dietTag,
+.cuisineTag,
+.cautionTag,
+.dishTag {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.healthTag {
+    color: #8edc9f;
+    border-color: rgba(142, 220, 159, 0.35);
+    background: rgba(142, 220, 159, 0.1);
+}
+
+.dietTag {
+    color: #b6d5ff;
+    border-color: rgba(122, 184, 255, 0.4);
+    background: rgba(122, 184, 255, 0.12);
+}
+
+.cuisineTag,
+.dishTag {
+    color: rgba(255, 255, 255, 0.82);
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cautionTag {
+    color: #ff8b8b;
+    border-color: rgba(255, 139, 139, 0.4);
+    background: rgba(255, 139, 139, 0.1);
+}
+
+.nutritionFactsContainer {
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 720px) {
+    .pageHeader {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 6%;
+        text-align: left;
+    }
+
+    .pagePhoto {
+        flex: 0 0 300px;
+        max-width: 300px;
+    }
+
+    .headerInfo {
+        flex: 0 1 auto;
+        max-width: 28rem;
+    }
+
+    .cuisineAndDishTagContainer {
+        justify-content: flex-start;
+    }
+
+    .body {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .bodyLeftColumn {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .bodyRightColumn {
+        flex: 0 0 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .pageHeader {
+        gap: 12%;
+    }
+}

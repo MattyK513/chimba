@@ -1,12 +1,18 @@
-import styles from "../../Meals.module.css";
+import styles from "../RecipeSearch.module.css";
 
 export default function KeywordSearchPanel() {
     return (
-        <div className={styles.keywordContainer}>
-            <label htmlFor="keyword-search">
-                Keyword search
-                <input type="text" name="q" id="keyword-search"></input>
+        <div className={styles.keywordField}>
+            <label htmlFor="keyword-search" className={styles.keywordLabel}>
+                Keyword
             </label>
+            <input
+                id="keyword-search"
+                type="text"
+                name="q"
+                placeholder="e.g. chicken tikka masala"
+                className={styles.keywordInput}
+            />
         </div>
     );
-};
+}

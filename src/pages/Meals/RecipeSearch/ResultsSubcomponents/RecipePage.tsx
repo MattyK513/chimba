@@ -1,22 +1,22 @@
 import { useEffect} from "react";
 import { useLocation, useLoaderData } from "react-router-dom";
 import { addIngredientToGroceryList } from "../../../../services/edamam";
+import { formatTime } from "../../../../utils/formatTime";
 import NutritionFacts from "./NutritionFacts";
 import type { EdamamHit } from "../../../../types";
-import styles from "../../Meals.module.css";
+import styles from "./RecipePage.module.css";
 
 export default function RecipePage() {
     const location = useLocation();
     const loaderData = useLoaderData();
-    //const { recipe } = location.state as EdamamHit;
     const { recipe } = (loaderData ?? location.state) as EdamamHit;
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto"});
      }, []);
 
-    const { label, calories, cautions, cuisineType, dietLabels, dishType, healthLabels, images, ingredients, mealType, shareAs, source,
-        totalDaily, totalNutrients, totalTime, totalWeight, uri, url, yield: servings, ingredientLines, id
+    const { label, calories, cautions, cuisineType, dietLabels, dishType, healthLabels, images, ingredients, source,
+        totalDaily, totalNutrients, totalTime, url, yield: servings, id
      } = recipe;
      
      const {height: imgHeight, width: imgWidth, url: imgURL} = images.REGULAR;
@@ -50,42 +50,49 @@ export default function RecipePage() {
         return display;
      };
 
-     const formatTime = (time: number) => {
-        const hours = Math.floor(time / 60);
-        const mins = time % 60;
-        const hourString = hours > 0 ? `${hours}h `: "";
-        const minString = `${mins}m`;
-
-        return hourString + minString;
-     };
-     console.log(id, url)
     return (
         <div className={styles.recipePage}>
-            <img src={imgURL} alt={label} className={styles.pagePhoto} />
-            <h1 className={styles.pageTitle}>{label}</h1>
-            <p>Full recipe available from <a href={url} target="_blank" rel="noopener noreferrer">{source}</a></p>
-            <div className={styles.pageCuisineAndDishTagContainer}>
-                <div>
-                    {cuisineTypeDisplay}
+            <div className={styles.pageHeader}>
+                <img src={imgURL} alt={label} className={styles.pagePhoto} />
+                <div className={styles.headerInfo}>
+                    <h1 className={styles.pageTitle}>{label}</h1>
+                    <p>Full recipe available from <a href={url} target="_blank" rel="noopener noreferrer">{source}</a></p>
+                    <div className={styles.cuisineAndDishTagContainer}>
+                        <div>
+                            {cuisineTypeDisplay}
+                        </div>
+                        <div>
+                            {dishTypeDisplay}
+                        </div>
+                    </div>
+                    {totalTime > 0 && <p className={styles.pageCookTime}>Total time: {formatTime(totalTime)}</p>}
                 </div>
-                <div>
-                    {dishTypeDisplay}
+            </div>
+            <div className={styles.body}>
+                <div className={styles.bodyLeftColumn}>
+                    <div className={styles.ingredientListContainer}>
+                        <h3 className={styles.ingredientListHeading}>Ingredients</h3>
+                        <ul className={styles.ingredientList}>
+                            {ingredientDisplay}
+                        </ul>
+                    </div>
+                    <div className={styles.tagsContainer}>
+                        <h3 className={styles.tagsHeading}>Health Tags</h3>
+                        <div className={styles.tagList}>
+                            {renderTags()}
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.bodyRightColumn}>
+                    <div className={styles.nutritionFactsContainer}>
+                        {location.state || loaderData
+                        ? <NutritionFacts nutrients={totalNutrients} daily={totalDaily} calories={calories} servings={servings}/>
+                        : <span>Loading...</span>
+                    }
+                    </div>
                 </div>
             </div>
-            {totalTime > 0 && <p className={styles.pageCookTime}>Total time: {formatTime(totalTime)}</p>}
-            <h3>Ingredients</h3>
-            <ul className={styles.ingredientList}>
-                {ingredientDisplay}
-            </ul>
-            <div className={styles.nutritionContainer}>
-                {location.state || loaderData
-                ? <NutritionFacts nutrients={totalNutrients} daily={totalDaily} calories={calories} servings={servings}/>
-                : <span>Loading...</span>
-            }
-            </div>
-            <div className={styles.tagContainer}>
-                {renderTags()}
-            </div>
+            
         </div>
     );
 };

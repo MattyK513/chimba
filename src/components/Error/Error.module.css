@@ -1,4 +1,4 @@
-.error-container {
+.errorContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,30 +8,30 @@
     text-align: center;
 }
 
-.error-status {
+.errorStatus {
     font-size: 5rem;
     font-weight: 700;
     opacity: 0.2;
     line-height: 1;
 }
 
-.error-title {
+.errorTitle {
     font-size: 2rem;
     margin: 0.5rem 0;
 }
 
-.error-message {
+.errorMessage {
     color: rgba(255, 255, 255, 0.6);
     max-width: 400px;
     margin-bottom: 1.5rem;
 }
 
-.error-actions {
+.errorActions {
     display: flex;
     gap: 1rem;
 }
 
-.error-link {
+.errorLink {
     padding: 0.6em 1.2em;
     border-radius: 8px;
     background-color: #646cff;
@@ -40,25 +40,25 @@
     transition: background-color 0.25s;
 }
 
-.error-link:hover {
+.errorLink:hover {
     background-color: #535bf2;
     color: white;
 }
 
-.error-details {
+.errorDetails {
     margin-top: 2rem;
     text-align: left;
     max-width: 600px;
     width: 100%;
 }
 
-.error-details summary {
+.errorDetails summary {
     cursor: pointer;
     opacity: 0.5;
     font-size: 0.875rem;
 }
 
-.error-details pre {
+.errorDetails pre {
     background: rgba(0, 0, 0, 0.3);
     padding: 1rem;
     border-radius: 8px;
@@ -67,11 +67,11 @@
 }
 
 @media (prefers-color-scheme: light) {
-    .error-message {
+    .errorMessage {
         color: rgba(0, 0, 0, 0.6);
     }
 
-    .error-details pre {
+    .errorDetails pre {
         background: rgba(0, 0, 0, 0.05);
     }
 }

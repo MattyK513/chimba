@@ -13,7 +13,16 @@ export default function Profile() {
     const [confirmingDelete, setConfirmingDelete] = useState<boolean>(false);
 
     const { profileData, deleteFirestoreUser } = useProfile();
-    const actionData: {success: boolean, error?: string} | undefined = useActionData();
+    const actionData: {success: boolean, error: string | null} | undefined = useActionData();
+
+    let errorMessage = null;
+    if (actionData?.error) {
+        errorMessage = actionData.error === 'wrong-password' || actionData.error === 'invalid-credential'
+            ? "Incorrect current password. Please try again."
+            : actionData.error === 'weak-password'
+            ? "Password be at least 6 characters long"
+            : "Please try again";
+    }
 
     async function handleDelete() {
         if (!user) return;
@@ -121,9 +130,9 @@ export default function Profile() {
                                 className={styles.passwordChangeForm}
                             >
                                 <input type="hidden" name="intent" value="change-password" />
-                                {actionData?.error === "wrong-password" && (
+                                {errorMessage && (
                                     <div className={styles.errorBox}>
-                                        Incorrect current password. Please try again.
+                                        {errorMessage}
                                     </div>
                                 )}
                                 <input
