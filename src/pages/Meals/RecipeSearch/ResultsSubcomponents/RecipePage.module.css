@@ -11,7 +11,7 @@
     gap: 1.25rem;
     margin-bottom: 1.75rem;
     padding-bottom: 1.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid hsl(var(--color-text) / 0.08);
     text-align: center;
 }
 
@@ -19,7 +19,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid hsl(var(--color-text) / 0.1);
 }
 
 .headerInfo {
@@ -69,9 +69,9 @@
 .ingredientListContainer,
 .tagsContainer {
     padding: 1.25rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid hsl(var(--color-text) / 0.12);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
+    background: hsl(var(--color-text) / 0.03);
 }
 
 .ingredientListHeading,
@@ -101,7 +101,7 @@
 }
 
 .ingredientList li:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: hsl(var(--color-text) / 0.06);
 }
 
 .tagList {
@@ -120,40 +120,39 @@
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid;
 }
 
 .healthTag {
-    color: #8edc9f;
-    border-color: rgba(142, 220, 159, 0.35);
-    background: rgba(142, 220, 159, 0.1);
+    color: hsl(var(--color-positive));
+    border-color: hsl(var(--color-positive) / 0.35);
+    background: hsl(var(--color-positive) / 0.1);
 }
 
 .dietTag {
-    color: #b6d5ff;
-    border-color: rgba(122, 184, 255, 0.4);
-    background: rgba(122, 184, 255, 0.12);
+    color: hsl(var(--color-search-param));
+    border-color: hsl(var(--color-search-param) / 0.4);
+    background: hsl(var(--color-search-param) / 0.12);
 }
 
 .cuisineTag,
 .dishTag {
-    color: rgba(255, 255, 255, 0.82);
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.05);
+    color: hsl(var(--color-text) / 0.82);
+    border-color: hsl(var(--color-text) / 0.22);
+    background: hsl(var(--color-text) / 0.05);
 }
 
 .cautionTag {
-    color: #ff8b8b;
-    border-color: rgba(255, 139, 139, 0.4);
-    background: rgba(255, 139, 139, 0.1);
+    color: hsl(var(--color-negative));
+    border-color: hsl(var(--color-negative) / 0.4);
+    background: hsl(var(--color-negative) / 0.1);
 }
 
 .nutritionFactsContainer {
     padding: 1.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid hsl(var(--color-text) / 0.12);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
+    background: hsl(var(--color-text) / 0.03);
     display: flex;
     justify-content: center;
 }

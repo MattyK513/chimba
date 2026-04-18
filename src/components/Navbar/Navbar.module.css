@@ -19,12 +19,12 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background: rgba(30, 30, 30, 0.95);
+    background: hsl(var(--color-navbar-background));
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid hsl(var(--color-navbar-text) / 0.1);
     border-radius: 50px;
     box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.3),
+        0 1px 20px rgba(0, 0, 0, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
@@ -41,19 +41,19 @@
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.6);
+    color: hsl(var(--color-navbar-text) / 0.6);
     transition: all 0.2s ease;
 }
 
 .navLink:hover {
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.1);
+    color: hsl(var(--color-navbar-text) / 0.9);
+    background: hsl(var(--color-navbar-text) / 0.1);
 }
 
 .navLink.active {
-    color: #fff;
-    background: rgba(100, 108, 255, 0.3);
-    box-shadow: inset 0 0 0 1px rgba(100, 108, 255, 0.5);
+    color: hsl(var(--color-navbar-text));
+    background: hsl(var(--color-focus) / 0.3);
+    box-shadow: inset 0 0 0 1px hsl(var(--color-focus) / 0.5);
 }
 
 .navLink svg {
@@ -70,17 +70,17 @@
     height: 32px;
     padding: 0;
     margin-left: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: hsl(var(--color-navbar-text) / 0.1);
     border: none;
     border-radius: 8px;
-    color: rgba(255, 255, 255, 0.5);
+    color: hsl(var(--color-navbar-text) / 0.5);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .dockToggle:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.8);
+    background: hsl(var(--color-navbar-text) / 0.15);
+    color: hsl(var(--color-navbar-text) / 0.8);
 }
 
 .navContainer.docked .dockToggle {
@@ -95,7 +95,6 @@
     }
 }
 
-/* Mobile styles - full width bar */
 @media (max-width: 768px) {
     .navContainer,
     .navContainer.docked {
@@ -121,41 +120,5 @@
 
     .navLink {
         flex: 0 0 auto;
-    }
-}
-
-/* Light mode */
-@media (prefers-color-scheme: light) {
-    .navbar {
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 
-            0 4px 20px rgba(0, 0, 0, 0.1),
-            0 0 0 1px rgba(0, 0, 0, 0.05);
-    }
-
-    .navLink {
-        color: rgba(0, 0, 0, 0.5);
-    }
-
-    .navLink:hover {
-        color: rgba(0, 0, 0, 0.8);
-        background: rgba(0, 0, 0, 0.05);
-    }
-
-    .navLink.active {
-        color: #4a4fff;
-        background: rgba(100, 108, 255, 0.15);
-        box-shadow: inset 0 0 0 1px rgba(100, 108, 255, 0.3);
-    }
-
-    .dockToggle {
-        background: rgba(0, 0, 0, 0.05);
-        color: rgba(0, 0, 0, 0.4);
-    }
-
-    .dockToggle:hover {
-        background: rgba(0, 0, 0, 0.1);
-        color: rgba(0, 0, 0, 0.7);
     }
 }

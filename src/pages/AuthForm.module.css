@@ -7,8 +7,8 @@
 .notice {
     padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
-    background: rgba(100, 108, 255, 0.15);
-    border: 1px solid rgba(100, 108, 255, 0.3);
+    background: hsl(var(--color-focus) / 0.15);
+    border: 1px solid hsl(var(--color-focus) / 0.3);
     border-radius: 8px;
     color: inherit;
 }
@@ -16,10 +16,10 @@
 .error {
     padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
-    background: rgba(255, 100, 100, 0.15);
-    border: 1px solid rgba(255, 100, 100, 0.3);
+    background: hsl(var(--color-negative) / 0.15);
+    border: 1px solid hsl(var(--color-negative) / 0.3);
     border-radius: 8px;
-    color: #ff6b6b;
+    color: hsl(var(--color-negative));
 }
 
 .form {
@@ -43,36 +43,36 @@
 .field input {
     padding: 0.75rem 1rem;
     font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid hsl(var(--color-text) / 0.2);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
+    background: hsl(var(--color-text) / 0.05);
     color: inherit;
     transition: border-color 0.2s;
 }
 
 .field input:focus {
     outline: none;
-    border-color: #646cff;
+    border-color: hsl(var(--color-focus));
 }
 
-.form button {
+.btn {
     margin-top: 0.5rem;
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
-    background: #646cff;
-    color: white;
+    background: hsl(var(--color-focus));
+    color: hsl(var(--color-text));
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
-.form button:hover:not(:disabled) {
-    background: #535bf2;
+.btn:hover:not(:disabled) {
+    background: hsl(var(--color-focus-hover));
 }
 
-.form button:disabled {
+.btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -80,16 +80,5 @@
 .switchAuth {
     margin-top: 1.5rem;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-@media (prefers-color-scheme: light) {
-    .field input {
-        border-color: rgba(0, 0, 0, 0.2);
-        background: rgba(0, 0, 0, 0.02);
-    }
-
-    .switchAuth {
-        color: rgba(0, 0, 0, 0.6);
-    }
+    color: hsl(var(--color-text) / 0.6);
 }

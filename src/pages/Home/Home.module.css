@@ -16,7 +16,11 @@
 }
 
 .heroName {
-    background: linear-gradient(135deg, #7ab8ff 0%, #a47aff 100%);
+    background: linear-gradient(
+        135deg,
+        hsl(var(--color-gradient-begin)) 0%,
+        hsl(var(--color-gradient-end)) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -37,9 +41,9 @@
 .card {
     display: flex;
     gap: 0;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid hsl(var(--color-text) / 0.12);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
+    background: hsl(var(--color-text) / 0.03);
     color: inherit;
     text-decoration: none;
     overflow: hidden;
@@ -48,8 +52,8 @@
 
 .card:hover {
     transform: translateY(-3px);
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: hsl(var(--color-text) / 0.3);
+    background: hsl(var(--color-text) / 0.06);
 }
 
 .card:visited,
@@ -59,12 +63,16 @@
 
 .cardAccent {
     width: 4px;
-    background: linear-gradient(180deg, #7ab8ff, #a47aff);
+    background: linear-gradient(
+        180deg,
+        hsl(var(--color-gradient-begin)),
+        hsl(var(--color-gradient-end))
+    );
     flex-shrink: 0;
 }
 
 .cardDisabled .cardAccent {
-    background: rgba(255, 255, 255, 0.2);
+    background: hsl(var(--color-text) / 0.2);
 }
 
 .cardDisabled {
@@ -101,9 +109,9 @@
     border-radius: 999px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    background: rgba(255, 186, 73, 0.12);
-    color: #ffba49;
-    border: 1px solid rgba(255, 186, 73, 0.35);
+    background: hsl(var(--color-neutral) / 0.12);
+    color: hsl(var(--color-neutral));
+    border: 1px solid hsl(var(--color-neutral) / 0.35);
     white-space: nowrap;
 }
 

@@ -12,7 +12,5 @@ export default async function recipePageLoader({ params }: {params: Params<strin
 
     const recipeData = await searchEdamamById(id);
 
-    console.log(recipeData)
-
     return recipeData;
 };

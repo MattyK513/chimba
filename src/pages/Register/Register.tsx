@@ -70,7 +70,7 @@ export default function Register() {
 
                 {/* TODO: Photo upload capability */}
 
-                <button type="submit" disabled={isSubmitting}>
+                <button type="submit" disabled={isSubmitting} className={styles.btn}>
                     {isSubmitting ? "Creating Account…" : "Create Account"}
                 </button>
             </Form>

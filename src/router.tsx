@@ -4,7 +4,8 @@ import {
     ProtectedLayout,
     protectedLoader,
     PublicLayout,
-    publicLoader
+    publicLoader,
+    Spinner
 } from "./components";
 import {
     Goals,
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
         element: <ProtectedLayout />,
         loader: protectedLoader,
         errorElement: <ErrorComponent />,
+        hydrateFallbackElement: <Spinner variant="fullscreen" />,
         children: [
             {
                 index: true,
@@ -77,6 +79,7 @@ const router = createBrowserRouter([
         element: <PublicLayout />,
         loader: publicLoader,
         errorElement: <ErrorComponent />,
+        hydrateFallbackElement: <Spinner variant="fullscreen" message="Loading" />,
         children: [
             {
                 path: "welcome",

@@ -13,6 +13,7 @@ import type {
     EdamamResponse, EdamamHit, InfiniteScrollErrorResponse,
     Dispatch, SetStateAction,
 } from "../../../types";
+import { Spinner } from "../../../components";
 import type { FetcherWithComponents } from "react-router-dom";
 import styles from "./RecipeSearch.module.css";
 
@@ -187,6 +188,8 @@ export default function RecipeSearch() {
                     searchIsDisabled={searchIsDisabled}
                 />
             )}
+
+            {fetcherState === "loading" ? <Spinner variant="inline" /> : null}
         </div>
     );
 }

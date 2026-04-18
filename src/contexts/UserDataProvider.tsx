@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { subscribeToGoals, subscribeToMealPlans, subscribeToGroceryList, subscribeToProfileData, subscribeToSavedRecipes } from "../services/firestore";
+import { AppError, AuthError } from "../errors";
 import type { Goal, Ingredient, MealPlans, ModuleName, ReactNode, SavedRecipeWithId, SubState, UserDataContextType, UserProfileFields } from "../types";
 
 export const UserDataContext = createContext<UserDataContextType | null>(null);
@@ -62,7 +63,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
     };
 
     const addDependency = useCallback((module: ModuleName): void => {
-        if (!user) throw new Error("Must be logged in to subscribe to Firebase");
+        if (!user) throw new AuthError("UNAUTHENTICATED", "Must be logged in to subscribe to Firebase");
 
         const entry = subStateRef.current[module];
 
@@ -72,7 +73,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
         }
         
         if (entry.count < 0) {
-            throw new Error (`Invalid subscription number: ${module} has subscription count ${entry.count}`);
+            throw new AppError ("SUB_MGR_ERROR", `Invalid subscription number: ${module} has subscription count ${entry.count}`);
         }
 
         entry.count++;
@@ -96,7 +97,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
     }, [user]);
 
     const removeDependency = useCallback((module: ModuleName): void => {
-        if (!user) throw new Error("Must be logged in to perform this action");
+        if (!user) throw new AuthError("UNAUTHENTICATED", "Must be logged in to perform this action");
 
         const entry = subStateRef.current[module];
 
@@ -109,7 +110,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
             entry.count--;
             
             if (!entry.unsubscribe) {
-                throw new Error(`Unsubscribe is not defined for module: ${module}`);
+                throw new AppError("SUB_MGR_ERROR", `Unsubscribe is not defined for module: ${module}`);
             }
 
             entry.unsubscribe();
@@ -135,8 +136,7 @@ export default function UserDataContextProvider({ children }: { children: ReactN
             return;
         }
 
-        throw new Error(
-            `Attempted to remove dependency for "${module}" but count is ${entry.count}`
+        throw new AppError( "SUB_MGR_ERROR", `Attempted to remove dependency for "${module}" but count is ${entry.count}`
         );
     }, [user]);
 

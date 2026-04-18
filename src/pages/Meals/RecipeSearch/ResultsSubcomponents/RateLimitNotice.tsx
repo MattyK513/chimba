@@ -1,4 +1,5 @@
 import type { FetcherSubmitFunction } from "../../../../types";
+import { Spinner } from "../../../../components";
 import styles from "./RateLimitNotice.module.css";
 
 interface Props {
@@ -21,6 +22,11 @@ export default function RateLimitNotice({searchIsDisabled, fetcherState, submit,
                 Please wait a minute to search again or continue fetching new results. In the meantime,
                 you can peruse your existing search results.
             </p>
+            {searchIsDisabled ? <Spinner
+                                    variant="inline"
+                                    color="hsl(var(--color-neutral))"
+                                /> : null
+            }
             {nextURL && <button disabled={searchIsDisabled || fetcherState !== "idle"} onClick={handleClick} className={styles.searchBtn}>More results</button>}
         </div>
     );

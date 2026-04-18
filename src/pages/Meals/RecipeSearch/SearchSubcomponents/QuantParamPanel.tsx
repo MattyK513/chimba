@@ -1,8 +1,11 @@
 import NutrientQuantInput from "./NutrientQuantInput";
 import SimpleQuantInput from "./SimpleQuantInput";
 import { sortNutrients } from "../../../../services/edamam";
+import { AppError } from "../../../../errors";
 import type { NutrientOption } from "../../../../types";
 import styles from "../RecipeSearch.module.css";
+
+const groupOrder = ["macros", "vitamins", "minerals", "other"] as const;
 
 const groupLabels: Record<string, string> = {
     macros: "Macronutrients",
@@ -22,25 +25,28 @@ export default function QuantParamPanel({ type, params = null }: Props) {
     }
 
     if (!params) {
-        throw new Error("QuantParamPanel with type 'nutrients' must include params prop.");
+        throw new AppError("COMPONENT_MISUSE", "QuantParamPanel with type 'nutrients' must include params prop.");
     }
 
     const grouped = sortNutrients(params);
 
     return (
         <>
-            {Object.entries(grouped).map(([group, nutrients]) => (
-                <details key={group} className={styles.subSection}>
-                    <summary className={styles.subSectionSummary}>
-                        {groupLabels[group] ?? group}
-                    </summary>
-                    <div className={styles.nutrientGrid}>
-                        {nutrients.map(p => (
-                            <NutrientQuantInput key={p.parameter} {...p} />
-                        ))}
-                    </div>
-                </details>
-            ))}
+            {groupOrder.map(group => {
+                const nutrients = grouped[group];
+                return (
+                    <details key={group} className={styles.subSection}>
+                        <summary className={styles.subSectionSummary}>
+                            {groupLabels[group] ?? group}
+                        </summary>
+                        <div className={styles.nutrientGrid}>
+                            {nutrients.map(p => (
+                                <NutrientQuantInput key={p.parameter} {...p} />
+                            ))}
+                        </div>
+                    </details>
+                );
+            })}
         </>
     );
 }

@@ -3,6 +3,7 @@ import { useLocation, useLoaderData } from "react-router-dom";
 import { addIngredientToGroceryList } from "../../../../services/edamam";
 import { formatTime } from "../../../../utils/formatTime";
 import NutritionFacts from "./NutritionFacts";
+import { Spinner } from "../../../../components";
 import type { EdamamHit } from "../../../../types";
 import styles from "./RecipePage.module.css";
 
@@ -16,13 +17,13 @@ export default function RecipePage() {
      }, []);
 
     const { label, calories, cautions, cuisineType, dietLabels, dishType, healthLabels, images, ingredients, source,
-        totalDaily, totalNutrients, totalTime, url, yield: servings, id
+        totalDaily, totalNutrients, totalTime, url, yield: servings
      } = recipe;
      
-     const {height: imgHeight, width: imgWidth, url: imgURL} = images.REGULAR;
+     const imgURL = images.REGULAR.url;
 
      const ingredientDisplay = ingredients.map(ing => {
-        const { text, food, measure, quantity, foodId } = ing;
+        const { text, food } = ing;
         return (
             <li key={food} onClick={() => addIngredientToGroceryList(ing)}>
                 <span>{text}</span>
@@ -87,7 +88,7 @@ export default function RecipePage() {
                     <div className={styles.nutritionFactsContainer}>
                         {location.state || loaderData
                         ? <NutritionFacts nutrients={totalNutrients} daily={totalDaily} calories={calories} servings={servings}/>
-                        : <span>Loading...</span>
+                        : <Spinner variant="inline" />
                     }
                     </div>
                 </div>

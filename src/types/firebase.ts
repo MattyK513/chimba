@@ -1,3 +1,5 @@
+import { colorThemes } from "../constants/colorThemes";
+
 import type { Dispatch, SetStateAction } from "react";
 import type { Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
@@ -17,6 +19,7 @@ export interface AuthStateType {
     loading: boolean;
     user: UserInfo | null;
 }
+export type ColorTheme = typeof colorThemes[number];
 
 /** Fields that can be updated on a user's profile. */
 export interface EditableUserProfileFields {
@@ -24,6 +27,7 @@ export interface EditableUserProfileFields {
     email?: string;
     phoneNumber?: string | null;
     photoURL?: string | null;
+    theme?: string;
 }
 
 export interface Goal {
@@ -78,6 +82,7 @@ export interface UserProfileFields {
     email: string;
     phoneNumber: string | null;
     photoURL: string | null;
+    theme: ColorTheme;
 }
 
 export type Ingredient = IngredientDetails & {
@@ -123,6 +128,12 @@ export interface MealModuleData {
     groceryList: Ingredient[];
     mealPlans: MealPlans;
     savedRecipes: SavedRecipe[];
+}
+
+export interface ThemeContextValue {
+    theme: ColorTheme;
+    setTheme: (t: ColorTheme) => Promise<void>;
+    themeOptions: readonly ColorTheme[];
 }
 
 // Re-export Firebase types for convenience

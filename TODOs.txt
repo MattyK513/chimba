@@ -1,17 +1,8 @@
-Remove redundancy with protected route context logic and protect route loaders
-Comments, obviously
-A couple auth functions
 Profile picture functionality (needs Firebase Storage to store pic and return photo URL)
    - optional: enable simple photo URL provision first
-Fix error UX with updated messages
-   - https://firebase.google.com/docs/reference/js/firestore_.md#firestoreerrorcode
-   - https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
-
 
 Request a verification code from the error messages (services/auth)
 
 If a user must sign in before deleting profile, redirect to login or provide UI for sign-in.
 
 Investigate whether it's worth it to combine nutrient quant and simple quant components into a single component
-
-Edge case: infinite scroll can potentially trigger "too many requests" error from Edamam if user goes fast. Integrate an case for this in the UX
