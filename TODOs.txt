@@ -1,8 +1,1 @@
-Profile picture functionality (needs Firebase Storage to store pic and return photo URL)
-   - optional: enable simple photo URL provision first
 
-Request a verification code from the error messages (services/auth)
-
-If a user must sign in before deleting profile, redirect to login or provide UI for sign-in.
-
-Investigate whether it's worth it to combine nutrient quant and simple quant components into a single component
