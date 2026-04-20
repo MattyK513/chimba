@@ -14,3 +14,4 @@ export { default as RecipeSearch } from "./Meals/RecipeSearch/RecipeSearch";
 export { default as recipeSearchAction } from "./Meals/RecipeSearch/recipeSearchAction";
 export { default as RecipePage } from "./Meals/RecipeSearch/ResultsSubcomponents/RecipePage";
 export { default as recipePageLoader } from "./Meals/RecipeSearch/ResultsSubcomponents/recipePageLoader";
+export { default as About } from "./About/About";

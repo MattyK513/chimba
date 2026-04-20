@@ -2,21 +2,6 @@ import { collection, doc, getDoc, onSnapshot, setDoc } from "firebase/firestore"
 import { db } from "../../config/firebase";
 import type { Ingredient, IngredientDetails, Meal, MealModuleData, MealPlanDay, MealPlans, SavedRecipe, SavedRecipeWithId, Unsubscribe } from "../../types";
 
-/*
-export function subscribeToGoals(uid: string, callback: (data: Goal[] | null) => void): Unsubscribe {
-    const colRef = collection(db, `users/${uid}/goals`);
-    return onSnapshot(colRef, (snapshot) => {
-        const docList = snapshot.docs;
-        const data = docList.map(doc => {
-            // TODO: Find a more robust generalizable approach for this. (This was done because TypeScript can't prove that the data in the snapshot query fits my type)
-            const { title } = doc.data();
-            return {id: doc.id, title};
-        });
-        callback(data);
-    });
-};
-*/
-
 export function subscribeToMealPlans(uid: string, callback: (data: MealPlans | null) => void): Unsubscribe {
     const colRef = collection (db, `users/${uid}/mealPlans`);
     return onSnapshot(colRef, (snapshot) => {

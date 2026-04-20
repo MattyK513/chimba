@@ -23,7 +23,8 @@ import {
     recipeSearchAction,
     Register,
     registerAction,
-    Travel
+    Travel,
+    About
 } from "./pages";
 
 // The app is split into two top-level route trees that share the same root path.
@@ -96,7 +97,13 @@ const router = createBrowserRouter([
                 action: registerAction
             }
         ]
-    }
+    },
+    {
+        path: "/about",
+        element: <About />,
+        errorElement: <ErrorComponent />,
+        hydrateFallbackElement: <Spinner variant="fullscreen" message="Loading" />,
+    },
 ]);
 
 export default router;

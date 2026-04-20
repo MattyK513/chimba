@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, useActionData } from "react-router-dom";
+import { Form, Link, useActionData } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useProfile from "../../hooks/useProfile";
 import useTheme from "../../hooks/useTheme";
@@ -62,6 +62,10 @@ export default function Profile() {
 
             <p className={styles.subtitle}>
                 Manage your account settings and personal information.
+            </p>
+
+            <p className={styles.aboutLink}>
+                <Link to="/about">About the developer</Link>
             </p>
 
             {guestMessageIsShown && 

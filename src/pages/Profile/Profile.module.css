@@ -19,16 +19,25 @@
 }
 
 .subtitle {
-    margin: 0.75rem 0 1.75rem;
     opacity: 0.8;
     line-height: 1.5;
+}
+
+.aboutLink {
+    margin-bottom: 1.1rem;
+    opacity: 0.7;
+    fontSize: 0.85rem;
+}
+
+.aboutLink:hover {
+    opacity: 0.9;
 }
 
 .guestMessageContainer {
     background: hsl(var(--color-focus) / 0.1);
     border: 1px solid hsl(var(--color-focus) / 0.15);
     border-radius: 10px;
-    margin: -1rem 0 0.8rem;
+    margin: -0.3rem auto 1rem;
     padding: 0 2.5rem 1rem;
 }
 

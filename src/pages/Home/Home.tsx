@@ -40,6 +40,12 @@ const features: Feature[] = [
         path: "/profile",
         status: "available",
     },
+    {
+        title: "About Me",
+        description: "Curious about Chimba or its developer? Click here for contact information or to learn more about the ideas and tech stack behind this project.",
+        path:"/about",
+        status: "available"
+    }
 ];
 
 export default function Home() {
@@ -89,6 +95,7 @@ export default function Home() {
                     );
                 })}
             </section>
+
         </div>
     );
 }

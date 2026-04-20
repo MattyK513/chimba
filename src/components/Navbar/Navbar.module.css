@@ -89,6 +89,18 @@
     transform: rotate(90deg);
 }
 
+@media (max-width: 320px) {
+    .navLink {
+        height: 35px;
+        width: 35px;
+    }
+
+    .navLink svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 @media (min-width: 769px) {
     .dockToggle {
         display: flex;
