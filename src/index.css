@@ -1,201 +1,201 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: hsl(var(--color-text) / 0.87);
-  background-color: hsl(var(--color-background));
+    color-scheme: light dark;
+    color: hsl(var(--color-text) / 0.87);
+    background-color: hsl(var(--color-background));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  --app-top-padding: 4.5rem;
+    --app-top-padding: 4.5rem;
 }
 
 [data-theme="dark"] {
-  --color-text: 0 0% 100%;
-  --color-background: 0 0% 14.12%;
+    --color-text: 0 0% 100%;
+    --color-background: 0 0% 14.12%;
 
-  --color-focus: 236.9 100% 69.61%;
-  --color-focus-hover: 236.98 85.95% 63.73%;
-  --color-positive: 143.13 56.47% 66.67%;
-  --color-negative: 0 100% 72.94%;
-  --color-neutral: 37.25 100% 64.31%;
+    --color-focus: 236.9 100% 69.61%;
+    --color-focus-hover: 236.98 85.95% 63.73%;
+    --color-positive: 143.13 56.47% 66.67%;
+    --color-negative: 0 100% 72.94%;
+    --color-neutral: 37.25 100% 64.31%;
 
-  --color-navbar-text: 0 0% 100%;
-  --color-navbar-background: 0 0% 11.76%;
-  --color-search-param: 213.2 100% 79.8%;
-  --color-gradient-begin: 213.2 100% 79.8%;
-  --color-gradient-end: 258.95 100% 73.92%;
+    --color-navbar-text: 0 0% 100%;
+    --color-navbar-background: 0 0% 11.76%;
+    --color-search-param: 213.2 100% 79.8%;
+    --color-gradient-begin: 213.2 100% 79.8%;
+    --color-gradient-end: 258.95 100% 73.92%;
 }
 
 [data-theme="light"] {
-  color-scheme: light;
-  --color-text: 50 50% 10%;
-  --color-background: 50 50% 90%;
+    color-scheme: light;
+    --color-text: 50 50% 10%;
+    --color-background: 50 50% 90%;
 
-  --color-focus: 270 80% 70%;
-  --color-focus-hover: 270 70% 60%;
-  --color-positive: 143.13 90% 35%;
-  --color-negative: 0 90% 45%;
-  --color-neutral: 250 80% 50%;
+    --color-focus: 270 80% 70%;
+    --color-focus-hover: 270 70% 60%;
+    --color-positive: 143.13 90% 35%;
+    --color-negative: 0 90% 45%;
+    --color-neutral: 250 80% 50%;
 
-  --color-navbar-text: 50 50% 90%;
-  --color-navbar-background: 150 75% 20%;
-  --color-search-param: 270 100% 45%;
-  --color-gradient-begin: 250 90% 65%;
-  --color-gradient-end: 270 100% 45%;
+    --color-navbar-text: 50 50% 90%;
+    --color-navbar-background: 150 75% 20%;
+    --color-search-param: 270 100% 45%;
+    --color-gradient-begin: 250 90% 65%;
+    --color-gradient-end: 270 100% 45%;
 }
 
 [data-theme="ocean"] {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  --color-text: 51 55% 88%;
-  --color-background: 177 60% 12%;
+    --color-text: 51 55% 88%;
+    --color-background: 177 60% 12%;
 
-  --color-focus: 353 65% 58%;
-  --color-focus-hover: 353 70% 50%;
-  --color-positive: 112 52% 58%;
-  --color-negative: 354 75% 72%;
-  --color-neutral: 50 95% 65%;
+    --color-focus: 353 65% 58%;
+    --color-focus-hover: 353 70% 50%;
+    --color-positive: 112 52% 58%;
+    --color-negative: 354 75% 72%;
+    --color-neutral: 50 95% 65%;
 
-  --color-navbar-text: 51 55% 85%;
-  --color-navbar-background: 177 60% 16%;
-  --color-search-param: 195 35% 80%;
-  --color-gradient-begin: 188 65% 60%;
-  --color-gradient-end: 354 75% 70%;
+    --color-navbar-text: 51 55% 85%;
+    --color-navbar-background: 177 60% 16%;
+    --color-search-param: 195 35% 80%;
+    --color-gradient-begin: 188 65% 60%;
+    --color-gradient-end: 354 75% 70%;
 }
 
 [data-theme="forest"] {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  --color-text: 40 45% 86%;
-  --color-background: 150 50% 10%;
+    --color-text: 40 45% 86%;
+    --color-background: 150 50% 10%;
 
-  --color-focus: 35 85% 58%;
-  --color-focus-hover: 35 90% 50%;
-  --color-positive: 110 50% 60%;
-  --color-negative: 5 75% 65%;
-  --color-neutral: 37 100% 64%;
+    --color-focus: 35 85% 58%;
+    --color-focus-hover: 35 90% 50%;
+    --color-positive: 110 50% 60%;
+    --color-negative: 5 75% 65%;
+    --color-neutral: 37 100% 64%;
 
-  --color-navbar-text: 40 45% 88%;
-  --color-navbar-background: 150 55% 16%;
-  --color-search-param: 45 80% 70%;
-  --color-gradient-begin: 110 50% 55%;
-  --color-gradient-end: 35 85% 58%;
+    --color-navbar-text: 40 45% 88%;
+    --color-navbar-background: 150 55% 16%;
+    --color-search-param: 45 80% 70%;
+    --color-gradient-begin: 110 50% 55%;
+    --color-gradient-end: 35 85% 58%;
 }
 
 [data-theme="desert"] {
-  color-scheme: light;
+    color-scheme: light;
 
-  --color-text: 25 45% 18%;
-  --color-background: 35 55% 92%;
+    --color-text: 25 45% 18%;
+    --color-background: 35 55% 92%;
 
-  --color-focus: 20 75% 48%;
-  --color-focus-hover: 20 80% 40%;
-  --color-positive: 85 45% 35%;
-  --color-negative: 5 75% 45%;
-  --color-neutral: 40 80% 45%;
+    --color-focus: 20 75% 48%;
+    --color-focus-hover: 20 80% 40%;
+    --color-positive: 85 45% 35%;
+    --color-negative: 5 75% 45%;
+    --color-neutral: 40 80% 45%;
 
-  --color-navbar-text: 35 55% 94%;
-  --color-navbar-background: 25 50% 22%;
-  --color-search-param: 15 70% 38%;
-  --color-gradient-begin: 35 80% 65%;
-  --color-gradient-end: 15 75% 55%;
+    --color-navbar-text: 35 55% 94%;
+    --color-navbar-background: 25 50% 22%;
+    --color-search-param: 15 70% 38%;
+    --color-gradient-begin: 35 80% 65%;
+    --color-gradient-end: 15 75% 55%;
 }
 
 [data-theme="arctic"] {
-  color-scheme: light;
+    color-scheme: light;
 
-  --color-text: 215 45% 18%;
-  --color-background: 200 55% 95%;
+    --color-text: 215 45% 18%;
+    --color-background: 200 55% 95%;
 
-  --color-focus: 195 85% 42%;
-  --color-focus-hover: 195 90% 35%;
-  --color-positive: 175 60% 35%;
-  --color-negative: 355 72% 48%;
-  --color-neutral: 240 60% 55%;
+    --color-focus: 195 85% 42%;
+    --color-focus-hover: 195 90% 35%;
+    --color-positive: 175 60% 35%;
+    --color-negative: 355 72% 48%;
+    --color-neutral: 240 60% 55%;
 
-  --color-navbar-text: 200 55% 96%;
-  --color-navbar-background: 215 50% 22%;
-  --color-search-param: 210 85% 38%;
-  --color-gradient-begin: 195 80% 70%;
-  --color-gradient-end: 240 70% 65%;
+    --color-navbar-text: 200 55% 96%;
+    --color-navbar-background: 215 50% 22%;
+    --color-search-param: 210 85% 38%;
+    --color-gradient-begin: 195 80% 70%;
+    --color-gradient-end: 240 70% 65%;
 }
 
 [data-theme="plains"] {
-  color-scheme: light;
+    color-scheme: light;
 
-  --color-text: 95 35% 15%;
-  --color-background: 70 35% 90%;
+    --color-text: 95 35% 15%;
+    --color-background: 70 35% 90%;
 
-  --color-focus: 35 85% 42%;
-  --color-focus-hover: 35 90% 35%;
-  --color-positive: 100 50% 32%;
-  --color-negative: 10 75% 42%;
-  --color-neutral: 45 75% 48%;
+    --color-focus: 35 85% 42%;
+    --color-focus-hover: 35 90% 35%;
+    --color-positive: 100 50% 32%;
+    --color-negative: 10 75% 42%;
+    --color-neutral: 45 75% 48%;
 
-  --color-navbar-text: 70 35% 92%;
-  --color-navbar-background: 95 35% 18%;
-  --color-search-param: 35 90% 38%;
-  --color-gradient-begin: 70 70% 70%;
-  --color-gradient-end: 35 85% 58%;
+    --color-navbar-text: 70 35% 92%;
+    --color-navbar-background: 95 35% 18%;
+    --color-search-param: 35 90% 38%;
+    --color-gradient-begin: 70 70% 70%;
+    --color-gradient-end: 35 85% 58%;
 }
 
 [data-theme="volcano"] {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  --color-text: 30 25% 92%;
-  --color-background: 15 20% 9%;
+    --color-text: 30 25% 92%;
+    --color-background: 15 20% 9%;
 
-  --color-focus: 18 95% 55%;
-  --color-focus-hover: 18 100% 48%;
-  --color-positive: 90 55% 58%;
-  --color-negative: 0 90% 62%;
-  --color-neutral: 45 95% 60%;
+    --color-focus: 18 95% 55%;
+    --color-focus-hover: 18 100% 48%;
+    --color-positive: 90 55% 58%;
+    --color-negative: 0 90% 62%;
+    --color-neutral: 45 95% 60%;
 
-  --color-navbar-text: 30 25% 94%;
-  --color-navbar-background: 10 35% 14%;
-  --color-search-param: 25 95% 62%;
-  --color-gradient-begin: 0 85% 50%;
-  --color-gradient-end: 30 100% 55%;
+    --color-navbar-text: 30 25% 94%;
+    --color-navbar-background: 10 35% 14%;
+    --color-search-param: 25 95% 62%;
+    --color-gradient-begin: 0 85% 50%;
+    --color-gradient-end: 30 100% 55%;
 }
 
 a {
-  font-weight: bold;
-  color: hsl(var(--color-focus));
-  text-decoration: inherit;
+    font-weight: bold;
+    color: hsl(var(--color-focus));
+    text-decoration: inherit;
 }
 a:hover {
-  color: hsl(var(--color-focus-hover));
+    color: hsl(var(--color-focus-hover));
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: 3.2em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }

@@ -11,7 +11,11 @@ const unitLabels: Partial<Record<"time" | "calories" | "ingr", string>> = {
     time: "min",
 };
 
-export default function SimpleQuantInput({ type }: { type: "time" | "calories" | "ingr" }) {
+export default function SimpleQuantInput({
+    type,
+}: {
+    type: "time" | "calories" | "ingr";
+}) {
     const [min, setMin] = useState("");
     const [max, setMax] = useState("");
     const minRef = useRef<HTMLInputElement>(null);
@@ -29,10 +33,13 @@ export default function SimpleQuantInput({ type }: { type: "time" | "calories" |
 
     const name = min !== "" || max !== "" ? type : undefined;
     const value =
-        min !== "" && max !== "" ? `${min}-${max}`
-        : min !== "" ? `${min}+`
-        : max !== "" ? max
-        : undefined;
+        min !== "" && max !== ""
+            ? `${min}-${max}`
+            : min !== ""
+              ? `${min}+`
+              : max !== ""
+                ? max
+                : undefined;
 
     const unit = unitLabels[type];
     const label = panelLabels[type];
@@ -40,7 +47,8 @@ export default function SimpleQuantInput({ type }: { type: "time" | "calories" |
     return (
         <div className={styles.rangeField}>
             <span className={styles.rangeLabel}>
-                {label}{unit ? ` (${unit})` : ""}
+                {label}
+                {unit ? ` (${unit})` : ""}
             </span>
             <div className={styles.rangeInputs}>
                 <input
@@ -52,7 +60,7 @@ export default function SimpleQuantInput({ type }: { type: "time" | "calories" |
                     value={min}
                     min="0"
                     max={max !== "" ? max : undefined}
-                    onChange={e => setMin(e.target.value)}
+                    onChange={(e) => setMin(e.target.value)}
                     className={styles.rangeInput}
                 />
                 <span className={styles.rangeSeparator}>–</span>
@@ -63,7 +71,7 @@ export default function SimpleQuantInput({ type }: { type: "time" | "calories" |
                     placeholder="max"
                     value={max}
                     min={min !== "" ? min : 0}
-                    onChange={e => setMax(e.target.value)}
+                    onChange={(e) => setMax(e.target.value)}
                     className={styles.rangeInput}
                 />
             </div>

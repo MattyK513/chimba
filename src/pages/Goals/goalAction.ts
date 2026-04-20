@@ -3,9 +3,13 @@ import { getCurrentUserInfo } from "../../services/auth";
 import { AuthError } from "../../errors";
 import type { ActionFunctionArgs } from "../../types";
 
-export default async function action({request}: ActionFunctionArgs) {
+export default async function action({ request }: ActionFunctionArgs) {
     const user = await getCurrentUserInfo();
-    if (!user) throw new AuthError("unauthorized", "Cannot edit goal list while unauthenticated");
+    if (!user)
+        throw new AuthError(
+            "unauthorized",
+            "Cannot edit goal list while unauthenticated"
+        );
     const data = await request.formData();
     const title = data.get("title");
 
@@ -14,4 +18,4 @@ export default async function action({request}: ActionFunctionArgs) {
     }
 
     await addGoal(user.uid, title);
-};
+}

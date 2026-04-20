@@ -26,7 +26,8 @@ export default function useInfiniteScroll({
 
     useEffect(() => {
         const sentinel = sentinelRef.current;
-        if (!sentinel || !nextURL || !enabled || fetcherState !== "idle") return;
+        if (!sentinel || !nextURL || !enabled || fetcherState !== "idle")
+            return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {

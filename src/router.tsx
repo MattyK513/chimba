@@ -5,7 +5,7 @@ import {
     protectedLoader,
     PublicLayout,
     publicLoader,
-    Spinner
+    Spinner,
 } from "./components";
 import {
     Goals,
@@ -24,7 +24,7 @@ import {
     Register,
     registerAction,
     Travel,
-    About
+    About,
 } from "./pages";
 
 // The app is split into two top-level route trees that share the same root path.
@@ -40,16 +40,16 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home />
+                element: <Home />,
             },
             {
                 path: "goals",
                 element: <Goals />,
-                action: goalAction
+                action: goalAction,
             },
             {
                 path: "travel",
-                element: <Travel />
+                element: <Travel />,
             },
             {
                 path: "meal-planner",
@@ -63,16 +63,16 @@ const router = createBrowserRouter([
                     {
                         path: "recipe-search/:recipeId",
                         element: <RecipePage />,
-                        loader: recipePageLoader
-                    }
-                ]
+                        loader: recipePageLoader,
+                    },
+                ],
             },
             {
                 path: "profile",
                 element: <Profile />,
-                action: profileAction
+                action: profileAction,
             },
-        ]
+        ],
     },
     // Public routes shown when no authenticated user is present.
     {
@@ -80,29 +80,33 @@ const router = createBrowserRouter([
         element: <PublicLayout />,
         loader: publicLoader,
         errorElement: <ErrorComponent />,
-        hydrateFallbackElement: <Spinner variant="fullscreen" message="Loading" />,
+        hydrateFallbackElement: (
+            <Spinner variant="fullscreen" message="Loading" />
+        ),
         children: [
             {
                 path: "welcome",
-                element: <Landing />
+                element: <Landing />,
             },
             {
                 path: "login",
                 element: <Login />,
-                action: loginAction
+                action: loginAction,
             },
             {
                 path: "register",
                 element: <Register />,
-                action: registerAction
-            }
-        ]
+                action: registerAction,
+            },
+        ],
     },
     {
         path: "/about",
         element: <About />,
         errorElement: <ErrorComponent />,
-        hydrateFallbackElement: <Spinner variant="fullscreen" message="Loading" />,
+        hydrateFallbackElement: (
+            <Spinner variant="fullscreen" message="Loading" />
+        ),
     },
 ]);
 

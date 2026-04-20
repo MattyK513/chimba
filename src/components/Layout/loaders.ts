@@ -15,7 +15,7 @@ export async function protectedLoader({ request }: LoaderFunctionArgs) {
         if (url.pathname === "/") {
             return redirect("/welcome");
         }
-        
+
         const params = new URLSearchParams({
             redirectTo: url.pathname + url.search,
         });

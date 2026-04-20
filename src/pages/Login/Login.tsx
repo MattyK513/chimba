@@ -1,4 +1,10 @@
-import { Form, Link, useActionData, useNavigation, useSearchParams } from "react-router-dom";
+import {
+    Form,
+    Link,
+    useActionData,
+    useNavigation,
+    useSearchParams,
+} from "react-router-dom";
 import type { LoginActionData } from "./loginAction";
 import styles from "../AuthForm.module.css";
 
@@ -51,7 +57,11 @@ export default function Login() {
                     />
                 </label>
 
-                <button type="submit" disabled={isSubmitting} className={styles.btn}>
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={styles.btn}
+                >
                     {isSubmitting ? "Logging in…" : "Log In"}
                 </button>
             </Form>
@@ -63,24 +73,18 @@ export default function Login() {
             <p className={styles.switchAuth}>- or -</p>
 
             <Form method="post">
+                <input name="email" type="hidden" value="guest@user.com" />
 
-                <input
-                    name="email"
-                    type="hidden"
-                    value="guest@user.com"
-                />
+                <input name="password" type="hidden" value="guestuser" />
 
-                <input
-                    name="password"
-                    type="hidden"
-                    value="guestuser"
-                />
-
-                <button type="submit" disabled={isSubmitting} className={styles.btn} >
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={styles.btn}
+                >
                     {isSubmitting ? "Logging in…" : "Continue As Guest"}
                 </button>
             </Form>
-            
         </div>
     );
 }

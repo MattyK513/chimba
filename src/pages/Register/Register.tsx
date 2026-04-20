@@ -1,4 +1,10 @@
-import { Form, Link, useActionData, useNavigation, useSearchParams } from "react-router-dom";
+import {
+    Form,
+    Link,
+    useActionData,
+    useNavigation,
+    useSearchParams,
+} from "react-router-dom";
 import type { RegisterActionData } from "./registerAction";
 import styles from "../AuthForm.module.css";
 
@@ -70,7 +76,11 @@ export default function Register() {
 
                 {/* TODO: Photo upload capability */}
 
-                <button type="submit" disabled={isSubmitting} className={styles.btn}>
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={styles.btn}
+                >
                     {isSubmitting ? "Creating Account…" : "Create Account"}
                 </button>
             </Form>

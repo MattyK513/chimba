@@ -25,14 +25,17 @@ export default function QuantParamPanel({ type, params = null }: Props) {
     }
 
     if (!params) {
-        throw new AppError("COMPONENT_MISUSE", "QuantParamPanel with type 'nutrients' must include params prop.");
+        throw new AppError(
+            "COMPONENT_MISUSE",
+            "QuantParamPanel with type 'nutrients' must include params prop."
+        );
     }
 
     const grouped = sortNutrients(params);
 
     return (
         <>
-            {groupOrder.map(group => {
+            {groupOrder.map((group) => {
                 const nutrients = grouped[group];
                 return (
                     <details key={group} className={styles.subSection}>
@@ -40,7 +43,7 @@ export default function QuantParamPanel({ type, params = null }: Props) {
                             {groupLabels[group] ?? group}
                         </summary>
                         <div className={styles.nutrientGrid}>
-                            {nutrients.map(p => (
+                            {nutrients.map((p) => (
                                 <NutrientQuantInput key={p.parameter} {...p} />
                             ))}
                         </div>

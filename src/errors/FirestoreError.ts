@@ -1,3 +1,3 @@
 import { AppError } from "./AppError";
 
-export class FirestoreError extends AppError {};
+export class FirestoreError extends AppError {}

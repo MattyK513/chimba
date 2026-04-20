@@ -5,13 +5,20 @@ import ClickableParamPanel from "./SearchSubcomponents/ClickableParamPanel";
 import QuantParamPanel from "./SearchSubcomponents/QuantParamPanel";
 import SearchResults from "./ResultsSubcomponents/SearchResults";
 import {
-    allergyOptions, cuisineOptions, dietOptions, dishTypeOptions,
-    mealTypeOptions, nutrientOptions,
+    allergyOptions,
+    cuisineOptions,
+    dietOptions,
+    dishTypeOptions,
+    mealTypeOptions,
+    nutrientOptions,
 } from "../../../constants/edamam";
 import { resetRecipeSearchState } from "../../../services/edamam";
 import type {
-    EdamamResponse, EdamamHit, InfiniteScrollErrorResponse,
-    Dispatch, SetStateAction,
+    EdamamResponse,
+    EdamamHit,
+    InfiniteScrollErrorResponse,
+    Dispatch,
+    SetStateAction,
 } from "../../../types";
 import { Spinner } from "../../../components";
 import type { FetcherWithComponents } from "react-router-dom";
@@ -24,14 +31,24 @@ type MealsOutletContext = {
     searchIsDisabled: boolean;
 };
 
-type SectionKey = "" | "diet" | "nutrition" | "cooking" | "allergy" | "cuisine" | "dish";
+type SectionKey =
+    | ""
+    | "diet"
+    | "nutrition"
+    | "cooking"
+    | "allergy"
+    | "cuisine"
+    | "dish";
 
 export default function RecipeSearch() {
     const [currentTab, setCurrentTab] = useState<SectionKey>("");
     const [searchIsHidden, setSearchIsHidden] = useState(false);
     const { fetcher, allHits, setAllHits, searchIsDisabled } =
         useOutletContext<MealsOutletContext>();
-    const { data }: { data: EdamamResponse | InfiniteScrollErrorResponse | undefined } = fetcher;
+    const {
+        data,
+    }: { data: EdamamResponse | InfiniteScrollErrorResponse | undefined } =
+        fetcher;
     const { Form, state: fetcherState, submit } = fetcher;
     const paginationError = data && "error" in data ? true : false;
 
@@ -45,8 +62,8 @@ export default function RecipeSearch() {
     useEffect(() => {
         if (data && data.count > 0) {
             setSearchIsHidden(true);
-            setAllHits(prev => {
-                const seen = new Set(prev.map(hit => hit.recipe.uri));
+            setAllHits((prev) => {
+                const seen = new Set(prev.map((hit) => hit.recipe.uri));
                 const newHits: EdamamHit[] = [];
                 for (const hit of data.hits) {
                     if (!seen.has(hit.recipe.uri)) {
@@ -68,14 +85,17 @@ export default function RecipeSearch() {
         <div className={styles.recipeSearchPage}>
             <h1 className={styles.title}>Recipe Search</h1>
             <p className={styles.subtitle}>
-                Search thousands of recipes and fine-tune your results with filters.
+                Search thousands of recipes and fine-tune your results with
+                filters.
             </p>
 
             <Form
                 method="post"
                 className={styles.searchForm}
                 hidden={searchIsHidden}
-                onSubmit={() => { resetRecipeSearchState(setAllHits); }}
+                onSubmit={() => {
+                    resetRecipeSearchState(setAllHits);
+                }}
             >
                 <KeywordSearchPanel />
 
@@ -95,10 +115,15 @@ export default function RecipeSearch() {
                     open={currentTab === "nutrition"}
                     onToggle={onSectionToggle("nutrition")}
                 >
-                    <summary className={styles.sectionSummary}>Nutrition</summary>
+                    <summary className={styles.sectionSummary}>
+                        Nutrition
+                    </summary>
                     <div className={styles.sectionContent}>
                         <QuantParamPanel type="calories" />
-                        <QuantParamPanel type="nutrients" params={nutrientOptions} />
+                        <QuantParamPanel
+                            type="nutrients"
+                            params={nutrientOptions}
+                        />
                     </div>
                 </details>
 
@@ -107,11 +132,15 @@ export default function RecipeSearch() {
                     open={currentTab === "cooking"}
                     onToggle={onSectionToggle("cooking")}
                 >
-                    <summary className={styles.sectionSummary}>Cooking constraints</summary>
+                    <summary className={styles.sectionSummary}>
+                        Cooking constraints
+                    </summary>
                     <div className={styles.sectionContent}>
                         <QuantParamPanel type="time" />
                         <QuantParamPanel type="ingr" />
-                        <span className={styles.sectionSubLabel}>Meal type</span>
+                        <span className={styles.sectionSubLabel}>
+                            Meal type
+                        </span>
                         <ClickableParamPanel params={mealTypeOptions} />
                     </div>
                 </details>
@@ -121,7 +150,9 @@ export default function RecipeSearch() {
                     open={currentTab === "allergy"}
                     onToggle={onSectionToggle("allergy")}
                 >
-                    <summary className={styles.sectionSummary}>Allergies</summary>
+                    <summary className={styles.sectionSummary}>
+                        Allergies
+                    </summary>
                     <div className={styles.sectionContent}>
                         <ClickableParamPanel params={allergyOptions} />
                     </div>
@@ -132,7 +163,9 @@ export default function RecipeSearch() {
                     open={currentTab === "cuisine"}
                     onToggle={onSectionToggle("cuisine")}
                 >
-                    <summary className={styles.sectionSummary}>Cuisines</summary>
+                    <summary className={styles.sectionSummary}>
+                        Cuisines
+                    </summary>
                     <div className={styles.sectionContent}>
                         <ClickableParamPanel params={cuisineOptions} />
                     </div>
@@ -143,7 +176,9 @@ export default function RecipeSearch() {
                     open={currentTab === "dish"}
                     onToggle={onSectionToggle("dish")}
                 >
-                    <summary className={styles.sectionSummary}>Dish types</summary>
+                    <summary className={styles.sectionSummary}>
+                        Dish types
+                    </summary>
                     <div className={styles.sectionContent}>
                         <ClickableParamPanel params={dishTypeOptions} />
                     </div>
@@ -170,7 +205,7 @@ export default function RecipeSearch() {
             {data && data.hits?.length > 0 && (
                 <button
                     type="button"
-                    onClick={() => setSearchIsHidden(prev => !prev)}
+                    onClick={() => setSearchIsHidden((prev) => !prev)}
                     className={styles.searchToggle}
                 >
                     {searchIsHidden ? "Show search panel" : "Hide search panel"}

@@ -45,7 +45,9 @@ export default function Navbar() {
     }, []);
 
     return (
-        <div className={`${styles.navContainer} ${isDocked ? styles.docked : ""}`}>
+        <div
+            className={`${styles.navContainer} ${isDocked ? styles.docked : ""}`}
+        >
             <nav className={styles.navbar} aria-label="Main navigation">
                 {NAV_ITEMS.map(({ to, label, Icon, end }) => (
                     <NavLink
@@ -65,7 +67,11 @@ export default function Navbar() {
                     className={styles.dockToggle}
                     onClick={toggleDock}
                     aria-pressed={isDocked}
-                    aria-label={isDocked ? "Undock navigation to top" : "Dock navigation to side"}
+                    aria-label={
+                        isDocked
+                            ? "Undock navigation to top"
+                            : "Dock navigation to side"
+                    }
                     title={isDocked ? "Move to top" : "Move to side"}
                 >
                     <GripVertical size={16} />

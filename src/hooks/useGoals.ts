@@ -3,7 +3,7 @@ import useUserData from "./useUserData";
 import { addGoal } from "../services/firestore";
 
 export default function useGoals() {
-    const { addDependency, removeDependency , goals } = useUserData();
+    const { addDependency, removeDependency, goals } = useUserData();
 
     useEffect(() => {
         addDependency("goals");
@@ -11,4 +11,4 @@ export default function useGoals() {
     }, []);
 
     return { goals, addGoal };
-};
+}

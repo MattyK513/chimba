@@ -3,15 +3,18 @@ import { colorThemes } from "../constants/colorThemes";
 import type { Dispatch, SetStateAction } from "react";
 import type { Unsubscribe, User } from "firebase/auth";
 import type { FirebaseError } from "firebase/app";
-import type { CollectionReference, DocumentReference, QuerySnapshot } from "firebase/firestore";
+import type {
+    CollectionReference,
+    DocumentReference,
+    QuerySnapshot,
+} from "firebase/firestore";
 
 export type { AuthError as AuthErrorType } from "firebase/auth";
 
 /** Ensures at least one property from T is present. */
-export type AtLeastOne<T, Keys extends keyof T = keyof T> =
-    Keys extends keyof T
-        ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
-        : never;
+export type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
+    ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
+    : never;
 
 export type AuthStateSetter = Dispatch<SetStateAction<UserInfo | null>>;
 
@@ -19,7 +22,7 @@ export interface AuthStateType {
     loading: boolean;
     user: UserInfo | null;
 }
-export type ColorTheme = typeof colorThemes[number];
+export type ColorTheme = (typeof colorThemes)[number];
 
 /** Fields that can be updated on a user's profile. */
 export interface EditableUserProfileFields {
@@ -36,7 +39,12 @@ export interface Goal {
 }
 
 /** Available data modules for lazy Firestore subscriptions. */
-export type ModuleName = "goals" | "mealPlans" | "savedRecipes" | "groceryList" | "profileData";
+export type ModuleName =
+    | "goals"
+    | "mealPlans"
+    | "savedRecipes"
+    | "groceryList"
+    | "profileData";
 
 export type SubState = Record<ModuleName, SubStateEntry>;
 
@@ -137,4 +145,11 @@ export interface ThemeContextValue {
 }
 
 // Re-export Firebase types for convenience
-export type { CollectionReference, DocumentReference, FirebaseError, QuerySnapshot, Unsubscribe, User };
+export type {
+    CollectionReference,
+    DocumentReference,
+    FirebaseError,
+    QuerySnapshot,
+    Unsubscribe,
+    User,
+};

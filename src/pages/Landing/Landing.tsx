@@ -80,15 +80,14 @@ const highlights: Highlight[] = [
 export default function Landing() {
     return (
         <div className={styles.landing}>
-            {/* Hero */}
             <header className={styles.hero}>
                 <span className={styles.eyebrow}>Your personal organizer</span>
                 <h1 className={styles.heroTitle}>
                     Welcome to <span className={styles.heroBrand}>Chimba</span>
                 </h1>
                 <p className={styles.heroSubtitle}>
-                    A modern dashboard for meal planning, goal tracking, and travel
-                    organization, all in one place.
+                    A modern dashboard for meal planning, goal tracking, and
+                    travel organization, all in one place.
                 </p>
 
                 <div className={styles.ctaRow}>
@@ -101,8 +100,11 @@ export default function Landing() {
                     </Link>
                 </div>
 
-                {/* Submits directly to /login using the same guest credentials the login page exposes */}
-                <Form method="post" action="/login" className={styles.guestForm}>
+                <Form
+                    method="post"
+                    action="/login"
+                    className={styles.guestForm}
+                >
                     <input type="hidden" name="email" value="guest@user.com" />
                     <input type="hidden" name="password" value="guestuser" />
                     <button type="submit" className={styles.guestButton}>
@@ -111,14 +113,14 @@ export default function Landing() {
                 </Form>
             </header>
 
-            {/* Features */}
             <section className={styles.featuresSection}>
                 <div className={styles.sectionHeader}>
                     <h2 className={styles.sectionTitle}>
                         Everything you need, nothing you don't
                     </h2>
                     <p className={styles.sectionSubtitle}>
-                        Chimba brings the tools you reach for every day under one roof.
+                        Chimba brings the tools you reach for every day under
+                        one roof.
                     </p>
                 </div>
 
@@ -126,36 +128,50 @@ export default function Landing() {
                     {features.map(({ title, description, Icon, status }) => (
                         <article key={title} className={styles.featureCard}>
                             <div className={styles.featureIconWrap}>
-                                <Icon className={styles.featureIcon} aria-hidden="true" />
+                                <Icon
+                                    className={styles.featureIcon}
+                                    aria-hidden="true"
+                                />
                             </div>
                             <div className={styles.featureCardHeader}>
                                 <h3 className={styles.featureTitle}>{title}</h3>
                                 {status === "coming-soon" && (
-                                    <span className={styles.tag}>Coming soon</span>
+                                    <span className={styles.tag}>
+                                        Coming soon
+                                    </span>
                                 )}
                             </div>
-                            <p className={styles.featureDescription}>{description}</p>
+                            <p className={styles.featureDescription}>
+                                {description}
+                            </p>
                         </article>
                     ))}
                 </div>
             </section>
 
-            {/* Highlights */}
             <section className={styles.highlightSection}>
                 {highlights.map(({ title, description, Icon }) => (
                     <div key={title} className={styles.highlight}>
-                        <Icon className={styles.highlightIcon} aria-hidden="true" />
+                        <Icon
+                            className={styles.highlightIcon}
+                            aria-hidden="true"
+                        />
                         <h4 className={styles.highlightTitle}>{title}</h4>
-                        <p className={styles.highlightDescription}>{description}</p>
+                        <p className={styles.highlightDescription}>
+                            {description}
+                        </p>
                     </div>
                 ))}
             </section>
 
             <section className={styles.developerStrip}>
                 <div>
-                    <span className={styles.developerLabel}>Built by one developer</span>
+                    <span className={styles.developerLabel}>
+                        Built by one developer
+                    </span>
                     <p className={styles.developerText}>
-                        Curious about the architecture, the stack, or the guy who made it?
+                        Curious about the architecture, the stack, or the guy
+                        who made it?
                     </p>
                 </div>
                 <Link to="/about" className={styles.developerLink}>
@@ -164,9 +180,10 @@ export default function Landing() {
                 </Link>
             </section>
 
-            {/* Final CTA */}
             <section className={styles.finalCta}>
-                <h2 className={styles.finalCtaTitle}>Ready to get organized?</h2>
+                <h2 className={styles.finalCtaTitle}>
+                    Ready to get organized?
+                </h2>
                 <p className={styles.finalCtaSubtitle}>
                     Create a free account in under a minute.
                 </p>

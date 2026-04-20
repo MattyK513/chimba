@@ -10,4 +10,4 @@ export default function useAuth() {
     }
 
     return useMemo(() => ({ ...context, ...authFunctions }), [context]);
-};
+}

@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import type { NutrientOption } from "../../../../types";
 import styles from "../RecipeSearch.module.css";
 
-export default function NutrientQuantInput({ parameter, label, unit }: NutrientOption) {
+export default function NutrientQuantInput({
+    parameter,
+    label,
+    unit,
+}: NutrientOption) {
     const [min, setMin] = useState("");
     const [max, setMax] = useState("");
     const minRef = useRef<HTMLInputElement>(null);
@@ -18,12 +22,16 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
         return () => form.removeEventListener("reset", handleReset);
     }, []);
 
-    const name = min !== "" || max !== "" ? `nutrients[${parameter}]` : undefined;
+    const name =
+        min !== "" || max !== "" ? `nutrients[${parameter}]` : undefined;
     const value =
-        min !== "" && max !== "" ? `${min}-${max}`
-        : min !== "" ? `${min}+`
-        : max !== "" ? max
-        : undefined;
+        min !== "" && max !== ""
+            ? `${min}-${max}`
+            : min !== ""
+              ? `${min}+`
+              : max !== ""
+                ? max
+                : undefined;
 
     return (
         <div className={styles.nutrientCard}>
@@ -41,7 +49,7 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
                     value={min}
                     min="0"
                     max={max !== "" ? max : undefined}
-                    onChange={e => setMin(e.target.value)}
+                    onChange={(e) => setMin(e.target.value)}
                     className={styles.rangeInput}
                 />
                 <span className={styles.rangeSeparator}>–</span>
@@ -52,7 +60,7 @@ export default function NutrientQuantInput({ parameter, label, unit }: NutrientO
                     placeholder="max"
                     value={max}
                     min={min !== "" ? min : 0}
-                    onChange={e => setMax(e.target.value)}
+                    onChange={(e) => setMax(e.target.value)}
                     className={styles.rangeInput}
                 />
             </div>

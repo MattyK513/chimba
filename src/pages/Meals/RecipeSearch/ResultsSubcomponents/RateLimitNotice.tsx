@@ -6,12 +6,20 @@ interface Props {
     searchIsDisabled: boolean;
     fetcherState: "idle" | "loading" | "submitting";
     submit: FetcherSubmitFunction;
-    nextURL: string | null
+    nextURL: string | null;
 }
 
-export default function RateLimitNotice({searchIsDisabled, fetcherState, submit, nextURL}: Props) {
+export default function RateLimitNotice({
+    searchIsDisabled,
+    fetcherState,
+    submit,
+    nextURL,
+}: Props) {
     function handleClick() {
-        submit({nextURL: nextURL}, {method: "post", action: "/meal-planner/recipe-search"});
+        submit(
+            { nextURL: nextURL },
+            { method: "post", action: "/meal-planner/recipe-search" }
+        );
     }
 
     return (
@@ -19,15 +27,22 @@ export default function RateLimitNotice({searchIsDisabled, fetcherState, submit,
             <h3 className={styles.noticeHeading}>Woah, slow down!</h3>
             <p className={styles.noticeText}>
                 There have been too many requests to the Edamam search API.
-                Please wait a minute to search again or continue fetching new results. In the meantime,
-                you can peruse your existing search results.
+                Please wait a minute to search again or continue fetching new
+                results. In the meantime, you can peruse your existing search
+                results.
             </p>
-            {searchIsDisabled ? <Spinner
-                                    variant="inline"
-                                    color="hsl(var(--color-neutral))"
-                                /> : null
-            }
-            {nextURL && <button disabled={searchIsDisabled || fetcherState !== "idle"} onClick={handleClick} className={styles.searchBtn}>More results</button>}
+            {searchIsDisabled ? (
+                <Spinner variant="inline" color="hsl(var(--color-neutral))" />
+            ) : null}
+            {nextURL && (
+                <button
+                    disabled={searchIsDisabled || fetcherState !== "idle"}
+                    onClick={handleClick}
+                    className={styles.searchBtn}
+                >
+                    More results
+                </button>
+            )}
         </div>
     );
 }

@@ -1,3 +1,3 @@
 import { AppError } from "./AppError";
 
-export class ValidationError extends AppError {};
+export class ValidationError extends AppError {}

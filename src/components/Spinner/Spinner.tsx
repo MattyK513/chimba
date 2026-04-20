@@ -20,7 +20,8 @@ export default function Spinner({ variant, message, color }: Props) {
                 color={spinnerColor}
                 size={size}
                 text={text}
-                textColor={spinnerColor} />
+                textColor={spinnerColor}
+            />
         </div>
     );
 }

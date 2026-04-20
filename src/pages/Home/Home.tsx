@@ -12,40 +12,46 @@ type Feature = {
 const features: Feature[] = [
     {
         title: "Recipe Search",
-        description: "Search thousands of recipes and filter by diet, nutrition, cooking time, allergies, cuisine, and more. Browse rich results with ingredient lists and full nutrition breakdowns.",
+        description:
+            "Search thousands of recipes and filter by diet, nutrition, cooking time, allergies, cuisine, and more. Browse rich results with ingredient lists and full nutrition breakdowns.",
         path: "/meal-planner/recipe-search",
         status: "available",
     },
     {
         title: "Meal Planner",
-        description: "Add recipes from search results or create your own, generate grocery lists from your planned meals, and save your favorite recipes for quick access later.",
+        description:
+            "Add recipes from search results or create your own, generate grocery lists from your planned meals, and save your favorite recipes for quick access later.",
         path: "/meal-planner",
         status: "coming-soon",
     },
     {
         title: "Goals",
-        description: "Set personal goals, break them into subtasks, and track your progress over time with deadlines, categories, and streaks.",
+        description:
+            "Set personal goals, break them into subtasks, and track your progress over time with deadlines, categories, and streaks.",
         path: "/goals",
         status: "coming-soon",
     },
     {
         title: "Travel",
-        description: "Plan trips, build itineraries, track budgets, save destinations to a wishlist, and keep all your travel details organized in one place.",
+        description:
+            "Plan trips, build itineraries, track budgets, save destinations to a wishlist, and keep all your travel details organized in one place.",
         path: "/travel",
         status: "coming-soon",
     },
     {
         title: "Profile",
-        description: "Manage your account settings, display name, and personal preferences.",
+        description:
+            "Manage your account settings, display name, and personal preferences.",
         path: "/profile",
         status: "available",
     },
     {
         title: "About Me",
-        description: "Curious about Chimba or its developer? Click here for contact information or to learn more about the ideas and tech stack behind this project.",
-        path:"/about",
-        status: "available"
-    }
+        description:
+            "Curious about Chimba or its developer? Click here for contact information or to learn more about the ideas and tech stack behind this project.",
+        path: "/about",
+        status: "available",
+    },
 ];
 
 export default function Home() {
@@ -58,7 +64,10 @@ export default function Home() {
                 <h1 className={styles.heroTitle}>
                     {displayName ? (
                         <>
-                            Welcome back, <span className={styles.heroName}>{displayName}</span>
+                            Welcome back,{" "}
+                            <span className={styles.heroName}>
+                                {displayName}
+                            </span>
                         </>
                     ) : (
                         "Welcome back"
@@ -81,12 +90,18 @@ export default function Home() {
                             <div className={styles.cardAccent} />
                             <div className={styles.cardBody}>
                                 <div className={styles.cardHeader}>
-                                    <h2 className={styles.cardTitle}>{feature.title}</h2>
+                                    <h2 className={styles.cardTitle}>
+                                        {feature.title}
+                                    </h2>
                                     {isComingSoon && (
-                                        <span className={styles.tag}>Coming Soon</span>
+                                        <span className={styles.tag}>
+                                            Coming Soon
+                                        </span>
                                     )}
                                 </div>
-                                <p className={styles.cardDescription}>{feature.description}</p>
+                                <p className={styles.cardDescription}>
+                                    {feature.description}
+                                </p>
                                 <span className={styles.cardLinkText}>
                                     {isComingSoon ? "Preview →" : "Open →"}
                                 </span>
@@ -95,7 +110,6 @@ export default function Home() {
                     );
                 })}
             </section>
-
         </div>
     );
 }

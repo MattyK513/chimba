@@ -13,13 +13,13 @@ export default function ErrorComponent() {
     let statusCode: number | null = null;
     let shouldDisplaySearchButton = false;
 
-
     if (isRouteErrorResponse(error)) {
         statusCode = error.status;
         switch (error.status) {
             case 404:
                 title = "Page Not Found";
-                message = "The page you're looking for doesn't exist or has been moved.";
+                message =
+                    "The page you're looking for doesn't exist or has been moved.";
                 break;
             case 401:
                 title = "Unauthorized";
@@ -36,21 +36,33 @@ export default function ErrorComponent() {
     } else if (error instanceof Error) {
         message = error.message;
         if (message === "Edamam API error: 429") {
-            title = "Too many requests"
-            message = "The recipe search API is currently overloaded with requests. Please wait a few moments before searching again."
+            title = "Too many requests";
+            message =
+                "The recipe search API is currently overloaded with requests. Please wait a few moments before searching again.";
             statusCode = 429;
             shouldDisplaySearchButton = true;
-        } 
+        }
     }
 
     return (
         <div className={styles.errorContainer}>
-            {statusCode && <span className={styles.errorStatus}>{statusCode}</span>}
+            {statusCode && (
+                <span className={styles.errorStatus}>{statusCode}</span>
+            )}
             <h1 className={styles.errorTitle}>{title}</h1>
             <p className={styles.errorMessage}>{message}</p>
             <div className={styles.errorActions}>
-                <Link to="/" className={styles.errorLink}>Go Home</Link>
-                {shouldDisplaySearchButton && <Link to="/meal-planner/recipe-search" className={styles.errorLink}>Back to search</Link>}
+                <Link to="/" className={styles.errorLink}>
+                    Go Home
+                </Link>
+                {shouldDisplaySearchButton && (
+                    <Link
+                        to="/meal-planner/recipe-search"
+                        className={styles.errorLink}
+                    >
+                        Back to search
+                    </Link>
+                )}
             </div>
             {import.meta.env.DEV && (
                 <details className={styles.errorDetails}>

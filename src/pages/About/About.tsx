@@ -4,8 +4,8 @@ import {
     Mail,
     Github,
     Linkedin,
-    FileText,
-    MapPin,
+    //FileText,
+    //MapPin,
     Layers,
     Shield,
     Palette,
@@ -72,14 +72,14 @@ const HIGHLIGHTS: Highlight[] = [
         description:
             "Every themeable token is stored as an HSL triple (e.g. --color-focus: 236 100% 70%) and composed at call sites with hsl(var(--color-focus) / 0.5). Eight full themes, every component has access to every token at any opacity, zero precomputed variants.",
         Icon: Palette,
-    }
+    },
 ];
 
 const STACK = {
-    "Core": ["React 19", "TypeScript", "Vite", "React Router 7"],
+    Core: ["React 19", "TypeScript", "Vite", "React Router 7"],
     "Backend & Data": ["Firebase Auth", "Cloud Firestore", "Edamam API"],
-    "Styling": ["CSS Modules", "HSL design tokens", "Lucide Icons"],
-    "Tooling": ["ESLint 9", "typescript-eslint", "Prettier"],
+    Styling: ["CSS Modules", "HSL design tokens", "Lucide Icons"],
+    Tooling: ["ESLint 9", "typescript-eslint", "Prettier"],
 } as const;
 
 export default function About() {
@@ -88,13 +88,11 @@ export default function About() {
     const appHomeLabel = user ? "Back to app" : "See the app";
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "auto"});
-     }, []);
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
 
     return (
         <div className={styles.about}>
-            
-
             {/* Hero */}
             <header className={styles.hero}>
                 <Link to={appHomePath} className={styles.backLink}>
@@ -102,7 +100,8 @@ export default function About() {
                 </Link>
                 <span className={styles.eyebrow}>About the developer</span>
                 <h1 className={styles.heroTitle}>
-                    Hi, I'm <span className={styles.heroName}>{DEVELOPER.name}</span>
+                    Hi, I'm{" "}
+                    <span className={styles.heroName}>{DEVELOPER.name}</span>
                 </h1>
                 <p className={styles.heroRole}>
                     {DEVELOPER.title}
@@ -115,7 +114,10 @@ export default function About() {
                 <p className={styles.heroTagline}>{DEVELOPER.tagline}</p>
 
                 <div className={styles.heroActions}>
-                    <a href={`mailto:${DEVELOPER.email}`} className={styles.primaryBtn}>
+                    <a
+                        href={`mailto:${DEVELOPER.email}`}
+                        className={styles.primaryBtn}
+                    >
                         <Mail size={18} aria-hidden="true" />
                         Email me
                     </a>
@@ -165,7 +167,11 @@ export default function About() {
             <section className={styles.card}>
                 <h2 className={styles.sectionTitle}>About this project</h2>
                 <p className={styles.prose}>
-                    Chimba is a personal-dashboard app in active development. It currently ships a full recipe-search experience backed by the Edamam API, user auth and profile management via Firebase, and an eight-theme design system. Meal planning, goal tracking, and travel modules are next.
+                    Chimba is a personal-dashboard app in active development. It
+                    currently ships a full recipe-search experience backed by
+                    the Edamam API, user auth and profile management via
+                    Firebase, and an eight-theme design system. Meal planning,
+                    goal tracking, and travel modules are next.
                 </p>
                 <p className={styles.proseMuted}>Built to demonstrate:</p>
                 <ul className={styles.goalList}>
@@ -177,7 +183,9 @@ export default function About() {
 
             {/* Engineering highlights */}
             <section>
-                <h2 className={`${styles.sectionTitle} ${styles.sectionTitleCentered}`}>
+                <h2
+                    className={`${styles.sectionTitle} ${styles.sectionTitleCentered}`}
+                >
                     A few things I'm proud of
                 </h2>
                 <p className={styles.sectionSubtitle}>
@@ -188,10 +196,15 @@ export default function About() {
                     {HIGHLIGHTS.map(({ title, description, Icon }) => (
                         <article key={title} className={styles.highlightCard}>
                             <div className={styles.highlightIconWrap}>
-                                <Icon className={styles.highlightIcon} aria-hidden="true" />
+                                <Icon
+                                    className={styles.highlightIcon}
+                                    aria-hidden="true"
+                                />
                             </div>
                             <h3 className={styles.highlightTitle}>{title}</h3>
-                            <p className={styles.highlightDescription}>{description}</p>
+                            <p className={styles.highlightDescription}>
+                                {description}
+                            </p>
                         </article>
                     ))}
                 </div>
@@ -203,10 +216,15 @@ export default function About() {
                 <div className={styles.stackGrid}>
                     {Object.entries(STACK).map(([category, items]) => (
                         <div key={category} className={styles.stackGroup}>
-                            <span className={styles.stackLabel}>{category}</span>
+                            <span className={styles.stackLabel}>
+                                {category}
+                            </span>
                             <div className={styles.stackBadges}>
-                                {items.map(item => (
-                                    <span key={item} className={styles.stackBadge}>
+                                {items.map((item) => (
+                                    <span
+                                        key={item}
+                                        className={styles.stackBadge}
+                                    >
                                         {item}
                                     </span>
                                 ))}
@@ -220,14 +238,20 @@ export default function About() {
             <section className={styles.contactCta}>
                 <h2 className={styles.contactTitle}>Let's talk</h2>
                 <p className={styles.contactSubtitle}>
-                    I'm looking for frontend roles, but would be thrilled to grow into a
-                    full-stack role as well. Happy to walk through any part of this codebase.
+                    I'm looking for frontend roles, but would be thrilled to
+                    grow into a full-stack role as well. Happy to walk through
+                    any part of this codebase.
                 </p>
                 <div className={styles.contactLinks}>
-                    <a href={`mailto:${DEVELOPER.email}`} className={styles.contactLink}>
+                    <a
+                        href={`mailto:${DEVELOPER.email}`}
+                        className={styles.contactLink}
+                    >
                         <Mail size={18} aria-hidden="true" />
                         <div>
-                            <span className={styles.contactLinkLabel}>Email</span>
+                            <span className={styles.contactLinkLabel}>
+                                Email
+                            </span>
                             <span className={styles.contactLinkValue}>
                                 {DEVELOPER.email}
                             </span>
@@ -246,7 +270,9 @@ export default function About() {
                     >
                         <Github size={18} aria-hidden="true" />
                         <div>
-                            <span className={styles.contactLinkLabel}>GitHub</span>
+                            <span className={styles.contactLinkLabel}>
+                                GitHub
+                            </span>
                             <span className={styles.contactLinkValue}>
                                 {DEVELOPER.github.replace(/^https?:\/\//, "")}
                             </span>
@@ -265,7 +291,9 @@ export default function About() {
                     >
                         <Linkedin size={18} aria-hidden="true" />
                         <div>
-                            <span className={styles.contactLinkLabel}>LinkedIn</span>
+                            <span className={styles.contactLinkLabel}>
+                                LinkedIn
+                            </span>
                             <span className={styles.contactLinkValue}>
                                 {DEVELOPER.linkedin.replace(/^https?:\/\//, "")}
                             </span>

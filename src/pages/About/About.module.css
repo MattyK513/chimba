@@ -13,7 +13,9 @@
     color: hsl(var(--color-text) / 0.55);
     text-decoration: none;
     border-radius: 6px;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
     position: absolute;
     top: 1rem;
     left: 2rem;
@@ -23,8 +25,6 @@
     color: hsl(var(--color-text) / 0.9);
     background: hsl(var(--color-text) / 0.06);
 }
-
-/* ---------- Hero ---------- */
 
 .hero {
     padding: 0;
@@ -111,8 +111,11 @@
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.2s ease, background-color 0.2s ease,
-        border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .primaryBtn {
@@ -144,8 +147,6 @@
     border-color: hsl(var(--color-text) / 0.4);
     color: inherit;
 }
-
-/* ---------- Cards / sections ---------- */
 
 .card {
     margin-top: 2rem;
@@ -206,8 +207,6 @@
     opacity: 0.85;
 }
 
-/* ---------- Engineering highlights ---------- */
-
 .highlightGrid {
     display: grid;
     gap: 1.25rem;
@@ -219,7 +218,10 @@
     border: 1px solid hsl(var(--color-text) / 0.12);
     border-radius: 12px;
     background: hsl(var(--color-text) / 0.03);
-    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .highlightCard:hover {
@@ -263,8 +265,6 @@
     opacity: 0.78;
 }
 
-/* ---------- Tech stack ---------- */
-
 .stackGrid {
     display: grid;
     gap: 1.25rem;
@@ -299,8 +299,6 @@
     font-size: 0.82rem;
     font-weight: 500;
 }
-
-/* ---------- Contact ---------- */
 
 .contactCta {
     margin-top: 3rem;
@@ -347,7 +345,10 @@
     color: inherit;
     text-decoration: none;
     text-align: left;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .contactLink:hover {
@@ -396,7 +397,10 @@
     background: hsl(var(--color-text) / 0.05);
     color: inherit;
     border: 1px solid hsl(var(--color-text) / 0.22);
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .appCta:hover {
@@ -405,8 +409,6 @@
     border-color: hsl(var(--color-text) / 0.4);
     color: inherit;
 }
-
-/* ---------- Responsive ---------- */
 
 @media (max-width: 600px) {
     .card,

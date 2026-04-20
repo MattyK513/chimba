@@ -28,17 +28,17 @@ Built with React 19, TypeScript, React Router data routers, Firebase, and the Ed
 
 ## Tech stack
 
-| Area              | Stack                                                             |
-| ----------------- | ----------------------------------------------------------------- |
-| Framework         | React 19, TypeScript 5.9, Vite 7                                  |
-| Routing           | React Router v7 (data router with loaders and actions)            |
-| State             | React Context, Firestore live subscriptions                       |
-| Backend services  | Firebase Auth, Cloud Firestore                                    |
-| External API      | Edamam Recipe Search                                              |
-| Styling           | CSS Modules with HSL-based design tokens                          |
-| Icons             | Lucide React                                                      |
-| Loading UI        | react-loading-indicators                                          |
-| Tooling           | ESLint 9, typescript-eslint, Vite dev server                      |
+| Area             | Stack                                                  |
+| ---------------- | ------------------------------------------------------ |
+| Framework        | React 19, TypeScript 5.9, Vite 7                       |
+| Routing          | React Router v7 (data router with loaders and actions) |
+| State            | React Context, Firestore live subscriptions            |
+| Backend services | Firebase Auth, Cloud Firestore                         |
+| External API     | Edamam Recipe Search                                   |
+| Styling          | CSS Modules with HSL-based design tokens               |
+| Icons            | Lucide React                                           |
+| Loading UI       | react-loading-indicators                               |
+| Tooling          | ESLint 9, typescript-eslint, Vite dev server           |
 
 ---
 
@@ -153,17 +153,17 @@ src/
 
 The router has two top-level trees sharing the `/` path, plus a public `/about` route. Route loaders act as auth guards and decide which tree the user sees.
 
-| Path                                    | Auth required | Notes                                                                    |
-| --------------------------------------- | ------------- | ------------------------------------------------------------------------ |
-| `/`                                     | Yes           | Home dashboard. Unauthenticated visitors are redirected to `/welcome`.   |
-| `/welcome`                              | No            | Public landing page. Authenticated users are bounced to `/`.             |
-| `/about`                                | No            | Developer / portfolio page. Accessible to anyone.                        |
-| `/login`, `/register`                   | No            | Auth forms. Preserve `?redirectTo=` through the flow.                    |
-| `/goals`, `/travel`                     | Yes           | Placeholder pages for upcoming modules.                                  |
-| `/meal-planner`                         | Yes           | Meal planner shell (placeholder for the weekly view).                    |
-| `/meal-planner/recipe-search`           | Yes           | Recipe search with filter panel and results.                             |
-| `/meal-planner/recipe-search/:recipeId` | Yes           | Recipe detail with ingredients and nutrition facts.                      |
-| `/profile`                              | Yes           | Account settings, theme picker, password change, account deletion.       |
+| Path                                    | Auth required | Notes                                                                  |
+| --------------------------------------- | ------------- | ---------------------------------------------------------------------- |
+| `/`                                     | Yes           | Home dashboard. Unauthenticated visitors are redirected to `/welcome`. |
+| `/welcome`                              | No            | Public landing page. Authenticated users are bounced to `/`.           |
+| `/about`                                | No            | Developer / portfolio page. Accessible to anyone.                      |
+| `/login`, `/register`                   | No            | Auth forms. Preserve `?redirectTo=` through the flow.                  |
+| `/goals`, `/travel`                     | Yes           | Placeholder pages for upcoming modules.                                |
+| `/meal-planner`                         | Yes           | Meal planner shell (placeholder for the weekly view).                  |
+| `/meal-planner/recipe-search`           | Yes           | Recipe search with filter panel and results.                           |
+| `/meal-planner/recipe-search/:recipeId` | Yes           | Recipe detail with ingredients and nutrition facts.                    |
+| `/profile`                              | Yes           | Account settings, theme picker, password change, account deletion.     |
 
 ---
 

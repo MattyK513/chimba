@@ -1,16 +1,26 @@
 import type {
-    AllergyOption, CuisineOption, DietOption, DishTypeOption, MealTypeOption,
+    AllergyOption,
+    CuisineOption,
+    DietOption,
+    DishTypeOption,
+    MealTypeOption,
 } from "../../../../types";
 import styles from "../RecipeSearch.module.css";
 
 type ParamOption =
-    | AllergyOption | CuisineOption | DietOption | DishTypeOption | MealTypeOption;
+    | AllergyOption
+    | CuisineOption
+    | DietOption
+    | DishTypeOption
+    | MealTypeOption;
 
 interface ClickableParamPanelProps {
     params: ParamOption[];
 }
 
-export default function ClickableParamPanel({ params }: ClickableParamPanelProps) {
+export default function ClickableParamPanel({
+    params,
+}: ClickableParamPanelProps) {
     return (
         <div className={styles.chipGroup}>
             {params.map((p) => {

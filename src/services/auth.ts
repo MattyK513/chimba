@@ -68,7 +68,11 @@ export async function logInWithEmailAndPassword(
     password: string
 ): Promise<UserInfo> {
     try {
-        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        const { user } = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
         return mapUserInfo(user);
     } catch (err) {
         throw normalizeAuthError(err);
@@ -98,7 +102,11 @@ export async function createAccountWithEmailAndPassword(
     profile?: ProfileUpdates
 ): Promise<UserInfo> {
     try {
-        const { user } = await createUserWithEmailAndPassword(auth, email, password);
+        const { user } = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
         if (profile?.displayName || profile?.photoURL) {
             await updateProfile(user, profile);
         }
@@ -114,7 +122,10 @@ export async function createAccountWithEmailAndPassword(
 export async function deleteProfile(): Promise<void> {
     const user = auth.currentUser;
     if (!user) {
-        throw new AuthError("auth/no-current-user", "No user is currently signed in.");
+        throw new AuthError(
+            "auth/no-current-user",
+            "No user is currently signed in."
+        );
     }
 
     try {
@@ -129,7 +140,10 @@ export async function updateUsernameOrPhotoURL(
 ): Promise<UserInfo> {
     const user = auth.currentUser;
     if (!user) {
-        throw new AuthError("auth/no-current-user", "You must be signed in to do that.");
+        throw new AuthError(
+            "auth/no-current-user",
+            "You must be signed in to do that."
+        );
     }
 
     try {
@@ -145,20 +159,34 @@ export async function updateUsernameOrPhotoURL(
  * reauthenticate first — Firebase rejects `updatePassword` if the user's
  * session isn't recent.
  */
-export async function changePassword(currentPassword: string, newPassword: string): Promise<{success: boolean, error: string | null}> {
+export async function changePassword(
+    currentPassword: string,
+    newPassword: string
+): Promise<{ success: boolean; error: string | null }> {
     const user = auth.currentUser;
-    
-    if (!user || !user.email) throw new AuthError("auth/no-current-user", "You must be signed in to do that.");
+
+    if (!user || !user.email)
+        throw new AuthError(
+            "auth/no-current-user",
+            "You must be signed in to do that."
+        );
 
     try {
-        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+        const credential = EmailAuthProvider.credential(
+            user.email,
+            currentPassword
+        );
         await reauthenticateWithCredential(user, credential);
         await updatePassword(user, newPassword);
 
-        return {success: true, error: null};
+        return { success: true, error: null };
     } catch (error: any) {
-        if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential' || error.code === 'auth/weak-password') {
-            return {success: false, error: error.code.slice(5)};
+        if (
+            error.code === "auth/wrong-password" ||
+            error.code === "auth/invalid-credential" ||
+            error.code === "auth/weak-password"
+        ) {
+            return { success: false, error: error.code.slice(5) };
         }
         throw error;
     }
@@ -167,14 +195,37 @@ export async function changePassword(currentPassword: string, newPassword: strin
 // Helpers
 
 function mapUserInfo(user: User): UserInfo {
-    const { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata } = user;
-    return { displayName, email, emailVerified, phoneNumber, photoURL, uid, metadata };
+    const {
+        displayName,
+        email,
+        emailVerified,
+        phoneNumber,
+        photoURL,
+        uid,
+        metadata,
+    } = user;
+    return {
+        displayName,
+        email,
+        emailVerified,
+        phoneNumber,
+        photoURL,
+        uid,
+        metadata,
+    };
 }
 
 /** Wraps Firebase errors in AuthError; passes through anything else. */
-function normalizeAuthError(err: unknown, overrideMessage?: string): AuthError | unknown {
+function normalizeAuthError(
+    err: unknown,
+    overrideMessage?: string
+): AuthError | unknown {
     if (err instanceof FirebaseError) {
-        return new AuthError(err.code, overrideMessage ?? translateAuthError(err.code), err);
+        return new AuthError(
+            err.code,
+            overrideMessage ?? translateAuthError(err.code),
+            err
+        );
     }
     return err;
 }
