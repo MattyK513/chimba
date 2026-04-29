@@ -36,24 +36,6 @@ function ensureAuthInitialization(): Promise<void> {
 }
 
 /**
- * Subscribes to auth state changes, mapping Firebase's `User` to the
- * app-level `UserInfo` shape so the rest of the app stays decoupled
- * from Firebase types.
- *
- * The callback fires immediately with the current state, then again on
- * every subsequent change (login, logout, token refresh).
- *
- * @returns Unsubscribe function.
- */
-export function subscribeToAuthState(
-    callback: (user: UserInfo | null) => void
-): Unsubscribe {
-    return onAuthStateChanged(auth, (user) => {
-        callback(user ? mapUserInfo(user) : null);
-    });
-}
-
-/**
  * Gets the current user, waiting for Firebase to finish initializing
  * if necessary. Safe to call from route loaders.
  */
